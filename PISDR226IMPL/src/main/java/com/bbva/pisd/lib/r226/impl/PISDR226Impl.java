@@ -3,6 +3,10 @@ package com.bbva.pisd.lib.r226.impl;
 import com.bbva.elara.domain.jdbc.CommonJdbcTemplate;
 import com.bbva.pisd.dto.contract.entity.ContractEntity;
 import com.bbva.pisd.dto.contract.entity.ReceiptEntity;
+import com.bbva.pisd.lib.r226.dao.OracleContractDAO;
+import com.bbva.pisd.lib.r226.interfaces.ContractDAO;
+import com.bbva.pisd.lib.r226.pattern.factory.DAOFactory;
+import com.bbva.pisd.lib.r226.pattern.factory.interfaces.BaseDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +25,9 @@ public class PISDR226Impl extends PISDR226Abstract {
 
 	@Override
 	public ContractEntity executeFindByCertifiedBank(String nroCertifyBank) {
-
+		BaseDAO daoFactory = DAOFactory.getDAOFactory(commonJdbcTemplate);
+		ContractDAO oracleContractDAO = new OracleContractDAO(daoFactory);
+		return oracleContractDAO.findByCertifiedBank(nroCertifyBank);
 	}
 
 	@Override

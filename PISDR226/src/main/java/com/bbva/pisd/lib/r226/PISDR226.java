@@ -15,8 +15,8 @@ public interface PISDR226 {
 
 	ContractEntity executeFindByCertifiedBank(String nroCertificadoBanco);
 
-	boolean executeUpdateReceiptsPayment(ReceiptEntity receipt);
+	boolean executeUpdateReceiptsPayment(List<ReceiptEntity> receipts);
 
-	List<ReceiptEntity> executeFindReceiptByChargeEntityExtern();
+	List<ReceiptEntity> executeFindReceiptByChargeEntityExtern(PaymentSearchCriteriaDTO paymentSearchCriteriaDTO);
 
 }
