@@ -1,5 +1,10 @@
 package com.bbva.pisd.lib.r226;
 
+import com.bbva.pisd.dto.contract.entity.ContractEntity;
+import com.bbva.pisd.dto.contract.entity.ReceiptEntity;
+
+import java.util.List;
+
 /**
  * The  interface PISDR226 class...
  */
@@ -9,5 +14,12 @@ public interface PISDR226 {
 	 * The execute method...
 	 */
 	void execute();
+	void executeSetCommonJdbcTemplate(Object commonJdbcTemplate);
+
+	ContractEntity executeFindByCertifiedBank(String nroCertificadoBanco);
+
+	boolean executeUpdateReceiptsPayment(ReceiptEntity receipt);
+
+	List<ReceiptEntity> executeFindReceiptByChargeEntityExtern();
 
 }
