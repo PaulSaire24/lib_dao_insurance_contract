@@ -16,12 +16,12 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Map;
 
-public class BaseDAO extends AbstractLibrary {
+public class BaseDAOV extends AbstractLibrary {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BaseDAO.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaseDAOV.class);
     private CommonJdbcTemplate commonJdbcTemplate;
 
-    public BaseDAO(CommonJdbcTemplate commonJdbcTemplate) {
+    public BaseDAOV(CommonJdbcTemplate commonJdbcTemplate) {
         this.commonJdbcTemplate = commonJdbcTemplate;
     }
 

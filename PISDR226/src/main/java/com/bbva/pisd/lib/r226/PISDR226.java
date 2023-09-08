@@ -10,10 +10,7 @@ import java.util.List;
  */
 public interface PISDR226 {
 
-	/**
-	 * The execute method...
-	 */
-	void execute();
+
 	void executeSetCommonJdbcTemplate(Object commonJdbcTemplate);
 
 	ContractEntity executeFindByCertifiedBank(String nroCertificadoBanco);
