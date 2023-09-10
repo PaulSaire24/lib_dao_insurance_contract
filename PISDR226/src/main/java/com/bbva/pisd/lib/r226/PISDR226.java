@@ -2,6 +2,7 @@ package com.bbva.pisd.lib.r226;
 
 import com.bbva.pisd.dto.contract.entity.ContractEntity;
 import com.bbva.pisd.dto.contract.entity.ReceiptEntity;
+import com.bbva.pisd.dto.contract.entity.ReceiptSearchCriteriaDTO;
 
 import java.util.List;
 
@@ -17,6 +18,6 @@ public interface PISDR226 {
 
 	boolean executeUpdateReceiptsPayment(List<ReceiptEntity> receipts);
 
-	List<ReceiptEntity> executeFindReceiptByChargeEntityExtern(PaymentSearchCriteriaDTO paymentSearchCriteriaDTO);
+	List<ReceiptEntity> executeFindReceiptByChargeEntityExtern(ReceiptSearchCriteriaDTO receiptSearchCriteriaDTO);
 
 }

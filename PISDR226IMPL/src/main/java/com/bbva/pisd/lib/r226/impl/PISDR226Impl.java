@@ -3,6 +3,7 @@ package com.bbva.pisd.lib.r226.impl;
 import com.bbva.elara.domain.jdbc.CommonJdbcTemplate;
 import com.bbva.pisd.dto.contract.entity.ContractEntity;
 import com.bbva.pisd.dto.contract.entity.ReceiptEntity;
+import com.bbva.pisd.dto.contract.entity.ReceiptSearchCriteriaDTO;
 import com.bbva.pisd.lib.r226.dao.OracleContractDAO;
 import com.bbva.pisd.lib.r226.interfaces.ContractDAO;
 import com.bbva.pisd.lib.r226.pattern.factory.DAOFactory;
@@ -31,14 +32,23 @@ public class PISDR226Impl extends PISDR226Abstract {
 	}
 
 	@Override
-	public boolean executeUpdateReceiptsPayment(ReceiptEntity receipt) {
+	public boolean executeUpdateReceiptsPayment(List<ReceiptEntity> receipts) {
 		return false;
 	}
 
 	@Override
-	public List<ReceiptEntity> executeFindReceiptByChargeEntityExtern() {
-		return null;
+	public List<ReceiptEntity> executeFindReceiptByChargeEntityExtern(ReceiptSearchCriteriaDTO receiptSearchCriteriaDTO) {
+		LOGGER.info("start executeFindReceiptByChargeEntityExtern()");
+		BaseDAO daoFactory = DAOFactory.getDAOFactory(commonJdbcTemplate);
+		ContractDAO oracleContractDAO = new OracleContractDAO(daoFactory);
+
+		List<ReceiptEntity> listReceipts = oracleContractDAO.findReceiptByChargeEntityExtern(receiptSearchCriteriaDTO);
+
+		LOGGER.info("end executeFindReceiptByChargeEntityExtern() {}", listReceipts!=null?listReceipts.size():0);
+
+		return listReceipts;
 	}
+
 
 	/**
 	 * executeSetCommonJdbcTemplate
