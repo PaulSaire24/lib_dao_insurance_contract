@@ -4,9 +4,9 @@ import com.bbva.pisd.dto.contract.entity.ContractEntity;
 
 import java.util.Map;
 
-public class ContractTransforBean {
+public class ContractTransformBean {
 
-    public static ContractEntity mapTransforContractEntity(Map<String,Object> map){
+    public static ContractEntity mapTransformContractEntity(Map<String,Object> map){
         ContractEntity contract = new ContractEntity();
         contract.setContractStatusId((String) map.get("X"));
         return contract;
