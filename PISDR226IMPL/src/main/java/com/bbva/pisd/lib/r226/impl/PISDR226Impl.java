@@ -40,12 +40,9 @@ public class PISDR226Impl extends PISDR226Abstract {
 	public List<ReceiptEntity> executeFindReceiptByChargeEntityExtern(ReceiptSearchCriteriaDTO receiptSearchCriteriaDTO) {
 		LOGGER.info("start executeFindReceiptByChargeEntityExtern()");
 		BaseDAO daoFactory = DAOFactory.getDAOFactory(commonJdbcTemplate);
-		ContractDAO oracleContractDAO = new OracleContractDAO(daoFactory);
-
-		List<ReceiptEntity> listReceipts = oracleContractDAO.findReceiptByChargeEntityExtern(receiptSearchCriteriaDTO);
-
+		ContractDAO contractDAO = new OracleContractDAO(daoFactory);
+		List<ReceiptEntity> listReceipts = contractDAO.findReceiptByChargeEntityExtern(receiptSearchCriteriaDTO);
 		LOGGER.info("end executeFindReceiptByChargeEntityExtern() {}", listReceipts!=null?listReceipts.size():0);
-
 		return listReceipts;
 	}
 

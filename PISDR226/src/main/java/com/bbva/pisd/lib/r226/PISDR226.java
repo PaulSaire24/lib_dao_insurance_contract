@@ -14,7 +14,7 @@ public interface PISDR226 {
 
 	void executeSetCommonJdbcTemplate(Object commonJdbcTemplate);
 
-	ContractEntity executeFindByCertifiedBank(String nroCertificadoBanco);
+	ContractEntity executeFindByCertifiedBank(String nroCertifyBank);
 
 	boolean executeUpdateReceiptsPayment(List<ReceiptEntity> receipts);
 
