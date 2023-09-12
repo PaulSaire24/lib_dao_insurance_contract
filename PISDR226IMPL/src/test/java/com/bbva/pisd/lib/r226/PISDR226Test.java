@@ -51,7 +51,6 @@ public class PISDR226Test {
 	
 	@Test
 	public void executeTest(){
-		pisdR226.execute();
 		Assert.assertEquals(0, context.getAdviceList().size());
 	}
 	

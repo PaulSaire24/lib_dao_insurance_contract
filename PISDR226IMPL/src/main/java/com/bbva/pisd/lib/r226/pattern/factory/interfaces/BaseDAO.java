@@ -11,5 +11,6 @@ public interface BaseDAO {
 
     Object executeQuery(OperationDTO operationDTO);
     List<Map<String, Object>> executeQueryList(String query, Map<String, Object> parameters);
+    List<Map<String, Object>> executeQueryListPagination(String query, Map<String, Object> parameters, int paginationKey, int pageSize);
 
 }

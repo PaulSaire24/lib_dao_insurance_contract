@@ -8,6 +8,7 @@ import com.bbva.apx.exception.db.TimeoutException;
 import com.bbva.elara.domain.jdbc.CommonJdbcTemplate;
 import com.bbva.elara.library.AbstractLibrary;
 import com.bbva.pisd.dto.contract.constants.PISDErrors;
+import com.bbva.pisd.dto.contract.operation.OperationConstants;
 import com.bbva.pisd.dto.contract.operation.OperationDTO;
 import com.bbva.pisd.lib.r226.pattern.factory.interfaces.BaseDAO;
 import org.slf4j.Logger;
@@ -28,8 +29,38 @@ public class CommonJdbcFactory extends AbstractLibrary implements BaseDAO {
 
 
     @Override
-    public Object executeQuery(OperationDTO operationDTO) {
-        return null;
+    public Object executeQuery(OperationDTO operation) {
+        Object response = null;
+        LOGGER.info("[BaseDAO] - start executeQuery() with Param OperationDTO :: {}", operation);
+        try {
+            if(operation.getTypeOperation().equals(OperationConstants.Operation.SELECT)){
+                if(operation.isForListQuery()){
+                    response = commonJdbcTemplate.queryForList(operation.getQuery(), operation.getParams());
+                }else {
+                    response = commonJdbcTemplate.queryForMap(operation.getQuery(), operation.getParams());
+                }
+            }else if(operation.getTypeOperation().equals(OperationConstants.Operation.UPDATE)){
+                response = commonJdbcTemplate.update(operation.getQuery(), operation.getParams());
+            }else if(operation.getTypeOperation().equals(OperationConstants.Operation.BATCH)){
+                response = commonJdbcTemplate.batchUpdate(operation.getQuery(), operation.getBatchValues());
+            }
+
+        } catch(NoResultException ex) {
+            LOGGER.info("[BaseDAO] - not found data, query Empty Result to {}", operation.getNameProp());
+            this.addAdvice(PISDErrors.QUERY_EMPTY_RESULT.getAdviceCode());
+        } catch(DuplicateKeyException ex) {
+            this.addAdvice(PISDErrors.ERROR_DUPLICATE_KEY.getAdviceCode());
+            throw new BusinessException(PISDErrors.ERROR_DUPLICATE_KEY.getAdviceCode(), false, ex.getMessage());
+        } catch (TimeoutException ae){
+            this.addAdvice(PISDErrors.ERROR_TIME_OUT.getAdviceCode());
+            throw new BusinessException(PISDErrors.ERROR_TIME_OUT.getAdviceCode(), false, ae.getMessage());
+        }catch (IncorrectResultSizeException ae){
+            this.addAdvice(PISDErrors.ERROR_INCORRECT_RESULT.getAdviceCode());
+            throw new BusinessException(PISDErrors.ERROR_INCORRECT_RESULT.getAdviceCode(), false, ae.getMessage());
+        }
+
+        LOGGER.info("[BaseDAO] - end executeQuery()");
+        return response;
     }
 
     @Override
@@ -46,5 +77,43 @@ public class CommonJdbcFactory extends AbstractLibrary implements BaseDAO {
 
         LOGGER.info("[BaseDAO] - end executeQueryList()");
         return response;
+    }
+
+    @Override
+    public List<Map<String, Object>> executeQueryListPagination(String query, Map<String, Object> parameters, int paginationKey, int pageSize) {
+        List<Map<String, Object>> response = null;
+        LOGGER.info("[PISDR201Impl] - executeQueryListPagination() :: Start - with Query : {}, (key, pageSize):{}", "", paginationKey+ ","+ pageSize);
+        int firstRow = paginationKey * pageSize + 1;
+        try {
+            final String sql = this.parseQueryWithPagination(query, firstRow, pageSize);
+
+            response = commonJdbcTemplate.queryForList(sql, parameters);
+        } catch(NoResultException ex) {
+            LOGGER.info("executeQueryListPagination() - not found data, query Empty Result to {}", query);
+            this.addAdvice(PISDErrors.QUERY_EMPTY_RESULT.getAdviceCode());
+        }
+        LOGGER.info("executeQueryListPagination() :: End");
+        return response;
+    }
+
+    private String parseQueryWithPagination(final String query, int firstRow, int pageSize) {
+        LOGGER.info("Getting query");
+        final String sql = insertPagination(query, firstRow, pageSize);
+
+        LOGGER.info("Getted query" + " ,with SQL: " + sql);
+        return sql;
+    }
+
+    private String insertPagination(String parseQuery, int firstRow, int pageSize) {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("SELECT * FROM ( SELECT a.*, ROWNUM rnum FROM ( ");
+        builder.append(parseQuery);
+        builder.append(" ) a WHERE ROWNUM <=");
+        builder.append(firstRow + pageSize - 1);
+        builder.append(") WHERE rnum >=");
+        builder.append(firstRow);
+
+        return builder.toString();
     }
 }
