@@ -15,16 +15,13 @@ public class ContractTransformMap {
 
     public static Map<String, Object> certifyBankCriteriaTransformMap(CertifyBankCriteria certifyBankCriteria){
         LOGGER.info("[***] ContractTransformMap certifyBankCriteriaTransformMap receiptSearchCriteriaDTO - {} ",certifyBankCriteria);
-
         Map<String, Object> parameters = new HashMap<>();
         parameters.put(PISDColumn.Contract.FIELD_INSURANCE_CONTRACT_ENTITY_ID, certifyBankCriteria.getInsuranceContractEntityId() );
         parameters.put(PISDColumn.Contract.FIELD_INSURANCE_CONTRACT_BRANCH_ID, certifyBankCriteria.getInsuranceContractBranchId() );
         parameters.put(PISDColumn.Contract.FIELD_CONTRACT_FIRST_VERFN_DIGIT_ID, certifyBankCriteria.getContractFirstVerfnDigitId());
         parameters.put(PISDColumn.Contract.FIELD_CONTRACT_SECOND_VERFN_DIGIT_ID, certifyBankCriteria.getContractSecondVerfnDigitId());
         parameters.put(PISDColumn.Contract.FIELD_INSRC_CONTRACT_INT_ACCOUNT_ID, certifyBankCriteria.getInsrcContractIntAccountId() );
-
         LOGGER.info("[***] ContractTransformMap certifyBankCriteriaTransformMap parameters - {} ",parameters);
-
         return parameters;
     }
 }

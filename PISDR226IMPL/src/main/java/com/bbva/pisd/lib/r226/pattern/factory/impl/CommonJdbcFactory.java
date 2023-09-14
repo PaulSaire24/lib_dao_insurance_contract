@@ -8,8 +8,6 @@ import com.bbva.apx.exception.db.TimeoutException;
 import com.bbva.elara.domain.jdbc.CommonJdbcTemplate;
 import com.bbva.elara.library.AbstractLibrary;
 import com.bbva.pisd.dto.contract.constants.PISDErrors;
-import com.bbva.pisd.dto.contract.operation.OperationConstants;
-import com.bbva.pisd.dto.contract.operation.OperationDTO;
 import com.bbva.pisd.dto.insurancedao.operation.Operation;
 import com.bbva.pisd.dto.insurancedao.operation.OperationConstants;
 import com.bbva.pisd.lib.r226.pattern.factory.interfaces.BaseDAO;
@@ -33,7 +31,7 @@ public class CommonJdbcFactory extends AbstractLibrary implements BaseDAO {
     @Override
     public Object executeQuery(Operation operation) {
         Object response = null;
-        LOGGER.info("[BaseDAO] - start executeQuery() with Param OperationDTO :: {}", operation);
+        LOGGER.info("[***] CommonJdbcFactory - start executeQuery() with Param OperationDTO :: {}", operation);
         try {
             if(operation.getTypeOperation().equals(OperationConstants.Operation.SELECT)){
                 if(operation.isForListQuery()){
@@ -48,20 +46,16 @@ public class CommonJdbcFactory extends AbstractLibrary implements BaseDAO {
             }
 
         } catch(NoResultException ex) {
-            LOGGER.info("[BaseDAO] - not found data, query Empty Result to {}", operation.getNameProp());
-            this.addAdvice(PISDErrors.QUERY_EMPTY_RESULT.getAdviceCode());
+            LOGGER.info("[***] CommonJdbcFactory - not found data, query Empty Result to {}", operation.getNameProp());
+            throw new BusinessException(PISDErrors.QUERY_EMPTY_RESULT.getAdviceCode(), false, ex.getMessage());
         } catch(DuplicateKeyException ex) {
-            this.addAdvice(PISDErrors.ERROR_DUPLICATE_KEY.getAdviceCode());
             throw new BusinessException(PISDErrors.ERROR_DUPLICATE_KEY.getAdviceCode(), false, ex.getMessage());
         } catch (TimeoutException ae){
-            this.addAdvice(PISDErrors.ERROR_TIME_OUT.getAdviceCode());
             throw new BusinessException(PISDErrors.ERROR_TIME_OUT.getAdviceCode(), false, ae.getMessage());
         }catch (IncorrectResultSizeException ae){
-            this.addAdvice(PISDErrors.ERROR_INCORRECT_RESULT.getAdviceCode());
             throw new BusinessException(PISDErrors.ERROR_INCORRECT_RESULT.getAdviceCode(), false, ae.getMessage());
         }
-
-        LOGGER.info("[BaseDAO] - end executeQuery()");
+        LOGGER.info("[***] CommonJdbcFactory - end executeQuery()");
         return response;
     }
 
