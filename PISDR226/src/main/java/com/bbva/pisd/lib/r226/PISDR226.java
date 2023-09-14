@@ -1,5 +1,6 @@
 package com.bbva.pisd.lib.r226;
 
+import com.bbva.pisd.dto.contract.search.CertifyBankCriteria;
 import com.bbva.pisd.dto.contract.search.ReceiptSearchCriteria;
 import com.bbva.pisd.dto.insurancedao.entities.ContractEntity;
 import com.bbva.pisd.dto.insurancedao.entities.ReceiptEntity;
@@ -14,7 +15,7 @@ public interface PISDR226 {
 
 	void executeSetCommonJdbcTemplate(Object commonJdbcTemplate);
 
-	ContractEntity executeFindByCertifiedBank(String nroCertifyBank);
+	ContractEntity executeFindByCertifiedBank(CertifyBankCriteria certifyBankCriteria);
 
 	boolean executeUpdateReceiptsPayment(List<ReceiptEntity> receipts);
 

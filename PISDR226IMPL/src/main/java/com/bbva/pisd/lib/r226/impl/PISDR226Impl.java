@@ -1,6 +1,7 @@
 package com.bbva.pisd.lib.r226.impl;
 
 import com.bbva.elara.domain.jdbc.CommonJdbcTemplate;
+import com.bbva.pisd.dto.contract.search.CertifyBankCriteria;
 import com.bbva.pisd.dto.contract.search.ReceiptSearchCriteria;
 import com.bbva.pisd.dto.insurancedao.entities.ContractEntity;
 import com.bbva.pisd.dto.insurancedao.entities.ReceiptEntity;
@@ -21,14 +22,6 @@ public class PISDR226Impl extends PISDR226Abstract {
 	private static final Logger LOGGER = LoggerFactory.getLogger(PISDR226Impl.class);
 
 	private CommonJdbcTemplate commonJdbcTemplate;
-
-
-	@Override
-	public ContractEntity executeFindByCertifiedBank(String nroCertifyBank) {
-		BaseDAO daoFactory = DAOFactory.getDAOFactory(commonJdbcTemplate);
-		ContractDAO oracleContractDAO = new OracleContractDAO(daoFactory);
-		return oracleContractDAO.findByCertifiedBank(nroCertifyBank);
-	}
 
 	@Override
 	public boolean executeUpdateReceiptsPayment(List<ReceiptEntity> receipts) {
@@ -55,5 +48,12 @@ public class PISDR226Impl extends PISDR226Abstract {
 	@Override
 	public void executeSetCommonJdbcTemplate(Object commonJdbcTemplate) {
 		this.commonJdbcTemplate = (CommonJdbcTemplate) commonJdbcTemplate;
+	}
+
+	@Override
+	public ContractEntity executeFindByCertifiedBank(CertifyBankCriteria certifyBankCriteria) {
+		BaseDAO daoFactory = DAOFactory.getDAOFactory(commonJdbcTemplate);
+		ContractDAO oracleContractDAO = new OracleContractDAO(daoFactory);
+		return oracleContractDAO.findByCertifiedBank(certifyBankCriteria);
 	}
 }

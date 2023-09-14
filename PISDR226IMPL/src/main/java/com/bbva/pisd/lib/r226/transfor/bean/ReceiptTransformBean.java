@@ -3,13 +3,14 @@ package com.bbva.pisd.lib.r226.transfor.bean;
 
 import com.bbva.pisd.dto.insurancedao.constants.PISDColumn;
 import com.bbva.pisd.dto.insurancedao.entities.ReceiptEntity;
-import com.bbva.pisd.lib.r226.transfor.list.ReceiptTransformList;
+
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
 public class ReceiptTransformBean {
-    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(ReceiptTransformBean.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReceiptTransformBean.class);
 
     public static ReceiptEntity mapTransformReceiptEntity(Map<String, Object> map){
         LOGGER.info("[***] ReceiptTransformBean mapTransformReceiptEntity map - {} ", map);
