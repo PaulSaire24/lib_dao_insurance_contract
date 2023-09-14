@@ -1,7 +1,8 @@
 package com.bbva.pisd.lib.r226.transfor.bean;
 
-import com.bbva.pisd.dto.contract.constants.PISDColumn;
-import com.bbva.pisd.dto.contract.entity.ReceiptEntity;
+
+import com.bbva.pisd.dto.insurancedao.constants.PISDColumn;
+import com.bbva.pisd.dto.insurancedao.entities.ReceiptEntity;
 import com.bbva.pisd.lib.r226.transfor.list.ReceiptTransformList;
 import org.slf4j.LoggerFactory;
 

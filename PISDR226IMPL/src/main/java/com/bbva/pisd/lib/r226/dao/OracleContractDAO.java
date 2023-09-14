@@ -4,11 +4,11 @@ package com.bbva.pisd.lib.r226.dao;
 
 import com.bbva.pisd.dto.contract.constants.PISDConstant;
 import com.bbva.pisd.dto.contract.constants.PISDQueryName;
-import com.bbva.pisd.dto.contract.entity.ContractEntity;
-import com.bbva.pisd.dto.contract.entity.ReceiptEntity;
-import com.bbva.pisd.dto.contract.entity.ReceiptSearchCriteriaDTO;
-import com.bbva.pisd.dto.contract.operation.OperationConstants;
-import com.bbva.pisd.dto.contract.operation.OperationDTO;
+import com.bbva.pisd.dto.contract.search.ReceiptSearchCriteria;
+import com.bbva.pisd.dto.insurancedao.entities.ContractEntity;
+import com.bbva.pisd.dto.insurancedao.entities.ReceiptEntity;
+import com.bbva.pisd.dto.insurancedao.operation.Operation;
+import com.bbva.pisd.dto.insurancedao.operation.OperationConstants;
 import com.bbva.pisd.lib.r226.interfaces.ContractDAO;
 import com.bbva.pisd.lib.r226.pattern.factory.impl.CommonJdbcFactory;
 import com.bbva.pisd.lib.r226.pattern.factory.interfaces.BaseDAO;
@@ -22,8 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static com.bbva.pisd.dto.contract.constants.PISDColumn.Contract.*;
-import static com.bbva.pisd.dto.contract.constants.PISDColumn.Receipt.*;
+import static com.bbva.pisd.dto.insurancedao.constants.PISDColumn.Contract.*;
+import static com.bbva.pisd.dto.insurancedao.constants.PISDColumn.Receipt.*;
 
 public class OracleContractDAO implements ContractDAO {
     private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(ContractDAO.class);
@@ -47,16 +47,16 @@ public class OracleContractDAO implements ContractDAO {
     }
 
     @Override
-    public List<ReceiptEntity> findReceiptByChargeEntityExtern(ReceiptSearchCriteriaDTO receiptSearchCriteriaDTO) {
+    public List<ReceiptEntity> findReceiptByChargeEntityExtern(ReceiptSearchCriteria receiptSearchCriteria) {
 
-        LOGGER.info("[***] OracleContractDAO executeFindReceiptByChargeEntityExtern - {} ",receiptSearchCriteriaDTO);
+        LOGGER.info("[***] OracleContractDAO executeFindReceiptByChargeEntityExtern - {} ",receiptSearchCriteria);
         List<ReceiptEntity> listReceipts = null;
         List<Map<String, Object>> result = new ArrayList<>();
-        Map<String, Object> parameters = ReceiptTransformMap.ReceiptSearchCriteriaTransformMap(receiptSearchCriteriaDTO);
+        Map<String, Object> parameters = ReceiptTransformMap.ReceiptSearchCriteriaTransformMap(receiptSearchCriteria);
 
         if(this.baseDAO instanceof CommonJdbcFactory){
 
-            Long countResult = executeQueryFindReceiptsCount(receiptSearchCriteriaDTO);
+            Long countResult = executeQueryFindReceiptsCount(receiptSearchCriteria);
 
             if(FunctionUtils.parametersIsValid(parameters, FIELD_PAYMENT_MEANS_TYPE,FIELD_CONTRACT_STATUS_ID, FIELD_RECEIPT_STATUS_TYPE )){
 
@@ -86,12 +86,12 @@ public class OracleContractDAO implements ContractDAO {
         return null;
     }
 
-    public Long executeQueryFindReceiptsCount(ReceiptSearchCriteriaDTO receiptSearchCriteriaDTO){
-        LOGGER.info("[***] OracleContractDAO executeQueryFindReceiptsCount receiptSearchCriteriaDTO - {}", receiptSearchCriteriaDTO);
+    public Long executeQueryFindReceiptsCount(ReceiptSearchCriteria receiptSearchCriteria){
+        LOGGER.info("[***] OracleContractDAO executeQueryFindReceiptsCount receiptSearchCriteria - {}", receiptSearchCriteria);
         Long countResult = 0l;
-        Map<String, Object> parameters = ReceiptTransformMap.ReceiptSearchCriteriaTransformMap(receiptSearchCriteriaDTO);
+        Map<String, Object> parameters = ReceiptTransformMap.ReceiptSearchCriteriaTransformMap(receiptSearchCriteria);
 
-        OperationDTO operation = OperationDTO.Builder.an()
+        Operation operation = Operation.Builder.an()
                 .withQuery(PISDQueryName.SQL_SELECT_RECEIPTS_CHARGE_THIRD_COUNT.getValue())
                 .withTypeOperation(OperationConstants.Operation.SELECT).withIsForListQuery(false)
                 .withParams(parameters).build();

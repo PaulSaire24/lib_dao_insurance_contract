@@ -1,6 +1,6 @@
 package com.bbva.pisd.lib.r226.transfor.bean;
 
-import com.bbva.pisd.dto.contract.entity.ContractEntity;
+import com.bbva.pisd.dto.insurancedao.entities.ContractEntity;
 
 import java.util.Map;
 

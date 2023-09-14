@@ -1,8 +1,7 @@
 package com.bbva.pisd.lib.r226.transfor.list;
 
-import com.bbva.pisd.dto.contract.entity.ReceiptEntity;
+import com.bbva.pisd.dto.insurancedao.entities.ReceiptEntity;
 import com.bbva.pisd.lib.r226.transfor.bean.ReceiptTransformBean;
-import com.bbva.pisd.lib.r226.transfor.map.ReceiptTransformMap;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
 

@@ -1,9 +1,9 @@
 package com.bbva.pisd.lib.r226.impl;
 
 import com.bbva.elara.domain.jdbc.CommonJdbcTemplate;
-import com.bbva.pisd.dto.contract.entity.ContractEntity;
-import com.bbva.pisd.dto.contract.entity.ReceiptEntity;
-import com.bbva.pisd.dto.contract.entity.ReceiptSearchCriteriaDTO;
+import com.bbva.pisd.dto.contract.search.ReceiptSearchCriteria;
+import com.bbva.pisd.dto.insurancedao.entities.ContractEntity;
+import com.bbva.pisd.dto.insurancedao.entities.ReceiptEntity;
 import com.bbva.pisd.lib.r226.dao.OracleContractDAO;
 import com.bbva.pisd.lib.r226.interfaces.ContractDAO;
 import com.bbva.pisd.lib.r226.pattern.factory.DAOFactory;
@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * The PISDR226Impl class...
@@ -37,12 +36,12 @@ public class PISDR226Impl extends PISDR226Abstract {
 	}
 
 	@Override
-	public List<ReceiptEntity> executeFindReceiptByChargeEntityExtern(ReceiptSearchCriteriaDTO receiptSearchCriteriaDTO) {
-		LOGGER.info("[***] PISDR226Impl executeFindReceiptByChargeEntityExtern receiptSearchCriteriaDTO - {} ", receiptSearchCriteriaDTO);
+	public List<ReceiptEntity> executeFindReceiptByChargeEntityExtern(ReceiptSearchCriteria receiptSearchCriteria) {
+		LOGGER.info("[***] PISDR226Impl executeFindReceiptByChargeEntityExtern receiptSearchCriteria - {} ", receiptSearchCriteria);
 
 		BaseDAO daoFactory = DAOFactory.getDAOFactory(commonJdbcTemplate);
 		ContractDAO contractDAO = new OracleContractDAO(daoFactory);
-		List<ReceiptEntity> listReceipts = contractDAO.findReceiptByChargeEntityExtern(receiptSearchCriteriaDTO);
+		List<ReceiptEntity> listReceipts = contractDAO.findReceiptByChargeEntityExtern(receiptSearchCriteria);
 
 		LOGGER.info("[***] PISDR226Impl executeFindReceiptByChargeEntityExtern listReceipts count {}", listReceipts!=null?listReceipts.size():0);
 
