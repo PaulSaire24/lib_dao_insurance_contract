@@ -18,7 +18,9 @@ import com.bbva.pisd.lib.r226.transfor.list.ReceiptTransformList;
 import com.bbva.pisd.lib.r226.transfor.map.ContractTransformMap;
 import com.bbva.pisd.lib.r226.transfor.map.ReceiptTransformMap;
 import com.bbva.pisd.lib.r226.util.FunctionUtils;
+import com.bbva.pisd.lib.r226.util.JsonHelper;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.CollectionUtils;
 
 
 import java.util.ArrayList;
@@ -40,27 +42,23 @@ public class OracleContractDAO implements ContractDAO {
 
     @Override
     public ContractEntity findByCertifiedBank(CertifyBankCriteria certifyBankCriteria) {
-        LOGGER.info("[OracleContractDAO]  findContractByCertificateBank() :: start");
-
+        LOGGER.info("[***]  findByCertifiedBank :: Criteria {} ",JsonHelper.getInstance().toJsonString(certifyBankCriteria));
         ContractEntity contract = null;
-
         int size = 0;
-
         Map<String, Object> parameters = ContractTransformMap.certifyBankCriteriaTransformMap(certifyBankCriteria);
-
         Operation operation = Operation.Builder.an()
                 .withQuery(PISDQueryName.SQL_SELECT_CONTRACT.getValue())
                 .withTypeOperation(OperationConstants.Operation.SELECT).withIsForListQuery(true)
                 .withParams(parameters).build();
-
         List<Map<String, Object>> maps = (List<Map<String, Object>>)this.baseDAO.executeQuery(operation);
-
-        if(maps != null && !maps.isEmpty()){
+        if(!CollectionUtils.isEmpty(maps)){
             contract = ContractTransformBean.mapTransformContractEntity(maps.get(PISDConstant.Numeros.CERO));
+            LOGGER.info("[OracleContractDAO]  findContractByCertificateBank - Result [ {} ] ", JsonHelper.getInstance().toJsonString(contract));
             //contract.setReceipts(maps.stream().map(r-> ReceiptBean.buildReceiptFromDatabase(r)).collect(Collectors.toList()));
             size = maps.size();
         }
-        LOGGER.info("[OracleContractDAO]  findContractByCertificateBank() :: end");
+        LOGGER.info("[***]  findByCertifiedBank :: size {} - result {} ",size,contract);
+        return contract;
     }
 
     @Override

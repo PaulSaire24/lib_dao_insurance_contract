@@ -2,7 +2,6 @@ package com.bbva.pisd.lib.r226.transfor.bean;
 
 import com.bbva.pisd.dto.insurancedao.constants.PISDColumn;
 import com.bbva.pisd.dto.insurancedao.entities.ContractEntity;
-import com.bbva.pisd.lib.r226.impl.PISDR226Impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,9 +10,8 @@ import java.util.Map;
 public class ContractTransformBean {
     private static final Logger LOGGER = LoggerFactory.getLogger(ContractTransformBean.class);
     public static ContractEntity mapTransformContractEntity(Map<String,Object> map){
-        LOGGER.info("[***] ContractTransformBean mapTransformContractEntity map - {} ", map);
-
-        return new ContractEntity.ContractBuilder().an()
+        LOGGER.info("[***] ContractTransformBean mapTransformContractEntity paramters - {} ", map);
+        return ContractEntity.ContractBuilder.an()
                 .withInsuranceContractEntityId((String) map.get(PISDColumn.Contract.FIELD_INSURANCE_CONTRACT_ENTITY_ID))
                 .withInsuranceContractBranchId((String) map.get(PISDColumn.Contract.FIELD_INSURANCE_CONTRACT_BRANCH_ID))
                 .withInsrcContractIntAccountId((String) map.get(PISDColumn.Contract.FIELD_INSRC_CONTRACT_INT_ACCOUNT_ID))
@@ -90,4 +88,5 @@ public class ContractTransformBean {
                 .withPaymentMeansType((String) map.get(PISDColumn.Contract.FIELD_PAYMENT_MEANS_TYPE))
                 .build();
     }
+
 }

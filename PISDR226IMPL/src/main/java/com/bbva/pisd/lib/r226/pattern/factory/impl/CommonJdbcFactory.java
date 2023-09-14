@@ -10,6 +10,8 @@ import com.bbva.elara.library.AbstractLibrary;
 import com.bbva.pisd.dto.contract.constants.PISDErrors;
 import com.bbva.pisd.dto.contract.operation.OperationConstants;
 import com.bbva.pisd.dto.contract.operation.OperationDTO;
+import com.bbva.pisd.dto.insurancedao.operation.Operation;
+import com.bbva.pisd.dto.insurancedao.operation.OperationConstants;
 import com.bbva.pisd.lib.r226.pattern.factory.interfaces.BaseDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +31,7 @@ public class CommonJdbcFactory extends AbstractLibrary implements BaseDAO {
 
 
     @Override
-    public Object executeQuery(OperationDTO operation) {
+    public Object executeQuery(Operation operation) {
         Object response = null;
         LOGGER.info("[BaseDAO] - start executeQuery() with Param OperationDTO :: {}", operation);
         try {

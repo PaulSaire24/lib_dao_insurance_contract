@@ -14,7 +14,6 @@ public class ReceiptTransformBean {
 
     public static ReceiptEntity mapTransformReceiptEntity(Map<String, Object> map){
         LOGGER.info("[***] ReceiptTransformBean mapTransformReceiptEntity map - {} ", map);
-
         return ReceiptEntity.Builder.an()
                 .withContract(ContractTransformBean.mapTransformContractEntity(map))
                 .withInsuranceContractEntityId( (String)map.get(PISDColumn.Receipt.FIELD_INSURANCE_CONTRACT_ENTITY_ID))
