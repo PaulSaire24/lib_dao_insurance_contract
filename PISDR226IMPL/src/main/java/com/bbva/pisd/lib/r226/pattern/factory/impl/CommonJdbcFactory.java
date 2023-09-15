@@ -7,13 +7,17 @@ import com.bbva.apx.exception.db.NoResultException;
 import com.bbva.apx.exception.db.TimeoutException;
 import com.bbva.elara.domain.jdbc.CommonJdbcTemplate;
 import com.bbva.elara.library.AbstractLibrary;
+import com.bbva.pisd.dto.contract.constants.PISDConstant;
 import com.bbva.pisd.dto.contract.constants.PISDErrors;
+import com.bbva.pisd.dto.contract.constants.PISDQueryName;
 import com.bbva.pisd.dto.insurancedao.operation.Operation;
 import com.bbva.pisd.dto.insurancedao.operation.OperationConstants;
 import com.bbva.pisd.lib.r226.pattern.factory.interfaces.BaseDAO;
+import com.bbva.pisd.lib.r226.util.FunctionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -60,29 +64,46 @@ public class CommonJdbcFactory extends AbstractLibrary implements BaseDAO {
     }
 
     @Override
-    public List<Map<String, Object>> executeQueryList(String query, Map<String, Object> parameters) {
-        List<Map<String, Object>> response = null;
-
-        LOGGER.info("[BaseDAO] - start executeQueryList() with Param parameters :: {}", parameters);
-        try {
-            response = commonJdbcTemplate.queryForList(query, parameters);
-        } catch(NoResultException ex) {
-            LOGGER.info("executeQueryList() - not found data, query Empty Result to {}", query);
-            this.addAdvice(PISDErrors.QUERY_EMPTY_RESULT.getAdviceCode());
+    public List<Map<String, Object>> executeQueryListPagination(Map<String, Object> conditions,String query) {
+        List<Map<String, Object>> result = new ArrayList<>();
+        Long countResult = this.countRowsOfQuery(conditions,query);
+        if (countResult > PISDConstant.Pagination.PAGINATION) {
+            long countPaginates = countResult / PISDConstant.Pagination.PAGINATION;
+            long mod            = countResult % PISDConstant.Pagination.PAGINATION;
+            countPaginates = countPaginates + (mod > 0 ? 1 : 0);
+            for (int i = 0; i < countPaginates; i++) {
+                result.addAll(this.executeQueryPagination(query, conditions, i, PISDConstant.Pagination.PAGINATION));
+            }
+        } else {
+            Operation operation = Operation.Builder.an()
+                    .withQuery(PISDQueryName.SQL_SELECT_RECEIPTS_CHARGE_THIRD.getValue())
+                    .withTypeOperation(OperationConstants.Operation.SELECT).withIsForListQuery(true)
+                    .withParams(conditions).build();
+            result = (List<Map<String, Object>>) this.executeQuery(operation);
+            LOGGER.info("[***] OracleContractDAO executeFindReceiptByChargeEntityExtern Result - {}", result);
         }
-
-        LOGGER.info("[BaseDAO] - end executeQueryList()");
-        return response;
+        return result;
     }
 
-    @Override
-    public List<Map<String, Object>> executeQueryListPagination(String query, Map<String, Object> parameters, int paginationKey, int pageSize) {
+    private Long countRowsOfQuery(Map<String, Object> conditions, String queryInExecution) {
+        LOGGER.info("[***] OracleContractDAO executeQueryFindReceiptsCount [ conditions - {} ] - [ queryInExecution - {}]", conditions, queryInExecution);
+        Long countResult = 0l;
+        Operation operationInput = Operation.Builder.an()
+                .withQuery(FunctionUtils.generateQueryCounter(queryInExecution))
+                .withTypeOperation(OperationConstants.Operation.SELECT).withIsForListQuery(false)
+                .withParams(conditions).build();
+        Map<String, Object> map = (Map<String, Object>) this.executeQuery(operationInput);
+        countResult = Long.valueOf(map.get(PISDConstant.Pagination.COLUMN_COUNT).toString());
+        LOGGER.info("[***] OracleContractDAO executeQueryFindReceiptsCount countResult - {}", countResult);
+        return countResult;
+    }
+
+    private List<Map<String, Object>> executeQueryPagination(String query, Map<String, Object> parameters, int paginationKey, int pageSize) {
         List<Map<String, Object>> response = null;
         LOGGER.info("[PISDR201Impl] - executeQueryListPagination() :: Start - with Query : {}, (key, pageSize):{}", "", paginationKey+ ","+ pageSize);
         int firstRow = paginationKey * pageSize + 1;
         try {
             final String sql = this.parseQueryWithPagination(query, firstRow, pageSize);
-
             response = commonJdbcTemplate.queryForList(sql, parameters);
         } catch(NoResultException ex) {
             LOGGER.info("executeQueryListPagination() - not found data, query Empty Result to {}", query);
@@ -102,14 +123,12 @@ public class CommonJdbcFactory extends AbstractLibrary implements BaseDAO {
 
     private String insertPagination(String parseQuery, int firstRow, int pageSize) {
         StringBuilder builder = new StringBuilder();
-
         builder.append("SELECT * FROM ( SELECT a.*, ROWNUM rnum FROM ( ");
         builder.append(parseQuery);
         builder.append(" ) a WHERE ROWNUM <=");
         builder.append(firstRow + pageSize - 1);
         builder.append(") WHERE rnum >=");
         builder.append(firstRow);
-
         return builder.toString();
     }
 }

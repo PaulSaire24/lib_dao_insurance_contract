@@ -22,14 +22,10 @@ public class JdbcUtilsFactory implements BaseDAO {
     }
 
     @Override
-    public List<Map<String, Object>> executeQueryList(String query, Map<String, Object> parameters) {
+    public List<Map<String, Object>> executeQueryListPagination(Map<String, Object> conditions, String query) {
         return null;
     }
 
-    @Override
-    public List<Map<String, Object>> executeQueryListPagination(String query, Map<String, Object> parameters, int paginationKey, int pageSize) {
-        return null;
-    }
 
     /**
      * @param jdbcUtils the this.jdbcUtils to set

@@ -56,9 +56,8 @@ public class OracleContractDAO extends AbstractLibrary implements ContractDAO {
                         .withParams(parameters).build();
                 List<Map<String, Object>> maps = (List<Map<String, Object>>) this.baseDAO.executeQuery(operation);
                 if (!CollectionUtils.isEmpty(maps)) {
-                    contract = ContractTransformBean.mapTransformContractEntity(maps.get(PISDConstant.Numeros.CERO));
+                    contract = ContractTransformBean.mapTransformContractEntityAndReceiptEntity(maps.get(PISDConstant.Numeros.CERO),maps).build();
                     LOGGER.info("[OracleContractDAO]  findContractByCertificateBank - Contract  [ {} ] ", JsonHelper.getInstance().toJsonString(contract));
-//                contract.setReceipts(maps.stream().map(r-> ReceiptBean.buildReceiptFromDatabase(r)).collect(Collectors.toList()));
                     size = maps.size();
                 }
                 LOGGER.info("[***]  findByCertifiedBank :: size {} - result {} ", size, contract);
@@ -76,58 +75,21 @@ public class OracleContractDAO extends AbstractLibrary implements ContractDAO {
 
     @Override
     public List<ReceiptEntity> findReceiptByChargeEntityExtern(ReceiptSearchCriteria receiptSearchCriteria) {
-
         LOGGER.info("[***] OracleContractDAO executeFindReceiptByChargeEntityExtern - {} ", receiptSearchCriteria);
         List<ReceiptEntity> listReceipts = null;
         List<Map<String, Object>> result = new ArrayList<>();
         Map<String, Object> parameters = ReceiptTransformMap.ReceiptSearchCriteriaTransformMap(receiptSearchCriteria);
-
         if (this.baseDAO instanceof CommonJdbcFactory) {
             if (FunctionUtils.parametersIsValid(parameters, FIELD_PAYMENT_MEANS_TYPE, FIELD_CONTRACT_STATUS_ID, FIELD_RECEIPT_STATUS_TYPE)) {
-
-                Long countResult = executeQueryFindReceiptsCount(receiptSearchCriteria);
-
-                if (countResult > PISDConstant.Pagination.PAGINATION) {
-
-                    long countPaginates = countResult / PISDConstant.Pagination.PAGINATION;
-                    long mod            = countResult % PISDConstant.Pagination.PAGINATION;
-                    countPaginates = countPaginates + (mod > 0 ? 1 : 0);
-
-                    for (int i = 0; i < countPaginates; i++) {
-                        result.addAll(this.baseDAO.executeQueryListPagination(PISDQueryName.SQL_SELECT_RECEIPTS_CHARGE_THIRD.getValue(), parameters, i, PISDConstant.Pagination.PAGINATION));
-                    }
-
-                } else {
-                    result = this.baseDAO.executeQueryList(PISDQueryName.SQL_SELECT_RECEIPTS_CHARGE_THIRD.getValue(), parameters);
-                    LOGGER.info("[***] OracleContractDAO executeFindReceiptByChargeEntityExtern Result - {}", result);
-                }
+                result = this.baseDAO.executeQueryListPagination(parameters,PISDQueryName.SQL_SELECT_RECEIPTS_CHARGE_THIRD.getValue());
                 listReceipts = ReceiptTransformList.mapListTransformListReceiptEntity(result);
                 LOGGER.info("[***] OracleContractDAO executeFindReceiptByChargeEntityExtern ResultMapper - {}", listReceipts);
                 return listReceipts;
             }
         }
-
         return null;
     }
 
-    public Long executeQueryFindReceiptsCount(ReceiptSearchCriteria receiptSearchCriteria) {
-        LOGGER.info("[***] OracleContractDAO executeQueryFindReceiptsCount receiptSearchCriteria - {}", receiptSearchCriteria);
-        Long countResult = 0l;
-        Map<String, Object> parameters = ReceiptTransformMap.ReceiptSearchCriteriaTransformMap(receiptSearchCriteria);
 
-        Operation operation = Operation.Builder.an()
-                .withQuery(PISDQueryName.SQL_SELECT_RECEIPTS_CHARGE_THIRD_COUNT.getValue())
-                .withTypeOperation(OperationConstants.Operation.SELECT).withIsForListQuery(false)
-                .withParams(parameters).build();
-
-        Map<String, Object> map = (Map<String, Object>) this.baseDAO.executeQuery(operation);
-
-        countResult = Long.valueOf(map.get(PISDConstant.Pagination.COLUMN_COUNT).toString());
-
-        LOGGER.info("[***] OracleContractDAO executeQueryFindReceiptsCount countResult - {}", countResult);
-
-        return countResult;
-
-    }
 
 }

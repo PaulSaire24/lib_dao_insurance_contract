@@ -6,6 +6,7 @@ import com.bbva.pisd.dto.insurancedao.entities.ContractEntity;
 import com.bbva.pisd.dto.insurancedao.entities.ReceiptEntity;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ContractDAO {
 
@@ -14,6 +15,5 @@ public interface ContractDAO {
     boolean updateReceiptsPayment(List<ReceiptEntity> receipts);
 
     List<ReceiptEntity> findReceiptByChargeEntityExtern(ReceiptSearchCriteria receiptSearchCriteriaDTO);
-
 
 }

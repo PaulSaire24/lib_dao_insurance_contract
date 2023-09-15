@@ -9,7 +9,6 @@ import java.util.Map;
 public interface BaseDAO {
 
     Object executeQuery(Operation operation);
-    List<Map<String, Object>> executeQueryList(String query, Map<String, Object> parameters);
-    List<Map<String, Object>> executeQueryListPagination(String query, Map<String, Object> parameters, int paginationKey, int pageSize);
+    List<Map<String, Object>> executeQueryListPagination(Map<String, Object> conditions,String query);
 
 }

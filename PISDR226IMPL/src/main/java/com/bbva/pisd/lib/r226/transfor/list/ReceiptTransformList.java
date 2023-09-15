@@ -15,12 +15,11 @@ public class ReceiptTransformList {
 
     public static List<ReceiptEntity> mapListTransformListReceiptEntity(List<Map<String, Object>> listReceiptsMap){
         LOGGER.info("[***] ReceiptTransformList mapListTransformListReceiptEntity listReceiptsMap - {} ", listReceiptsMap);
-
         if(CollectionUtils.isEmpty(listReceiptsMap)){
             return new ArrayList<>();
         }
-
         return listReceiptsMap.stream().map(ReceiptTransformBean::mapTransformReceiptEntity).collect(Collectors.toList());
     }
+
 
 }
