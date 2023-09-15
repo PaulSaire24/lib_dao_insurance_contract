@@ -1,8 +1,6 @@
 package com.bbva.pisd.lib.r226.dao;
 
 
-import com.bbva.apx.exception.business.BusinessException;
-import com.bbva.elara.library.AbstractLibrary;
 import com.bbva.pisd.dto.contract.constants.PISDConstant;
 import com.bbva.pisd.dto.contract.constants.PISDQueryName;
 import com.bbva.pisd.dto.contract.search.CertifyBankCriteria;
@@ -32,7 +30,7 @@ import static com.bbva.pisd.dto.insurancedao.constants.PISDColumn.Contract.FIELD
 import static com.bbva.pisd.dto.insurancedao.constants.PISDColumn.Contract.FIELD_PAYMENT_MEANS_TYPE;
 import static com.bbva.pisd.dto.insurancedao.constants.PISDColumn.Receipt.FIELD_RECEIPT_STATUS_TYPE;
 
-public class OracleContractDAO extends AbstractLibrary implements ContractDAO {
+public class OracleContractDAO implements ContractDAO {
     private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(ContractDAO.class);
 
     private BaseDAO baseDAO;

@@ -9,7 +9,6 @@ import com.bbva.elara.domain.jdbc.CommonJdbcTemplate;
 import com.bbva.elara.library.AbstractLibrary;
 import com.bbva.pisd.dto.contract.constants.PISDConstant;
 import com.bbva.pisd.dto.contract.constants.PISDErrors;
-import com.bbva.pisd.dto.contract.constants.PISDQueryName;
 import com.bbva.pisd.dto.insurancedao.operation.Operation;
 import com.bbva.pisd.dto.insurancedao.operation.OperationConstants;
 import com.bbva.pisd.lib.r226.pattern.factory.interfaces.BaseDAO;
@@ -21,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class CommonJdbcFactory extends AbstractLibrary implements BaseDAO {
+public class CommonJdbcFactory  implements BaseDAO {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JdbcUtilsFactory.class);
 
@@ -76,7 +75,7 @@ public class CommonJdbcFactory extends AbstractLibrary implements BaseDAO {
             }
         } else {
             Operation operation = Operation.Builder.an()
-                    .withQuery(PISDQueryName.SQL_SELECT_RECEIPTS_CHARGE_THIRD.getValue())
+                    .withQuery(query)
                     .withTypeOperation(OperationConstants.Operation.SELECT).withIsForListQuery(true)
                     .withParams(conditions).build();
             result = (List<Map<String, Object>>) this.executeQuery(operation);
@@ -107,7 +106,7 @@ public class CommonJdbcFactory extends AbstractLibrary implements BaseDAO {
             response = commonJdbcTemplate.queryForList(sql, parameters);
         } catch(NoResultException ex) {
             LOGGER.info("executeQueryListPagination() - not found data, query Empty Result to {}", query);
-            this.addAdvice(PISDErrors.QUERY_EMPTY_RESULT.getAdviceCode());
+            throw new BusinessException(PISDErrors.QUERY_EMPTY_RESULT.getAdviceCode(), false, ex.getMessage());
         }
         LOGGER.info("executeQueryListPagination() :: End");
         return response;
