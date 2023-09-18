@@ -106,7 +106,7 @@ public class PISDR226Test {
 		result.add(receipt);
 
 		HashMap<String,Object> countRow = new HashMap<>();
-		countRow.put(PISDConstant.Pagination.COLUMN_COUNT,5001);
+		countRow.put(PISDConstant.Pagination.COLUMN_COUNT, 5001);
 
 		ReceiptSearchCriteria receiptSearchCriteria = this.getMockReceiptSearchCriteria();
 
