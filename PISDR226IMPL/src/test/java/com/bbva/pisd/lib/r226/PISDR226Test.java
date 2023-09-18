@@ -7,7 +7,9 @@ import com.bbva.elara.domain.transaction.ThreadContext;
 import javax.annotation.Resource;
 
 import com.bbva.pisd.dto.contract.constants.PISDConstant;
+import com.bbva.pisd.dto.contract.constants.PISDStatus;
 import com.bbva.pisd.dto.contract.search.ReceiptSearchCriteria;
+import com.bbva.pisd.dto.insurancedao.constants.PISDColumn;
 import com.bbva.pisd.dto.insurancedao.entities.ReceiptEntity;
 import com.bbva.pisd.lib.r226.pattern.factory.impl.CommonJdbcFactory;
 import org.junit.Assert;
@@ -72,19 +74,15 @@ public class PISDR226Test {
 		 * */
 		CommonJdbcTemplate commonJdbcTemplate = Mockito.mock(CommonJdbcTemplate.class);
 		this.pisdR226.executeSetCommonJdbcTemplate(commonJdbcTemplate);
+
 		ArrayList<Object> result = new ArrayList<>();
 		HashMap<String,Object> countRow = new HashMap<>();
 		countRow.put(PISDConstant.Pagination.COLUMN_COUNT,0);
+
  		Mockito.when(commonJdbcTemplate.queryForList(Mockito.anyString(),Mockito.anyMap())).thenReturn(result);
 		Mockito.when(commonJdbcTemplate.queryForMap(Mockito.anyString(),Mockito.anyMap())).thenReturn(countRow);
-		//Mockito.when(commonJdbcFactory..thenReturn(result);
-		ReceiptSearchCriteria receiptSearchCriteria = new ReceiptSearchCriteria();
-		receiptSearchCriteria.setContractStatusId("FOR");
-		receiptSearchCriteria.setContractPaymentMeansType("EXT");
-		ArrayList<String> receiptStatus = new ArrayList<>();
-		receiptStatus.add("FAC");
-		receiptStatus.add("IMP");
-		receiptSearchCriteria.setReceiptStatusSearch(receiptStatus);
+
+		ReceiptSearchCriteria receiptSearchCriteria = this.getMockReceiptSearchCriteria();
 
 		/**
 		 * Ejecución
@@ -99,39 +97,21 @@ public class PISDR226Test {
 		/**
 		 *  Context
 		 * */
-		Map<String, Object> receipt = new HashMap<>();
-		receipt.put("INSURANCE_CONTRACT_ENTITY_ID","0011");
-		receipt.put("INSURANCE_CONTRACT_BRANCH_ID","0172");
-		receipt.put("CONTRACT_FIRST_VERFN_DIGIT_ID","1");
-		receipt.put("CONTRACT_SECOND_VERFN_DIGIT_ID","2");
-		receipt.put("INSRC_CONTRACT_INT_ACCOUNT_ID","4000018548");
-		receipt.put("POLICY_ID","1234567");
-		receipt.put("CUSTOMER_ID","12345678");
-		receipt.put("INSURANCE_MODALITY_TYPE","1");
-		receipt.put("CONTRACT_STATUS_ID","FOR");
-		receipt.put("POLICY_RECEIPT_ID", 1);
-		receipt.put("INSURANCE_COMPANY_RECEIPT_ID","123456");
-		receipt.put("PREMIUM_PAYMENT_RECEIPT_AMOUNT", 123.0);
-		receipt.put("CURRENCY_ID","USD");
-		receipt.put("RECEIPT_STATUS_TYPE","FAC");
-
-		List<Map<String, Object>> result = new ArrayList<>();
-		result.add(receipt);
 
 		CommonJdbcTemplate commonJdbcTemplate = Mockito.mock(CommonJdbcTemplate.class);
 		this.pisdR226.executeSetCommonJdbcTemplate(commonJdbcTemplate);
+
+		Map<String, Object> receipt = this.getMockMapQueryFindReceiptsSuccessFull();
+		List<Map<String, Object>> result = new ArrayList<>();
+		result.add(receipt);
+
 		HashMap<String,Object> countRow = new HashMap<>();
 		countRow.put(PISDConstant.Pagination.COLUMN_COUNT,5001);
+
+		ReceiptSearchCriteria receiptSearchCriteria = this.getMockReceiptSearchCriteria();
+
 		Mockito.when(commonJdbcTemplate.queryForList(Mockito.anyString(),Mockito.anyMap())).thenReturn(result);
 		Mockito.when(commonJdbcTemplate.queryForMap(Mockito.anyString(),Mockito.anyMap())).thenReturn(countRow);
-		//Mockito.when(commonJdbcFactory..thenReturn(result);
-		ReceiptSearchCriteria receiptSearchCriteria = new ReceiptSearchCriteria();
-		receiptSearchCriteria.setContractStatusId("FOR");
-		receiptSearchCriteria.setContractPaymentMeansType("EXT");
-		ArrayList<String> receiptStatus = new ArrayList<>();
-		receiptStatus.add("FAC");
-		receiptStatus.add("IMP");
-		receiptSearchCriteria.setReceiptStatusSearch(receiptStatus);
 
 		/**
 		 * Ejecución
@@ -144,6 +124,41 @@ public class PISDR226Test {
 	@Test
 	public void executeTest(){
 		Assert.assertEquals(0, context.getAdviceList().size());
+	}
+
+	private Map<String,Object> getMockMapQueryFindReceiptsSuccessFull(){
+		Map<String,Object> mapResponse = new HashMap<>();
+
+		mapResponse.put(PISDColumn.Receipt.FIELD_INSURANCE_CONTRACT_ENTITY_ID, "0011");
+		mapResponse.put(PISDColumn.Receipt.FIELD_INSURANCE_CONTRACT_BRANCH_ID, "0172");
+		mapResponse.put(PISDColumn.Contract.FIELD_CONTRACT_FIRST_VERFN_DIGIT_ID, "1");
+		mapResponse.put(PISDColumn.Contract.FIELD_CONTRACT_SECOND_VERFN_DIGIT_ID, "2");
+		mapResponse.put(PISDColumn.Receipt.FIELD_INSRC_CONTRACT_INT_ACCOUNT_ID, "4000018548");
+		mapResponse.put(PISDColumn.Contract.FIELD_POLICY_ID, "1234567");
+		mapResponse.put(PISDColumn.Contract.FIELD_CUSTOMER_ID, "12345678");
+		mapResponse.put(PISDColumn.Contract.FIELD_INSURANCE_MODALITY_TYPE, "1");
+		mapResponse.put(PISDColumn.Contract.FIELD_CONTRACT_STATUS_ID, "FOR");
+		mapResponse.put(PISDColumn.Receipt.FIELD_POLICY_RECEIPT_ID, 1);
+		mapResponse.put(PISDColumn.Receipt.FIELD_INSURANCE_COMPANY_RECEIPT_ID, "123456");
+		mapResponse.put(PISDColumn.Receipt.FIELD_PREMIUM_PAYMENT_RECEIPT_AMOUNT, 123.0);
+		mapResponse.put(PISDColumn.Receipt.FIELD_CURRENCY_ID, "USD");
+		mapResponse.put(PISDColumn.Receipt.FIELD_RECEIPT_STATUS_TYPE, "FAC");
+
+		return mapResponse;
+	}
+
+	private ReceiptSearchCriteria getMockReceiptSearchCriteria(){
+		ReceiptSearchCriteria receiptSearchCriteria = new ReceiptSearchCriteria();
+
+		ArrayList<String> receiptStatus = new ArrayList<>();
+		receiptStatus.add(PISDStatus.RECEIPT_STATUS_TYPE.FAC.getValue());
+		receiptStatus.add(PISDStatus.RECEIPT_STATUS_TYPE.IMP.getValue());
+		receiptSearchCriteria.setContractStatusId(PISDStatus.CONTRACT_STATUS_ID.FOR.getValue());
+		receiptSearchCriteria.setContractPaymentMeansType(PISDStatus.CONTRACT_PAYMENT_MEANS_TYPE.EXT.getValue());
+		receiptSearchCriteria.setReceiptStatusSearch(receiptStatus);
+
+		return receiptSearchCriteria;
+
 	}
 	
 }
