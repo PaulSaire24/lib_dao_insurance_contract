@@ -14,6 +14,7 @@ import com.bbva.pisd.lib.r226.interfaces.ContractDAO;
 import com.bbva.pisd.lib.r226.pattern.factory.impl.CommonJdbcFactory;
 import com.bbva.pisd.lib.r226.pattern.factory.interfaces.BaseDAO;
 import com.bbva.pisd.lib.r226.transfor.bean.ContractTransformBean;
+import com.bbva.pisd.lib.r226.transfor.bean.ReceiptTransformBean;
 import com.bbva.pisd.lib.r226.transfor.list.ReceiptTransformList;
 import com.bbva.pisd.lib.r226.transfor.map.ContractTransformMap;
 import com.bbva.pisd.lib.r226.transfor.map.ReceiptTransformMap;
@@ -23,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -68,7 +70,45 @@ public class OracleContractDAO implements ContractDAO {
 
     @Override
     public boolean updateReceiptsPayment(List<ReceiptEntity> receipts) {
-        return false;
+        LOGGER.info("[***] OracleContractDAO updateReceiptsPayment - {} ", receipts);
+
+        List<Map<String, Object>> listReceipts = new ArrayList<>();
+
+        for (ReceiptEntity receipt: receipts) {
+            listReceipts.add(ReceiptTransformBean.entityTransformReceiptMap(receipt));
+        }
+        int [] result;
+        Map<String, Object> [] params = FunctionUtils.convertAsPrimitiveArray(listReceipts);
+        Operation operation = Operation.Builder.an()
+                .withQuery(PISDQueryName.SQL_UPDATE_RECEIPTS.getValue())
+                .withTypeOperation(OperationConstants.Operation.BATCH)
+                .withBatchValues(params).build();
+
+        result = (int []) this.baseDAO.executeQuery(operation);
+
+        return Arrays.stream(result).sum()==listReceipts.size();
+    }
+
+    @Override
+    public boolean updateContractPayment(List<ContractEntity> contractEntity) {
+        LOGGER.info("[***] OracleContractDAO updateContractPayment - {} ", contractEntity);
+
+        List<Map<String, Object>> listContract = new ArrayList<>();
+
+        for (ContractEntity contract: contractEntity) {
+            listContract.add(ContractTransformMap.objTransformContractMap(contract));
+        }
+        int [] result;
+        Map<String, Object> [] params = FunctionUtils.convertAsPrimitiveArray(listContract);
+        Operation operation = Operation.Builder.an()
+                .withQuery(PISDQueryName.SQL_UPDATE_CONTRACT.getValue())
+                .withTypeOperation(OperationConstants.Operation.BATCH)
+                .withBatchValues(params).build();
+
+        result = (int []) this.baseDAO.executeQuery(operation);
+        LOGGER.info("[***] OracleContractDAO updateContractPayment - result {} ", result);
+
+        return Arrays.stream(result).sum()==listContract.size();
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.bbva.pisd.dto.insurancedao.entities.ReceiptEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class ReceiptTransformBean {
@@ -24,6 +25,20 @@ public class ReceiptTransformBean {
                 .withCurrencyId( (String)map.get(PISDColumn.Receipt.FIELD_CURRENCY_ID))
                 .withReceiptStatusType( (String)map.get(PISDColumn.Receipt.FIELD_RECEIPT_STATUS_TYPE))
                 .build();
+    }
+
+    public static Map<String, Object> entityTransformReceiptMap(ReceiptEntity receipt){
+        LOGGER.info("[***] ReceiptTransformBean objTransformReceiptEntity receipt - {} ", receipt);
+        Map<String, Object> mapReceipt = new HashMap<>();
+        mapReceipt.put(PISDColumn.Receipt.FIELD_INSURANCE_CONTRACT_ENTITY_ID,receipt.getInsuranceContractEntityId());
+        mapReceipt.put(PISDColumn.Receipt.FIELD_INSURANCE_CONTRACT_BRANCH_ID,receipt.getInsuranceContractBranchId());
+        mapReceipt.put(PISDColumn.Receipt.FIELD_INSRC_CONTRACT_INT_ACCOUNT_ID,receipt.getInsrcContractIntAccountId());
+        mapReceipt.put(PISDColumn.Receipt.FIELD_POLICY_RECEIPT_ID,receipt.getPolicyReceiptId());
+        mapReceipt.put(PISDColumn.Receipt.FIELD_INSURANCE_COMPANY_RECEIPT_ID,receipt.getInsuranceCompanyReceiptId());
+        mapReceipt.put(PISDColumn.Receipt.FIELD_PREMIUM_PAYMENT_RECEIPT_AMOUNT,receipt.getPremiumPaymentReceiptAmount());
+        mapReceipt.put(PISDColumn.Receipt.FIELD_CURRENCY_ID,receipt.getCurrencyId());
+        mapReceipt.put(PISDColumn.Receipt.FIELD_RECEIPT_STATUS_TYPE,receipt.getReceiptStatusType());
+        return mapReceipt;
     }
 
 }

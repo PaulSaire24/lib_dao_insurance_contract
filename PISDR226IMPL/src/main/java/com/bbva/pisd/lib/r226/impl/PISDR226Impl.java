@@ -26,7 +26,23 @@ public class PISDR226Impl extends PISDR226Abstract {
 
 	@Override
 	public boolean executeUpdateReceiptsPayment(List<ReceiptEntity> receipts) {
-		return false;
+
+		LOGGER.info("[***] PISDR226Impl executeUpdateReceiptsPayment receipts - {} ", receipts);
+		BaseDAO daoFactory = DAOFactory.getDAOFactory(commonJdbcTemplate);
+		ContractDAO contractDAO = new OracleContractDAO(daoFactory);
+		boolean result = contractDAO.updateReceiptsPayment(receipts);
+		LOGGER.info("[***] PISDR226Impl executeUpdateReceiptsPayment result - {} ", result);
+		return result;
+	}
+
+	@Override
+	public boolean executeUpdateContractsPayment(List<ContractEntity> contractEntities) {
+		LOGGER.info("[***] PISDR226Impl executeUpdateContractsPayment contractEntity - {} ", contractEntities);
+		BaseDAO daoFactory = DAOFactory.getDAOFactory(commonJdbcTemplate);
+		ContractDAO contractDAO = new OracleContractDAO(daoFactory);
+		boolean result = contractDAO.updateContractPayment(contractEntities);
+		LOGGER.info("[***] PISDR226Impl executeUpdateContractsPayment result - {} ", result);
+		return result;
 	}
 
 	@Override

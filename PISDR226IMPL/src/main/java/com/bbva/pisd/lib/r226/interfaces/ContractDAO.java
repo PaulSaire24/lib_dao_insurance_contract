@@ -14,6 +14,7 @@ public interface ContractDAO {
     ContractEntity findByCertifiedBank(CertifyBankCriteria certifyBankCriteria);
 
     boolean updateReceiptsPayment(List<ReceiptEntity> receipts);
+    boolean updateContractPayment(List<ContractEntity> contractEntity);
 
     List<ReceiptEntity> findReceiptByChargeEntityExtern(ReceiptSearchCriteria receiptSearchCriteriaDTO);
 

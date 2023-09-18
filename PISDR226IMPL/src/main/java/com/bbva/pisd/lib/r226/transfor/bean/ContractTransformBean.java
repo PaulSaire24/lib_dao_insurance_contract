@@ -96,5 +96,4 @@ public class ContractTransformBean {
                 .withOpenpayCommerceTransDate((String) map.get(PISDColumn.Contract.FIELD_OPENPAY_COMMERCE_TRANS_DATE))
                 .withPaymentMeansType((String) map.get(PISDColumn.Contract.FIELD_PAYMENT_MEANS_TYPE));
     }
-
 }

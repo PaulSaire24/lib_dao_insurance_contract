@@ -3,9 +3,7 @@ package com.bbva.pisd.lib.r226.util;
 import com.bbva.pisd.dto.contract.constants.PISDConstant;
 import com.bbva.pisd.dto.contract.constants.PISDQueryName;
 
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class FunctionUtils {
     /**
@@ -15,6 +13,14 @@ public class FunctionUtils {
      * */
     public static boolean parametersIsValid(Map<String, Object> arguments, String... keys) {
         return Arrays.stream(keys).allMatch(key -> Objects.nonNull(arguments.get(key)));
+    }
+
+    public static Map<String, Object>[] convertAsPrimitiveArray(List<Map<String, Object>> list){
+        Map<String, Object> [] array = new HashMap[list.size()];
+        for(int i = 0; i < list.size(); i++){
+            array[i] = list.get(i);
+        }
+        return array;
     }
 
     public static String generateQueryCounter(String query){
