@@ -9,6 +9,7 @@ import com.bbva.pisd.lib.r226.dao.OracleContractDAO;
 import com.bbva.pisd.lib.r226.interfaces.ContractDAO;
 import com.bbva.pisd.lib.r226.pattern.factory.DAOFactory;
 import com.bbva.pisd.lib.r226.pattern.factory.interfaces.BaseDAO;
+import com.bbva.pisd.lib.r226.util.JsonHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +31,7 @@ public class PISDR226Impl extends PISDR226Abstract {
 
 	@Override
 	public List<ReceiptEntity> executeFindReceiptByChargeEntityExtern(ReceiptSearchCriteria receiptSearchCriteria) {
-		LOGGER.info("[***] PISDR226Impl executeFindReceiptByChargeEntityExtern receiptSearchCriteria - {} ", receiptSearchCriteria);
+		LOGGER.info("[***] PISDR226Impl executeFindReceiptByChargeEntityExtern receiptSearchCriteria - {} ", JsonHelper.getInstance().toJsonString(receiptSearchCriteria));
 
 		BaseDAO daoFactory = DAOFactory.getDAOFactory(commonJdbcTemplate);
 		ContractDAO contractDAO = new OracleContractDAO(daoFactory);

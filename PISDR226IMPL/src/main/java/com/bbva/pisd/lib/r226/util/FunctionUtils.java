@@ -21,13 +21,4 @@ public class FunctionUtils {
         int positionFrom = query.indexOf(PISDConstant.Pagination.FROM);
         return PISDQueryName.SQL_COUNT_ROWS.getValue().concat(query.substring(positionFrom));
     }
-
-    public static String getDateTimeToString(Map<String, Object> data, String key) {
-        String strDate = null;
-        if (data.get(key) != null) {
-            strDate = data.get(key).toString().trim();
-
-        }
-        return strDate;
-    }
 }

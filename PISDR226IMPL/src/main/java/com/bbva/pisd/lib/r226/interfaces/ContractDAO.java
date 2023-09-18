@@ -10,6 +10,7 @@ import java.util.Map;
 
 public interface ContractDAO {
 
+
     ContractEntity findByCertifiedBank(CertifyBankCriteria certifyBankCriteria);
 
     boolean updateReceiptsPayment(List<ReceiptEntity> receipts);
