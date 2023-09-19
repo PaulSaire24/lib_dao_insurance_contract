@@ -8,9 +8,12 @@ import javax.annotation.Resource;
 
 import com.bbva.pisd.dto.contract.constants.PISDConstant;
 import com.bbva.pisd.dto.contract.constants.PISDStatus;
+import com.bbva.pisd.dto.contract.search.CertifyBankCriteria;
 import com.bbva.pisd.dto.contract.search.ReceiptSearchCriteria;
 import com.bbva.pisd.dto.insurancedao.constants.PISDColumn;
+import com.bbva.pisd.dto.insurancedao.entities.ContractEntity;
 import com.bbva.pisd.dto.insurancedao.entities.ReceiptEntity;
+import com.bbva.pisd.lib.r226.mock.Mock;
 import com.bbva.pisd.lib.r226.pattern.factory.impl.CommonJdbcFactory;
 import org.junit.Assert;
 import org.junit.Before;
@@ -66,7 +69,60 @@ public class PISDR226Test {
 		}
 		return result;
 	}
+	@Test
+	public void executeFindByCertifiedBankTest(){
 
+		CommonJdbcTemplate commonJdbcTemplate = Mockito.mock(CommonJdbcTemplate.class);
+		this.pisdR226.executeSetCommonJdbcTemplate(commonJdbcTemplate);
+		Map<String, Object>contratos = new HashMap<>();
+		contratos.put("00114444111010101010",Mock.mockContract2());
+		List<Map<String, Object>> result = new ArrayList<>();
+		result.add(contratos);
+
+
+		Mockito.when(commonJdbcTemplate.queryForList(Mockito.anyString(),Mockito.anyMap())).thenReturn(result);
+		CertifyBankCriteria certifyBankCriteria = Mock.mockCertifyCriteria();
+		ContractEntity contractEntity =  this.pisdR226.executeFindByCertifiedBank(certifyBankCriteria);
+		Assert.assertNotNull(contractEntity);
+
+
+	}
+	@Test
+	public void executeUpdateReceiptsPaymentTest(){
+		/**
+		 *  Context
+		 * */
+		CommonJdbcTemplate commonJdbcTemplate = Mockito.mock(CommonJdbcTemplate.class);
+		this.pisdR226.executeSetCommonJdbcTemplate(commonJdbcTemplate);
+		int [] result = {1};
+		//Mockito.when(commonJdbcTemplate.queryForMap(Mockito.anyString(), Mockito.anyMap())).thenReturn(map);
+		Map<String, Object> [] array = new HashMap[5];
+		Mockito.when(commonJdbcTemplate.batchUpdate(Mockito.anyString(), Mockito.any(array.getClass()))).thenReturn(result);
+
+		List<ReceiptEntity> receiptEntities = new ArrayList<>();
+		receiptEntities.add(Mock.mockReceipts());
+		//contractEntities.add(Mock.mockContract2());
+		boolean result2 = this.pisdR226.executeUpdateReceiptsPayment(receiptEntities);
+		Assert.assertTrue(result2);
+	}
+	@Test
+	public void executeUpdateContractsPaymentTest(){
+		/**
+		 *  Context
+		 * */
+		CommonJdbcTemplate commonJdbcTemplate = Mockito.mock(CommonJdbcTemplate.class);
+		this.pisdR226.executeSetCommonJdbcTemplate(commonJdbcTemplate);
+		int [] result = {1};
+		//Mockito.when(commonJdbcTemplate.queryForMap(Mockito.anyString(), Mockito.anyMap())).thenReturn(map);
+		Map<String, Object> [] array = new HashMap[5];
+		Mockito.when(commonJdbcTemplate.batchUpdate(Mockito.anyString(), Mockito.any(array.getClass()))).thenReturn(result);
+
+		List<ContractEntity> contractEntities = new ArrayList<>();
+		contractEntities.add(Mock.mockContract());
+		//contractEntities.add(Mock.mockContract2());
+		boolean result2 = this.pisdR226.executeUpdateContractsPayment(contractEntities);
+		Assert.assertTrue(result2);
+	}
 	@Test
 	public void executeFindEmptyReceiptByChargeEntityExternTest(){
 		/**
