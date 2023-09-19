@@ -6,7 +6,6 @@ import com.bbva.apx.exception.db.IncorrectResultSizeException;
 import com.bbva.apx.exception.db.NoResultException;
 import com.bbva.apx.exception.db.TimeoutException;
 import com.bbva.elara.domain.jdbc.CommonJdbcTemplate;
-import com.bbva.elara.library.AbstractLibrary;
 import com.bbva.pisd.dto.contract.constants.PISDConstant;
 import com.bbva.pisd.dto.contract.constants.PISDErrors;
 import com.bbva.pisd.dto.insurancedao.operation.Operation;
