@@ -34,5 +34,10 @@ public class FunctionUtils {
         return Integer.parseInt(value);
     }
 
+    public static Double mapConvertToDouble(String key,Map<String,Object> map){
+        String value = Objects.toString(map.get(key), "0");
+        return Double.parseDouble(value);
+    }
+
 
 }

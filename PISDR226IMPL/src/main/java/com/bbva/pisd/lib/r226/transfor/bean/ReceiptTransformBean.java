@@ -23,9 +23,9 @@ public class ReceiptTransformBean {
                 .withInsuranceContractEntityId( (String)map.get(PISDColumn.Receipt.FIELD_INSURANCE_CONTRACT_ENTITY_ID))
                 .withInsuranceContractBranchId( (String)map.get(PISDColumn.Receipt.FIELD_INSURANCE_CONTRACT_BRANCH_ID))
                 .withInsrcContractIntAccountId( (String)map.get(PISDColumn.Receipt.FIELD_INSRC_CONTRACT_INT_ACCOUNT_ID))
-                .withPolicyReceiptId(FunctionUtils.mapConvertToInteger(PISDColumn.Receipt.FIELD_POLICY_RECEIPT_ID, map))  ////
+                .withPolicyReceiptId(FunctionUtils.mapConvertToInteger(PISDColumn.Receipt.FIELD_POLICY_RECEIPT_ID, map))
                 .withInsuranceCompanyReceiptId( (String)map.get(PISDColumn.Receipt.FIELD_INSURANCE_COMPANY_RECEIPT_ID))
-                .withPremiumPaymentReceiptAmount( (Double)map.get(PISDColumn.Receipt.FIELD_PREMIUM_PAYMENT_RECEIPT_AMOUNT))
+                .withPremiumPaymentReceiptAmount( FunctionUtils.mapConvertToDouble(PISDColumn.Receipt.FIELD_PREMIUM_PAYMENT_RECEIPT_AMOUNT, map))
                 .withCurrencyId( (String)map.get(PISDColumn.Receipt.FIELD_CURRENCY_ID))
                 .withReceiptStatusType( (String)map.get(PISDColumn.Receipt.FIELD_RECEIPT_STATUS_TYPE))
                 .build();
