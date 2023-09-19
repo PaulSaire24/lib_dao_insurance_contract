@@ -20,7 +20,7 @@ public class ContractTransformBean {
 
 
     public static ContractEntity.ContractBuilder mapTransformContractEntity(Map<String,Object> map){
-        LOGGER.info("[***] ContractTransformBean mapTransformContractEntity paramters - {} ", ma    p);
+        LOGGER.info("[***] ContractTransformBean mapTransformContractEntity paramters - {} ", map);
         return ContractEntity.ContractBuilder.an()
                 .withInsuranceContractEntityId(Objects.toString(map.get(PISDColumn.Contract.FIELD_INSURANCE_CONTRACT_ENTITY_ID),""))
                 .withInsuranceContractBranchId(Objects.toString(map.get(PISDColumn.Contract.FIELD_INSURANCE_CONTRACT_BRANCH_ID),""))
