@@ -27,4 +27,11 @@ public class FunctionUtils {
         int positionFrom = query.indexOf(PISDConstant.Pagination.FROM);
         return PISDQueryName.SQL_COUNT_ROWS.getValue().concat(query.substring(positionFrom));
     }
+
+    public static Integer mapConvertToInteger(String key,Map<String,Object> map){
+        String value = map.get(key).toString();
+        return Integer.parseInt(value);
+    }
+
+
 }

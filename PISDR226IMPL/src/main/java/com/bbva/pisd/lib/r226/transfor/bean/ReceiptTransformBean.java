@@ -3,11 +3,15 @@ package com.bbva.pisd.lib.r226.transfor.bean;
 
 import com.bbva.pisd.dto.insurancedao.constants.PISDColumn;
 import com.bbva.pisd.dto.insurancedao.entities.ReceiptEntity;
+import com.bbva.pisd.lib.r226.util.FunctionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class ReceiptTransformBean {
     private static final Logger LOGGER = LoggerFactory.getLogger(ReceiptTransformBean.class);
@@ -19,7 +23,7 @@ public class ReceiptTransformBean {
                 .withInsuranceContractEntityId( (String)map.get(PISDColumn.Receipt.FIELD_INSURANCE_CONTRACT_ENTITY_ID))
                 .withInsuranceContractBranchId( (String)map.get(PISDColumn.Receipt.FIELD_INSURANCE_CONTRACT_BRANCH_ID))
                 .withInsrcContractIntAccountId( (String)map.get(PISDColumn.Receipt.FIELD_INSRC_CONTRACT_INT_ACCOUNT_ID))
-                .withPolicyReceiptId( (Integer) map.get(PISDColumn.Receipt.FIELD_POLICY_RECEIPT_ID))
+                .withPolicyReceiptId(FunctionUtils.mapConvertToInteger(PISDColumn.Receipt.FIELD_POLICY_RECEIPT_ID, map))  ////
                 .withInsuranceCompanyReceiptId( (String)map.get(PISDColumn.Receipt.FIELD_INSURANCE_COMPANY_RECEIPT_ID))
                 .withPremiumPaymentReceiptAmount( (Double)map.get(PISDColumn.Receipt.FIELD_PREMIUM_PAYMENT_RECEIPT_AMOUNT))
                 .withCurrencyId( (String)map.get(PISDColumn.Receipt.FIELD_CURRENCY_ID))
