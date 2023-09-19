@@ -15,6 +15,7 @@ import com.bbva.pisd.dto.insurancedao.entities.ContractEntity;
 import com.bbva.pisd.dto.insurancedao.entities.ReceiptEntity;
 import com.bbva.pisd.lib.r226.mock.Mock;
 import com.bbva.pisd.lib.r226.pattern.factory.impl.CommonJdbcFactory;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -68,6 +69,9 @@ public class PISDR226Test {
 		}
 		return result;
 	}
+
+
+
 	@Test
 	public void executeFindByCertifiedBankTest(){
 
