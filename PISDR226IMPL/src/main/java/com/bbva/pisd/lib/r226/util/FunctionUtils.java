@@ -1,7 +1,7 @@
 package com.bbva.pisd.lib.r226.util;
 
-import com.bbva.pisd.dto.contract.constants.PISDConstant;
 import com.bbva.pisd.dto.contract.constants.PISDQueryName;
+import com.bbva.pisd.dto.insurancedao.constants.PISDConstant;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.*;

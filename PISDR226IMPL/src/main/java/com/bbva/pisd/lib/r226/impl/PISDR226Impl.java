@@ -58,6 +58,16 @@ public class PISDR226Impl extends PISDR226Abstract {
 		return listReceipts;
 	}
 
+	@Override
+	public boolean executeUpdateReceiptsChargeEntityExtern(ReceiptEntity receiptEntity) {
+		LOGGER.info("[***] PISDR226Impl executeUpdateReceiptsChargeEntityExtern listReceipts - {} ", receiptEntity);
+		BaseDAO daoFactory = DAOFactory.getDAOFactory(commonJdbcTemplate);
+		ContractDAO contractDAO = new OracleContractDAO(daoFactory);
+		boolean result = contractDAO.updateReceiptsChargeEntityExtern(receiptEntity);
+		LOGGER.info("[***] PISDR226Impl executeUpdateReceiptsChargeEntityExtern result - {} ", result);
+		return result;
+	}
+
 
 	/**
 	 * executeSetCommonJdbcTemplate
