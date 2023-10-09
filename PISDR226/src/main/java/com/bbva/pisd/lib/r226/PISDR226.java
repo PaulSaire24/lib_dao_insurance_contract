@@ -22,4 +22,6 @@ public interface PISDR226 {
 
 	List<ReceiptEntity> executeFindReceiptByChargeEntityExtern(ReceiptSearchCriteria receiptSearchCriteriaDTO);
 
+	boolean executeUpdateReceiptsChargeEntityExtern(ReceiptEntity receiptEntity);
+
 }

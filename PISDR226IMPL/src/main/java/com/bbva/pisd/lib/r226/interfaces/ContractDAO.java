@@ -17,5 +17,5 @@ public interface ContractDAO {
     boolean updateContractPayment(List<ContractEntity> contractEntity);
 
     List<ReceiptEntity> findReceiptByChargeEntityExtern(ReceiptSearchCriteria receiptSearchCriteriaDTO);
-
+    boolean updateReceiptsChargeEntityExtern(ReceiptEntity receiptEntity);
 }

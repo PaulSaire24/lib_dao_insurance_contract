@@ -14,7 +14,6 @@ import com.bbva.pisd.lib.r226.interfaces.ContractDAO;
 import com.bbva.pisd.lib.r226.pattern.factory.impl.CommonJdbcFactory;
 import com.bbva.pisd.lib.r226.pattern.factory.interfaces.BaseDAO;
 import com.bbva.pisd.lib.r226.transfor.bean.ContractTransformBean;
-import com.bbva.pisd.lib.r226.transfor.bean.ReceiptTransformBean;
 import com.bbva.pisd.lib.r226.transfor.list.ReceiptTransformList;
 import com.bbva.pisd.lib.r226.transfor.map.ContractTransformMap;
 import com.bbva.pisd.lib.r226.transfor.map.ReceiptTransformMap;
@@ -75,7 +74,7 @@ public class OracleContractDAO implements ContractDAO {
         List<Map<String, Object>> listReceipts = new ArrayList<>();
 
         for (ReceiptEntity receipt: receipts) {
-            listReceipts.add(ReceiptTransformBean.entityTransformReceiptMap(receipt));
+            listReceipts.add(ReceiptTransformMap.ReceiptTransformMapReceipts(receipt));
         }
         int [] result;
         Map<String, Object> [] params = FunctionUtils.convertAsPrimitiveArray(listReceipts);
@@ -118,7 +117,9 @@ public class OracleContractDAO implements ContractDAO {
         List<Map<String, Object>> result = new ArrayList<>();
         Map<String, Object> parameters = ReceiptTransformMap.ReceiptSearchCriteriaTransformMap(receiptSearchCriteria);
         if (this.baseDAO instanceof CommonJdbcFactory) {
+            LOGGER.info("[***] OracleContractDAO findReceiptByChargeEntityExtern instanceof CommonJdbcFactory");
             if (FunctionUtils.parametersIsValid(parameters, FIELD_PAYMENT_MEANS_TYPE, FIELD_CONTRACT_STATUS_ID, FIELD_RECEIPT_STATUS_TYPE)) {
+                LOGGER.info("[***] OracleContractDAO findReceiptByChargeEntityExtern Parameters Valid");
                 result = this.baseDAO.executeQueryListPagination(parameters,PISDQueryName.SQL_SELECT_RECEIPTS_CHARGE_THIRD.getValue());
                 listReceipts = ReceiptTransformList.mapListTransformListReceiptEntity(result);
                 LOGGER.info("[***] OracleContractDAO executeFindReceiptByChargeEntityExtern ResultMapper - {}", listReceipts);
@@ -126,6 +127,27 @@ public class OracleContractDAO implements ContractDAO {
             }
         }
         return null;
+    }
+
+
+    @Override
+    public boolean updateReceiptsChargeEntityExtern(ReceiptEntity receipt) {
+        LOGGER.info("[***] OracleContractDAO updateReceiptsChargeEntityExtern - {} ", receipt);
+
+        Map<String, Object> receiptParameters = ReceiptTransformMap.ReceiptTransformMapReceipts(receipt);
+
+        int result;
+
+        Operation operation = Operation.Builder.an()
+                .withQuery(PISDQueryName.SQL_UPDATE_RECEIPTS_CHARGE.getValue())
+                .withTypeOperation(OperationConstants.Operation.UPDATE)
+                .withParams(receiptParameters).build();
+
+        result = (int) this.baseDAO.executeQuery(operation);
+
+        LOGGER.info("[***] OracleContractDAO updateReceiptsChargeEntityExtern result - {} ", result);
+
+        return result == PISDConstant.Numeros.UNO;
     }
 
 
