@@ -93,7 +93,7 @@ public class ContractTransformBean {
                 .withNonRenwCtrctSubReasonType(Objects.toString(map.get(PISDColumn.Contract.FIELD_NON_RENW_CTRCT_SUB_REASON_TYPE),""))
                 .withOriginalPaymentSubChannelId(Objects.toString(map.get(PISDColumn.Contract.FIELD_ORIGINAL_PAYMENT_SUBCHANNEL_ID),""))
                 .withProcessedRegisterType(Objects.toString(map.get(PISDColumn.Contract.FIELD_PROCESSED_REGISTER_TYPE),""))
-                .withTokenSupplierId(Objects.toString(map.get(PISDColumn.Contract.FIELD_TOKEN_SUPPLIER_ID),""))
+                .withCardTokenizedId(Objects.toString(map.get(PISDColumn.Contract.FIELD_OPENPAY_CUSTOMER_CARD_TOKENIZED_ID),""))
                 .withOpenpayCommerceTransDate(Objects.toString(map.get(PISDColumn.Contract.FIELD_OPENPAY_COMMERCE_TRANS_DATE),""))
                 .withPaymentMeansType(Objects.toString(map.get(PISDColumn.Contract.FIELD_PAYMENT_MEANS_TYPE),""));
     }

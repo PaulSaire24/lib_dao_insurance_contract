@@ -101,7 +101,7 @@ public class ContractTransformMap {
         contractMap.put(PISDColumn.Contract.FIELD_NON_RENW_CTRCT_SUB_REASON_TYPE, contract.getNonRenwCtrctSubReasonType());
         contractMap.put(PISDColumn.Contract.FIELD_ORIGINAL_PAYMENT_SUBCHANNEL_ID, contract.getOriginalPaymentSubChannelId());
         contractMap.put(PISDColumn.Contract.FIELD_PROCESSED_REGISTER_TYPE, contract.getProcessedRegisterType());
-        contractMap.put(PISDColumn.Contract.FIELD_TOKEN_SUPPLIER_ID, contract.getTokenSupplierId());
+        contractMap.put(PISDColumn.Contract.FIELD_OPENPAY_CUSTOMER_CARD_TOKENIZED_ID, contract.getCardTokenizedId());
         contractMap.put(PISDColumn.Contract.FIELD_OPENPAY_COMMERCE_TRANS_DATE, contract.getOpenpayCommerceTransDate());
         contractMap.put(PISDColumn.Contract.FIELD_PAYMENT_MEANS_TYPE, contract.getPaymentMeansType());
         LOGGER.info("[***] ContractTransformBean objTransformContractMap contractMap - {} ", contractMap);

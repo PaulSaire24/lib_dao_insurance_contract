@@ -38,8 +38,8 @@ public class ReceiptTransformMap {
         mapReceipt.put(PISDColumn.Receipt.FIELD_PREMIUM_PAYMENT_RECEIPT_AMOUNT,receipt.getPremiumPaymentReceiptAmount());
         mapReceipt.put(PISDColumn.Receipt.FIELD_CURRENCY_ID,receipt.getCurrencyId());
         mapReceipt.put(PISDColumn.Receipt.FIELD_RECEIPT_STATUS_TYPE,receipt.getReceiptStatusType());
-        mapReceipt.put(PISDColumn.Receipt.FIELD_OPENPAY_RECEIPT_STATUS_TYPE, receipt.getCommerceReceiptStatusType());
-        mapReceipt.put(PISDColumn.Receipt.FIELD_COMMERCE_SEND_OPENPAY_DATE, receipt.getCommerceSendDate());
+        mapReceipt.put(PISDColumn.Receipt.FIELD_COMMERCE_RECEIPT_STATUS_TYPE, receipt.getCommerceReceiptStatusType());
+        mapReceipt.put(PISDColumn.Receipt.FIELD_CHARGE_FILE_SEND_DATE, receipt.getChargeFileSendDate());
         mapReceipt.put(PISDColumn.Receipt.FIELD_USER_AUDIT_ID, receipt.getUserAuditId());
 
         return mapReceipt;
