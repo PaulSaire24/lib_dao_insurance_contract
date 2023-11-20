@@ -150,6 +150,31 @@ public class OracleContractDAO implements ContractDAO {
         return result == PISDConstant.Numeros.UNO;
     }
 
+    @Override
+    public ContractEntity findQuotationByCertifiedBank(CertifyBankCriteria certifyBankCriteria) {
+        LOGGER.info("[***]  findQuotationByCertifiedBank :: Criteria {} ", JsonHelper.getInstance().toJsonString(certifyBankCriteria));
+        ContractEntity contract = null;
+        int size = 0;
+        Map<String, Object> parameters = ContractTransformMap.certifyBankCriteriaTransformMap(certifyBankCriteria);
+        if (FunctionUtils.parametersIsValid(parameters, PISDColumn.Contract.FIELD_INSURANCE_CONTRACT_ENTITY_ID,
+                PISDColumn.Contract.FIELD_INSURANCE_CONTRACT_BRANCH_ID,PISDColumn.Contract.FIELD_INSRC_CONTRACT_INT_ACCOUNT_ID)) {
+            if (this.baseDAO instanceof CommonJdbcFactory) {
+                Operation operation = Operation.Builder.an()
+                        .withQuery(PISDQueryName.SQL_SELECT_QUOTATION_BY_CONTRACT.getValue())
+                        .withTypeOperation(OperationConstants.Operation.SELECT).withIsForListQuery(false)
+                        .withParams(parameters).build();
+                Map<String, Object> map = (Map<String, Object>) this.baseDAO.executeQuery(operation);
+                if (!CollectionUtils.isEmpty(map)) {
+                    contract = ContractTransformBean.mapTransformContractEntity(map).build();
+                    LOGGER.info("[OracleContractDAO]  findQuotationByCertifiedBank - Contract  [ {} ] ", JsonHelper.getInstance().toJsonString(contract));
+                    size = map.size();
+                }
+                LOGGER.info("[***]  findQuotationByCertifiedBank :: size {} - result {} ", size, contract);
+            }
+        }
+        LOGGER.info("[***]  findQuotationByCertifiedBank ::  Invalid Parameters ");
+        return contract;
+    }
 
 
 }
