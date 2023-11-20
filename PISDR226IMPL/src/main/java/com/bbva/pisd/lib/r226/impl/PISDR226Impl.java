@@ -68,6 +68,13 @@ public class PISDR226Impl extends PISDR226Abstract {
 		return result;
 	}
 
+	@Override
+	public ContractEntity executeFindQuotationByCertifiedBank(CertifyBankCriteria certifyBankCriteria) {
+		BaseDAO daoFactory = DAOFactory.getDAOFactory(commonJdbcTemplate);
+		ContractDAO oracleContractDAO = new OracleContractDAO(daoFactory);
+		return oracleContractDAO.findQuotationByCertifiedBank(certifyBankCriteria);
+	}
+
 
 	/**
 	 * executeSetCommonJdbcTemplate

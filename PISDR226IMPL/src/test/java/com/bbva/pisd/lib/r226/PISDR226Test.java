@@ -90,6 +90,23 @@ public class PISDR226Test {
 
 
 	}
+
+	@Test
+	public void textExecuteFindQuotationByCertifiedBank(){
+
+		CommonJdbcTemplate commonJdbcTemplate = Mockito.mock(CommonJdbcTemplate.class);
+		this.pisdR226.executeSetCommonJdbcTemplate(commonJdbcTemplate);
+		Map<String, Object>  contrato = new HashMap<>();
+		contrato.put("00110283734000283741",Mock.mockContract2());
+
+
+		Mockito.when(commonJdbcTemplate.queryForMap(Mockito.anyString(),Mockito.anyMap())).thenReturn(contrato);
+		CertifyBankCriteria certifyBankCriteria = Mock.mockCertifyCriteria();
+		ContractEntity contractEntity =  this.pisdR226.executeFindQuotationByCertifiedBank(certifyBankCriteria);
+		Assert.assertNotNull(contractEntity);
+
+	}
+
 	@Test
 	public void executeUpdateReceiptsPaymentTest(){
 		/**
