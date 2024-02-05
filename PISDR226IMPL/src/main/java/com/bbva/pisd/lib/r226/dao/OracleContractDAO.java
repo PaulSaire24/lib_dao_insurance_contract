@@ -120,7 +120,7 @@ public class OracleContractDAO implements ContractDAO {
             LOGGER.info("[***] OracleContractDAO findReceiptByChargeEntityExtern instanceof CommonJdbcFactory");
             if (FunctionUtils.parametersIsValid(parameters, FIELD_PAYMENT_MEANS_TYPE, FIELD_CONTRACT_STATUS_ID, FIELD_RECEIPT_STATUS_TYPE)) {
                 LOGGER.info("[***] OracleContractDAO findReceiptByChargeEntityExtern Parameters Valid");
-                result = this.baseDAO.executeQueryListPagination(parameters,PISDQueryName.SQL_SELECT_RECEIPTS_CHARGE_THIRD.getValue());
+                result = this.baseDAO.executeQueryListPagination(parameters,PISDQueryName.SQL_SELECT_BILLED_RECEIPTS.getValue());
                 listReceipts = ReceiptTransformList.mapListTransformListReceiptEntity(result);
                 LOGGER.info("[***] OracleContractDAO executeFindReceiptByChargeEntityExtern ResultMapper - {}", listReceipts);
                 return listReceipts;

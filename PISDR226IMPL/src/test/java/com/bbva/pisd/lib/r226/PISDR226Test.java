@@ -226,9 +226,8 @@ public class PISDR226Test {
 	private ReceiptSearchCriteria getMockReceiptSearchCriteria(){
 		ReceiptSearchCriteria receiptSearchCriteria = new ReceiptSearchCriteria();
 
-		ArrayList<String> receiptStatus = new ArrayList<>();
-		receiptStatus.add(PISDStatus.RECEIPT_STATUS_TYPE.FAC.getValue());
-		receiptStatus.add(PISDStatus.RECEIPT_STATUS_TYPE.IMP.getValue());
+		String receiptStatus = PISDStatus.RECEIPT_STATUS_TYPE.FAC.getValue();
+
 		receiptSearchCriteria.setContractStatusId(PISDStatus.CONTRACT_STATUS_ID.FOR.getValue());
 		receiptSearchCriteria.setContractPaymentMeansType(PISDStatus.CONTRACT_PAYMENT_MEANS_TYPE.EXT.getValue());
 		receiptSearchCriteria.setReceiptStatusSearch(receiptStatus);
