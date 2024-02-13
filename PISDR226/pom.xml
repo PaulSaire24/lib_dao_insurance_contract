@@ -39,14 +39,6 @@
 						<Bundle-SymbolicName>${project.artifactId}-${project.version}</Bundle-SymbolicName>
 						<Bundle-Category>library</Bundle-Category>
 						<Import-Package>
-							com.bbva.pisd.dto.contract.constants.PISDErrors;version="${osgi.version.manifest}",
-							com.bbva.pisd.dto.contract.constants.PISDQueryName;version="${osgi.version.manifest}",
-							com.bbva.pisd.dto.contract.constants.PISDStatus;version="${osgi.version.manifest}",
-							com.bbva.pisd.dto.contract.search.CertifyBankCriteria;version="${osgi.version.manifest}",
-							com.bbva.pisd.dto.contract.search.ReceiptSearchCriteria;version="${osgi.version.manifest}",
-							com.bbva.pisd.dto.insurancedao.constants.*;version="${osgi.version.manifest}",
-							com.bbva.pisd.dto.insurancedao.entities.*;version="${osgi.version.manifest}",
-							com.bbva.pisd.dto.insurancedao.operation.*;version="${osgi.version.manifest}",
 							*;version="${osgi.version.manifest}"
 						</Import-Package>
 					</instructions>

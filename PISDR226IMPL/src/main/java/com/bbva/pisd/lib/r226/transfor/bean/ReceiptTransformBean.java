@@ -2,6 +2,7 @@ package com.bbva.pisd.lib.r226.transfor.bean;
 
 
 import com.bbva.pisd.dto.insurancedao.constants.PISDColumn;
+import com.bbva.pisd.dto.insurancedao.entities.ContractEntity;
 import com.bbva.pisd.dto.insurancedao.entities.ReceiptEntity;
 import com.bbva.pisd.lib.r226.util.FunctionUtils;
 import org.slf4j.Logger;
@@ -19,7 +20,6 @@ public class ReceiptTransformBean {
     public static ReceiptEntity mapTransformReceiptEntity(Map<String, Object> map){
         LOGGER.info("[***] ReceiptTransformBean mapTransformReceiptEntity map - {} ", map);
         return ReceiptEntity.Builder.an()
-                .withContract(ContractTransformBean.mapTransformContractEntity(map).build())
                 .withInsuranceContractEntityId( (String)map.get(PISDColumn.Receipt.FIELD_INSURANCE_CONTRACT_ENTITY_ID))
                 .withInsuranceContractBranchId( (String)map.get(PISDColumn.Receipt.FIELD_INSURANCE_CONTRACT_BRANCH_ID))
                 .withInsrcContractIntAccountId( (String)map.get(PISDColumn.Receipt.FIELD_INSRC_CONTRACT_INT_ACCOUNT_ID))
