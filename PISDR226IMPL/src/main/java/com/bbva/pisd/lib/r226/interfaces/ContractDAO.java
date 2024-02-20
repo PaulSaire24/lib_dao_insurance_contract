@@ -9,14 +9,5 @@ import java.util.List;
 import java.util.Map;
 
 public interface ContractDAO {
-
-
-    ContractEntity findByCertifiedBank(CertifyBankCriteria certifyBankCriteria);
-
-    boolean updateReceiptsPayment(List<ReceiptEntity> receipts);
-    boolean updateContractPayment(List<ContractEntity> contractEntity);
-
-    List<ReceiptEntity> findReceiptByChargeEntityExtern(ReceiptSearchCriteria receiptSearchCriteriaDTO);
-    boolean updateReceiptsChargeEntityExtern(ReceiptEntity receiptEntity);
-    ContractEntity findQuotationByCertifiedBank(CertifyBankCriteria certifyBankCriteria);
+    List<ContractEntity> findContractBySearchCriteria(ReceiptSearchCriteria SearchCriteria);
 }

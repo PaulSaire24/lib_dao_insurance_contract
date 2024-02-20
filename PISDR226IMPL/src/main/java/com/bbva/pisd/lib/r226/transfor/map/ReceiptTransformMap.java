@@ -24,33 +24,4 @@ public class ReceiptTransformMap {
         return parameters;
     }
 
-
-    public static Map<String, Object> ReceiptTransformMapReceipts(ReceiptEntity receipt){
-        LOGGER.info("[***] ReceiptTransformBean ReceiptTransformMapReceipts receipt - {} ", receipt);
-
-        Map<String, Object> mapReceipt = new HashMap<>();
-
-        mapReceipt.put(PISDColumn.Receipt.FIELD_INSURANCE_CONTRACT_ENTITY_ID,receipt.getInsuranceContractEntityId());
-        mapReceipt.put(PISDColumn.Receipt.FIELD_INSURANCE_CONTRACT_BRANCH_ID,receipt.getInsuranceContractBranchId());
-        mapReceipt.put(PISDColumn.Receipt.FIELD_INSRC_CONTRACT_INT_ACCOUNT_ID,receipt.getInsrcContractIntAccountId());
-        mapReceipt.put(PISDColumn.Receipt.FIELD_POLICY_RECEIPT_ID,receipt.getPolicyReceiptId());
-        mapReceipt.put(PISDColumn.Receipt.FIELD_INSURANCE_COMPANY_RECEIPT_ID,receipt.getInsuranceCompanyReceiptId());
-        mapReceipt.put(PISDColumn.Receipt.FIELD_PREMIUM_PAYMENT_RECEIPT_AMOUNT,receipt.getPremiumPaymentReceiptAmount());
-        mapReceipt.put(PISDColumn.Receipt.FIELD_CURRENCY_ID,receipt.getCurrencyId());
-        mapReceipt.put(PISDColumn.Receipt.FIELD_RECEIPT_STATUS_TYPE,receipt.getReceiptStatusType());
-        mapReceipt.put(PISDColumn.Receipt.FIELD_COMMERCE_RECEIPT_STATUS_TYPE, receipt.getCommerceReceiptStatusType());
-        mapReceipt.put(PISDColumn.Receipt.FIELD_CHARGE_FILE_SEND_DATE, receipt.getChargeFileSendDate());
-        mapReceipt.put(PISDColumn.Receipt.FIELD_RECEIPT_COLLECTION_STATUS_TYPE,receipt.getReceiptCollectionStatusType());
-        mapReceipt.put(PISDColumn.Receipt.FIELD_FIXING_EXCHANGE_RATE_AMOUNT, receipt.getFixingExchangeRateAmount());
-        mapReceipt.put(PISDColumn.Receipt.FIELD_PREMIUM_CURRENCY_EXCH_AMOUNT, receipt.getPremiumCurrencyExchAmount());
-        mapReceipt.put(PISDColumn.Receipt.FIELD_PREMIUM_CHARGE_OPERATION_ID,receipt.getPremiumChargeOperationId());
-        mapReceipt.put(PISDColumn.Receipt.FIELD_DEBIT_ACCOUNT_ID,receipt.getDebitAccountId());
-        mapReceipt.put(PISDColumn.Receipt.FIELD_CHARGE_ATTEMPTS_NUMBER, receipt.getChargeAttemptsNumber());
-        mapReceipt.put(PISDColumn.Receipt.FIELD_RECEIPTS_TRANSMISSION_DATE, receipt.getReceiptsTransmissionDate());
-        mapReceipt.put(PISDColumn.Receipt.FIELD_PAYMENT_NOTIFICATION_ID, receipt.getPaymentNotificationId());
-        mapReceipt.put(PISDColumn.Receipt.FIELD_PAYMENT_NOTIFICATION_MSG_DESC, receipt.getPaymentNotificationMsgDesc());
-        mapReceipt.put(PISDColumn.Receipt.FIELD_USER_AUDIT_ID, receipt.getUserAuditId());
-
-        return mapReceipt;
-    }
 }

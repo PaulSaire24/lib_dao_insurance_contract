@@ -2,6 +2,8 @@ package com.bbva.pisd.lib.r226.transfor.bean;
 
 import com.bbva.pisd.dto.insurancedao.constants.PISDColumn;
 import com.bbva.pisd.dto.insurancedao.entities.ContractEntity;
+import com.bbva.pisd.dto.insurancedao.entities.ReceiptEntity;
+import com.bbva.pisd.lib.r226.transfor.list.ContractTransformList;
 import com.bbva.pisd.lib.r226.transfor.list.ReceiptTransformList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,11 +15,12 @@ import java.util.Objects;
 public class ContractTransformBean {
     private static final Logger LOGGER = LoggerFactory.getLogger(ContractTransformBean.class);
 
-    public static ContractEntity.ContractBuilder mapTransformContractEntityAndReceiptEntity(Map<String,Object> contract, List<Map<String,Object>> receipt){
-        return ContractTransformBean.mapTransformContractEntity(contract)
-                .withReceipts(ReceiptTransformList.mapListTransformListReceiptEntity(receipt));
-    }
+    public static ContractEntity mapTransformContractEntityAndReceiptEntity(Map<String,Object> contract,List<Map<String,Object>>receipts){
 
+        return ContractTransformBean.mapTransformContractEntity(contract)
+                .withReceipts(ReceiptTransformList.transformListMapToListReceiptEntity(receipts))
+                .build();
+    }
 
     public static ContractEntity.ContractBuilder mapTransformContractEntity(Map<String,Object> map){
         LOGGER.info("[***] ContractTransformBean mapTransformContractEntity paramters - {} ", map);
@@ -29,6 +32,7 @@ public class ContractTransformBean {
                 .withContractSecondVerfnDigitId(Objects.toString(map.get(PISDColumn.Contract.FIELD_CONTRACT_SECOND_VERFN_DIGIT_ID),""))
                 .withPolicyQuotaInternalId(Objects.toString(map.get(PISDColumn.Contract.FIELD_POLICY_QUOTA_INTERNAL_ID),""))
                 .withInsuranceProductId(Objects.toString(map.get(PISDColumn.Contract.FIELD_INSURANCE_PRODUCT_ID),""))
+                .withInsuranceProductName(Objects.toString(map.get(PISDColumn.Contract.FIELD_INSURANCE_PRODUCT_NAME),""))
                 .withInsuranceModalityType(Objects.toString(map.get(PISDColumn.Contract.FIELD_INSURANCE_MODALITY_TYPE),""))
                 .withInsuranceCompanyId(Objects.toString(map.get(PISDColumn.Contract.FIELD_INSURANCE_COMPANY_ID),""))
                 .withPolicyId(Objects.toString(map.get(PISDColumn.Contract.FIELD_POLICY_ID),""))
