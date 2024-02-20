@@ -27,10 +27,7 @@ import org.springframework.aop.framework.Advised;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -71,7 +68,6 @@ public class PISDR226Test {
 	}
 
 
-@Ignore
 	@Test
 	public void executeFindContractBySearchCriteriaConPaginacion(){
 		/**
@@ -100,7 +96,6 @@ public class PISDR226Test {
 	List<ContractEntity> listContract = this.pisdR226.executeFindContractBySearchCriteria(receiptSearchCriteria);
 		Assert.assertNotNull(listContract);
 	}
-	@Ignore
 	@Test
 	public void executeFindContractBySearchCriteriaSinPaginacion(){
 		/**
@@ -140,6 +135,8 @@ public class PISDR226Test {
 		mapResponse.put(PISDColumn.Contract.FIELD_CONTRACT_SECOND_VERFN_DIGIT_ID, "2");
 		mapResponse.put(PISDColumn.Receipt.FIELD_INSRC_CONTRACT_INT_ACCOUNT_ID, "4000018548");
 		mapResponse.put(PISDColumn.Contract.FIELD_POLICY_ID, "1234567");
+		mapResponse.put(PISDColumn.Receipt.FIELD_RECEIPT_START_DATE,new Date());
+		mapResponse.put(PISDColumn.Receipt.FIELD_RECEIPT_END_DATE,new Date());
 		mapResponse.put(PISDColumn.Contract.FIELD_CUSTOMER_ID, "12345678");
 		mapResponse.put(PISDColumn.Contract.FIELD_INSURANCE_MODALITY_TYPE, "1");
 		mapResponse.put(PISDColumn.Contract.FIELD_CONTRACT_STATUS_ID, "FOR");

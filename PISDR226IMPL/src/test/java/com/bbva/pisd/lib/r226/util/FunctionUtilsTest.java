@@ -5,6 +5,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class FunctionUtilsTest {
@@ -37,17 +38,23 @@ public class FunctionUtilsTest {
         lista.add(mapa2);
 
         Map<String, Object>[] arreglo = FunctionUtils.convertAsPrimitiveArray(lista);
-
-        // Verificar que el arreglo no sea nulo
         Assert.assertNotNull(arreglo);
-
-        // Verificar que el tamaño del arreglo sea igual al tamaño de la lista
         Assert.assertEquals(lista.size(), arreglo.length);
-
-        // Verificar que los elementos en el arreglo sean iguales a los de la lista
         for (int i = 0; i < lista.size(); i++) {
             Assert.assertEquals(lista.get(i), arreglo[i]);
         }
     }
+    @Test
+    public void testConvertDatoToString() {
+        String key = "fecha";
+        Date fechaActual = new Date();
+        Map<String, Object> map = new HashMap<>();
+        map.put(key, fechaActual);
 
+        String resultado = FunctionUtils.convertDatoToString(key, map);
+
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        String fechaFormateada = formatoFecha.format(fechaActual);
+        Assert.assertEquals(fechaFormateada, resultado);
+    }
 }
