@@ -27,6 +27,8 @@ public class ReceiptTransformBean {
                 .withInsuranceCompanyReceiptId( (String)map.get(PISDColumn.Receipt.FIELD_INSURANCE_COMPANY_RECEIPT_ID))
                 .withPremiumPaymentReceiptAmount( FunctionUtils.mapConvertToDouble(PISDColumn.Receipt.FIELD_PREMIUM_PAYMENT_RECEIPT_AMOUNT, map))
                 .withCurrencyId( (String)map.get(PISDColumn.Receipt.FIELD_CURRENCY_ID))
+                .withReceiptStartDate(FunctionUtils.convertDatoToString(PISDColumn.Receipt.FIELD_RECEIPT_START_DATE,map))
+                .withReceiptEndDate(FunctionUtils.convertDatoToString(PISDColumn.Receipt.FIELD_RECEIPT_END_DATE,map))
                 .withReceiptStatusType( (String)map.get(PISDColumn.Receipt.FIELD_RECEIPT_STATUS_TYPE))
                 .build();
     }

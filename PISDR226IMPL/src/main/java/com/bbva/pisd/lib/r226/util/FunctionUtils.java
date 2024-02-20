@@ -4,6 +4,9 @@ import com.bbva.pisd.dto.contract.constants.PISDQueryName;
 import com.bbva.pisd.dto.insurancedao.constants.PISDConstant;
 import org.apache.commons.lang.StringUtils;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class FunctionUtils {
@@ -37,6 +40,12 @@ public class FunctionUtils {
     public static Double mapConvertToDouble(String key,Map<String,Object> map){
         String value = Objects.toString(map.get(key), "0");
         return Double.parseDouble(value);
+    }
+    public static String convertDatoToString(String key,Map<String,Object> map){
+        Object objeto = (map.get(key));
+        Date fecha = (Date) objeto;
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        return formatoFecha.format(fecha);
     }
 
 

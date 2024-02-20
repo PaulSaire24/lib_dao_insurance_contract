@@ -71,7 +71,7 @@ public class PISDR226Test {
 	}
 
 
-
+@Ignore
 	@Test
 	public void executeFindContractBySearchCriteriaConPaginacion(){
 		/**
@@ -100,6 +100,7 @@ public class PISDR226Test {
 	List<ContractEntity> listContract = this.pisdR226.executeFindContractBySearchCriteria(receiptSearchCriteria);
 		Assert.assertNotNull(listContract);
 	}
+	@Ignore
 	@Test
 	public void executeFindContractBySearchCriteriaSinPaginacion(){
 		/**

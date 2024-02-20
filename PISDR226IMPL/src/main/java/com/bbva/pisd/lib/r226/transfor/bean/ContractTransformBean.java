@@ -32,6 +32,7 @@ public class ContractTransformBean {
                 .withContractSecondVerfnDigitId(Objects.toString(map.get(PISDColumn.Contract.FIELD_CONTRACT_SECOND_VERFN_DIGIT_ID),""))
                 .withPolicyQuotaInternalId(Objects.toString(map.get(PISDColumn.Contract.FIELD_POLICY_QUOTA_INTERNAL_ID),""))
                 .withInsuranceProductId(Objects.toString(map.get(PISDColumn.Contract.FIELD_INSURANCE_PRODUCT_ID),""))
+                .withInsuranceProductName(Objects.toString(map.get(PISDColumn.Contract.FIELD_INSURANCE_PRODUCT_NAME),""))
                 .withInsuranceModalityType(Objects.toString(map.get(PISDColumn.Contract.FIELD_INSURANCE_MODALITY_TYPE),""))
                 .withInsuranceCompanyId(Objects.toString(map.get(PISDColumn.Contract.FIELD_INSURANCE_COMPANY_ID),""))
                 .withPolicyId(Objects.toString(map.get(PISDColumn.Contract.FIELD_POLICY_ID),""))
@@ -99,6 +100,5 @@ public class ContractTransformBean {
                 .withCardTokenizedId(Objects.toString(map.get(PISDColumn.Contract.FIELD_OPENPAY_CUSTOMER_CARD_TOKENIZED_ID),""))
                 .withOpenpayCommerceTransDate(Objects.toString(map.get(PISDColumn.Contract.FIELD_OPENPAY_COMMERCE_TRANS_DATE),""))
                 .withPaymentMeansType(Objects.toString(map.get(PISDColumn.Contract.FIELD_PAYMENT_MEANS_TYPE),""));
-                //.withReceipts(ReceiptTransformBean.mapTransformReceiptEntity(contract));
     }
 }
