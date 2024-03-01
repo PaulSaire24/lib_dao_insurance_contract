@@ -10,4 +10,6 @@ import java.util.Map;
 
 public interface ContractDAO {
     List<ContractEntity> findContractBySearchCriteria(ReceiptSearchCriteria SearchCriteria);
+
+    Object findInsuranceContract(String biometricKey);
 }

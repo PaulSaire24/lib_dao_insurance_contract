@@ -1,6 +1,7 @@
 package com.bbva.pisd.lib.r226.dao;
 
 
+import com.bbva.elara.utility.jdbc.connector.factory.JdbcUtilsFactory;
 import com.bbva.pisd.dto.contract.constants.PISDQueryName;
 import com.bbva.pisd.dto.contract.search.ReceiptSearchCriteria;
 import com.bbva.pisd.dto.insurancedao.entities.ContractEntity;
@@ -35,6 +36,22 @@ public class OracleContractDAO implements ContractDAO {
         Map<String, Object> parameters = ReceiptTransformMap.ReceiptSearchCriteriaTransformMap(searchCriteria);
         if (this.baseDAO instanceof CommonJdbcFactory) {
             LOGGER.info("[***] OracleContractDAO findReceiptByChargeEntityExtern instanceof CommonJdbcFactory");
+            if (FunctionUtils.parametersIsValid(parameters, FIELD_PAYMENT_MEANS_TYPE, FIELD_CONTRACT_STATUS_ID, FIELD_RECEIPT_STATUS_TYPE)) {
+                LOGGER.info("[***] OracleContractDAO findReceiptByChargeEntityExtern Parameters Valid");
+                result = this.baseDAO.executeQueryListPagination(parameters,PISDQueryName.SQL_SELECT_BILLED_RECEIPTS.getValue());
+                listContract = ContractTransformList.transformListMapToListContractEntity(result);
+                LOGGER.info("[***] OracleContractDAO executeFindReceiptByChargeEntityExtern ResultMapper - {}", listContract);
+                return listContract;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Object findInsuranceContract(String biometricKey) {
+
+        if (this.baseDAO instanceof JdbcUtilsFactory) {
+            LOGGER.info("[***] OracleContractDAO findInsuranceContract instanceof JdbcUtilsFactory");
             if (FunctionUtils.parametersIsValid(parameters, FIELD_PAYMENT_MEANS_TYPE, FIELD_CONTRACT_STATUS_ID, FIELD_RECEIPT_STATUS_TYPE)) {
                 LOGGER.info("[***] OracleContractDAO findReceiptByChargeEntityExtern Parameters Valid");
                 result = this.baseDAO.executeQueryListPagination(parameters,PISDQueryName.SQL_SELECT_BILLED_RECEIPTS.getValue());
