@@ -6,6 +6,9 @@ import com.bbva.elara.domain.transaction.Context;
 import com.bbva.elara.domain.transaction.ThreadContext;
 import javax.annotation.Resource;
 
+import com.bbva.pisd.lib.r226.pattern.factory.impl.JdbcUtilsFactory;
+import org.mockito.Mockito;
+import com.bbva.elara.utility.jdbc.JdbcUtils;
 import com.bbva.pisd.dto.contract.constants.PISDStatus;
 import com.bbva.pisd.dto.contract.search.CertifyBankCriteria;
 import com.bbva.pisd.dto.contract.search.ReceiptSearchCriteria;
@@ -14,7 +17,9 @@ import com.bbva.pisd.dto.insurancedao.constants.PISDConstant;
 import com.bbva.pisd.dto.insurancedao.entities.ContractEntity;
 import com.bbva.pisd.dto.insurancedao.entities.ReceiptEntity;
 import com.bbva.pisd.lib.r226.mock.Mock;
+import com.bbva.pisd.lib.r226.pattern.factory.DAOFactory;
 import com.bbva.pisd.lib.r226.pattern.factory.impl.CommonJdbcFactory;
+import com.bbva.pisd.lib.r226.pattern.factory.interfaces.BaseDAO;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -42,6 +47,10 @@ public class PISDR226Test {
 
 	@Resource(name = "pisdR226")
 	private PISDR226 pisdR226;
+	@Resource(name = "jdbcUtils")
+	private JdbcUtils jdbcUtils;
+
+	private JdbcUtilsFactory jdbcUtilsFactory;
 
 	@Resource(name = "applicationConfigurationService")
 	private ApplicationConfigurationService applicationConfigurationService;
@@ -56,6 +65,7 @@ public class PISDR226Test {
 		getObjectIntrospection();
 
 		commonJdbcFactory = Mockito.mock(CommonJdbcFactory.class);
+		jdbcUtilsFactory = Mockito.mock(JdbcUtilsFactory.class);
 	}
 	
 	private Object getObjectIntrospection() throws Exception{
@@ -123,6 +133,28 @@ public class PISDR226Test {
 
 		List<ContractEntity> listContract = this.pisdR226.executeFindContractBySearchCriteria(receiptSearchCriteria);
 		Assert.assertNotNull(listContract);
+	}
+
+	@Test
+	public void executeUpdateReceiptsJdbcUtilsTest(){
+
+		Map<String, String> contratos = new HashMap<>();
+		contratos.put(PISDColumn.Contract.FIELD_INSURANCE_CONTRACT_ENTITY_ID, "1");
+
+		Mockito.when(this.jdbcUtils.update(Mockito.anyString(),Mockito.anyMap())).thenReturn(1);
+		this.pisdR226.executeSetCommonJdbcTemplate(null);
+		boolean result2 = this.pisdR226.executeUpdateBiometricId("12345678901234567890","12345678","1234");
+		Assert.assertTrue(result2);
+
+	}
+	@Test
+	public void executeFindByCertifiedBankByJdbcUtilsTest(){
+		Map<String, Object> contratos = new HashMap<>();
+		contratos.put("COUNT",1);
+		Mockito.when(this.jdbcUtils.queryForMap(Mockito.anyString())).thenReturn(contratos);
+		this.pisdR226.executeSetCommonJdbcTemplate(null);
+		boolean resp=this.pisdR226.executeFindByContract("12345678");
+		Assert.assertTrue(resp);
 	}
 
 

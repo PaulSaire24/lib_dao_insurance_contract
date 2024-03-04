@@ -41,9 +41,6 @@ public class JdbcUtilsFactory implements BaseDAO {
             }else if(operation.getTypeOperation().equals(OperationConstants.Operation.UPDATE)){
                 LOGGER.info("[BaseDAO] - start executeQuery.queryForMap.UPDATE with Param OperationDTO :: {}", operation);
                 response = this.jdbcUtils.update(operation.getNameProp(), operation.getParams());
-            }else if(operation.getTypeOperation().equals(OperationConstants.Operation.BATCH)){
-                LOGGER.info("[BaseDAO] - start executeQuery.queryForMap.BATCH with Param OperationDTO :: {}", operation);
-                response = this.jdbcUtils.batchUpdate(operation.getNameProp(), operation.getBatchValues());
             }
 
         } catch(NoResultException ex) {
@@ -69,7 +66,7 @@ public class JdbcUtilsFactory implements BaseDAO {
     /**
      * @param jdbcUtils the this.jdbcUtils to set
      */
-    public void setJdbcUtils(JdbcUtils jdbcUtils) {
+    public JdbcUtilsFactory(JdbcUtils jdbcUtils) {
         this.jdbcUtils = jdbcUtils;
     }
 }
