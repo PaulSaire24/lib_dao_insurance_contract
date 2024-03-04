@@ -36,7 +36,7 @@ public class JdbcUtilsFactory implements BaseDAO {
                     response = this.jdbcUtils.queryForList(operation.getNameProp(), operation.getParams());
                 }else{
                     LOGGER.info("[BaseDAO] - start executeQuery.queryForMap.SELECT not contain Param Operation :: {}", operation);
-                    response = this.jdbcUtils.queryForMap(operation.getNameProp());
+                    response = this.jdbcUtils.queryForMap(operation.getNameProp(),operation.getParams());
                 }
             }else if(operation.getTypeOperation().equals(OperationConstants.Operation.UPDATE)){
                 LOGGER.info("[BaseDAO] - start executeQuery.queryForMap.UPDATE with Param OperationDTO :: {}", operation);
