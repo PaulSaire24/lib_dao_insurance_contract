@@ -151,8 +151,7 @@ public class PISDR226Test {
 	public void executeFindByCertifiedBankByJdbcUtilsTest(){
 		Map<String, Object> contratos = new HashMap<>();
 		contratos.put("COUNT",1);
-		Mockito.when(this.jdbcUtils.queryForMap(Mockito.anyString())).thenReturn(contratos);
-		this.pisdR226.executeSetCommonJdbcTemplate(null);
+		Mockito.when(this.jdbcUtils.queryForMap(Mockito.anyString(),Mockito.anyMap())).thenReturn(contratos);
 		boolean resp=this.pisdR226.executeFindByContract("12345678");
 		Assert.assertTrue(resp);
 	}
