@@ -8,7 +8,7 @@ import java.util.Map;
 public class ContractTransformMap {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ContractTransformMap.class);
-
+    private static final String FIELD_BIOMETRIC_KEY_ID="BIOMETRIC_KEY_ID";
 
     public static Map<String, Object> contractTransformMapContract(String contractEntityId, String contractBranchId, String contractIntAccount,String biometricId,String usuario){
         LOGGER.info("[***] ContractTransformBean objTransformContractMap contractEntityId - {} ", contractEntityId);
@@ -19,7 +19,7 @@ public class ContractTransformMap {
         contractMap.put(PISDColumn.Contract.FIELD_INSURANCE_CONTRACT_ENTITY_ID, contractEntityId);
         contractMap.put(PISDColumn.Contract.FIELD_INSURANCE_CONTRACT_BRANCH_ID, contractBranchId);
         contractMap.put(PISDColumn.Contract.FIELD_INSRC_CONTRACT_INT_ACCOUNT_ID, contractIntAccount);
-        contractMap.put(PISDColumn.Contract.FIELD_INSRC_CONTRACT_INT_ACCOUNT_ID, biometricId);
+        contractMap.put(FIELD_BIOMETRIC_KEY_ID,biometricId);
         contractMap.put(PISDColumn.Contract.FIELD_USER_AUDIT_ID, usuario);
 
 

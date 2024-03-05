@@ -1,7 +1,5 @@
 package com.bbva.pisd.lib.r226.dao;
 
-
-import com.bbva.elara.utility.jdbc.connector.factory.JdbcUtilsFactory;
 import com.bbva.pisd.dto.contract.constants.PISDQueryName;
 import com.bbva.pisd.dto.contract.search.ReceiptSearchCriteria;
 import com.bbva.pisd.dto.insurancedao.constants.PISDConstant;
@@ -16,10 +14,7 @@ import com.bbva.pisd.lib.r226.transfor.map.ContractTransformMap;
 import com.bbva.pisd.lib.r226.transfor.map.ReceiptTransformMap;
 import com.bbva.pisd.lib.r226.util.FunctionUtils;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.CollectionUtils;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 

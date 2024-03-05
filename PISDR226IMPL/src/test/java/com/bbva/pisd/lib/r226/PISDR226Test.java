@@ -10,7 +10,7 @@ import com.bbva.pisd.lib.r226.pattern.factory.impl.JdbcUtilsFactory;
 import org.mockito.Mockito;
 import com.bbva.elara.utility.jdbc.JdbcUtils;
 import com.bbva.pisd.dto.contract.constants.PISDStatus;
-import com.bbva.pisd.dto.contract.search.CertifyBankCriteria;
+
 import com.bbva.pisd.dto.contract.search.ReceiptSearchCriteria;
 import com.bbva.pisd.dto.insurancedao.constants.PISDColumn;
 import com.bbva.pisd.dto.insurancedao.constants.PISDConstant;
