@@ -19,7 +19,7 @@
 		<dependency>
 			<groupId>com.bbva.pisd.dto.contract</groupId>
 			<artifactId>PISDC226</artifactId>
-			<version>0.1.0</version>
+			<version>0.2.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.bbva.pisd.dto.insurancedao</groupId>

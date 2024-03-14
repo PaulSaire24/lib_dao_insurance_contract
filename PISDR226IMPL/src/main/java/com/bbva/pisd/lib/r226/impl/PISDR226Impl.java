@@ -25,7 +25,7 @@ public class PISDR226Impl extends PISDR226Abstract {
 	public List<ContractEntity> executeFindContractBySearchCriteria(ReceiptSearchCriteria searchCriteria) {
 		LOGGER.info("[***] PISDR226Impl executeFindContractBySearchCriteria searchCriteria - {} ", JsonHelper.getInstance().toJsonString(searchCriteria));
 
-		BaseDAO daoFactory = DAOFactory.getDAOFactory(commonJdbcTemplate);
+		BaseDAO daoFactory = DAOFactory.getDAOFactory(commonJdbcTemplate,jdbcUtils);
 		ContractDAO contractDAO = new OracleContractDAO(daoFactory);
 		List<ContractEntity> listContract = contractDAO.findContractBySearchCriteria(searchCriteria);
 
@@ -33,9 +33,29 @@ public class PISDR226Impl extends PISDR226Abstract {
 
 		return listContract;
 	}
-	/**
-	 * executeSetCommonJdbcTemplate
-	 * */
+
+	@Override
+	public boolean executeUpdateBiometricId(String insuranceContractId, String biometricId, String usuario) {
+		LOGGER.info("[***] PISDR226Impl executeUpdateBiometricId - insuranceContractId {} ", insuranceContractId);
+		LOGGER.info("[***] PISDR226Impl executeUpdateBiometricId - biometricId {} ",  biometricId);
+		LOGGER.info("[***] PISDR226Impl executeUpdateBiometricId - usuario {} ",  usuario);
+		BaseDAO baseDAO = DAOFactory.getDAOFactory(commonJdbcTemplate, jdbcUtils);
+		ContractDAO contractDAO = new OracleContractDAO(baseDAO);
+		boolean result = contractDAO.updateBiometricId(insuranceContractId,biometricId,usuario);
+		LOGGER.info("[***] PISDR226Impl executeUpdateBiometricId - {} ", result);
+		return result;
+	}
+
+	@Override
+	public boolean executeFindByContract(String biometricId) {
+		LOGGER.info("[***] PISDR226Impl executeFindByContract - biometricId {} ",  biometricId);
+		BaseDAO baseDAO = DAOFactory.getDAOFactory(commonJdbcTemplate, jdbcUtils);
+		ContractDAO contractDAO = new OracleContractDAO(baseDAO);
+		boolean result = contractDAO.findByContract(biometricId);
+		LOGGER.info("[***] PISDR226Impl executeFindByContract - {} ", result);
+		return result;
+	}
+
 	@Override
 	public void executeSetCommonJdbcTemplate(Object commonJdbcTemplate) {
 		this.commonJdbcTemplate = (CommonJdbcTemplate) commonJdbcTemplate;
