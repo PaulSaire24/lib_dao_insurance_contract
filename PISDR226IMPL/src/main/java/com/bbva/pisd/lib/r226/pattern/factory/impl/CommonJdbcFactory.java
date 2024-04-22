@@ -21,9 +21,9 @@ import java.util.Map;
 
 public class CommonJdbcFactory  implements BaseDAO {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JdbcUtilsFactory.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CommonJdbcFactory.class);
 
-    private CommonJdbcTemplate commonJdbcTemplate;
+    private final CommonJdbcTemplate commonJdbcTemplate;
 
     public CommonJdbcFactory(CommonJdbcTemplate commonJdbcTemplate) {
         this.commonJdbcTemplate = commonJdbcTemplate;
@@ -78,13 +78,13 @@ public class CommonJdbcFactory  implements BaseDAO {
                     .withTypeOperation(OperationConstants.Operation.SELECT).withIsForListQuery(true)
                     .withParams(conditions).build();
             result = (List<Map<String, Object>>) this.executeQuery(operation);
-            LOGGER.info("[***] OracleContractDAO executeFindReceiptByChargeEntityExtern Result - {}", result);
+            LOGGER.info("[***] ContractDAOImpl executeFindReceiptByChargeEntityExtern Result - {}", result);
         }
         return result;
     }
 
     private Long countRowsOfQuery(Map<String, Object> conditions, String queryInExecution) {
-        LOGGER.info("[***] OracleContractDAO executeQueryFindReceiptsCount [ conditions - {} ] - [ queryInExecution - {}]", conditions, queryInExecution);
+        LOGGER.info("[***] ContractDAOImpl executeQueryFindReceiptsCount [ conditions - {} ] - [ queryInExecution - {}]", conditions, queryInExecution);
         Long countResult = 0l;
         Operation operationInput = Operation.Builder.an()
                 .withQuery(FunctionUtils.generateQueryCounter(queryInExecution))
@@ -92,7 +92,7 @@ public class CommonJdbcFactory  implements BaseDAO {
                 .withParams(conditions).build();
         Map<String, Object> map = (Map<String, Object>) this.executeQuery(operationInput);
         countResult = Long.valueOf(map.get(PISDConstant.Pagination.COLUMN_COUNT).toString());
-        LOGGER.info("[***] OracleContractDAO executeQueryFindReceiptsCount countResult - {}", countResult);
+        LOGGER.info("[***] ContractDAOImpl executeQueryFindReceiptsCount countResult - {}", countResult);
         return countResult;
     }
 

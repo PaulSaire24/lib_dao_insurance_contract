@@ -18,9 +18,9 @@ import java.util.Map;
 
 public class JdbcUtilsFactory implements BaseDAO {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BaseDAO.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JdbcUtilsFactory.class);
 
-    private JdbcUtils jdbcUtils;
+    private final JdbcUtils jdbcUtils;
 
 
     @Override
