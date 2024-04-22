@@ -3,7 +3,7 @@ package com.bbva.pisd.lib.r226.impl;
 import com.bbva.elara.domain.jdbc.CommonJdbcTemplate;
 import com.bbva.pisd.dto.contract.search.ReceiptSearchCriteria;
 import com.bbva.pisd.dto.insurancedao.entities.ContractEntity;
-import com.bbva.pisd.lib.r226.dao.OracleContractDAO;
+import com.bbva.pisd.lib.r226.dao.ContractDAOImpl;
 import com.bbva.pisd.lib.r226.interfaces.ContractDAO;
 import com.bbva.pisd.lib.r226.pattern.factory.DAOFactory;
 import com.bbva.pisd.lib.r226.pattern.factory.interfaces.BaseDAO;
@@ -26,7 +26,7 @@ public class PISDR226Impl extends PISDR226Abstract {
 		LOGGER.info("[***] PISDR226Impl executeFindContractBySearchCriteria searchCriteria - {} ", JsonHelper.getInstance().toJsonString(searchCriteria));
 
 		BaseDAO daoFactory = DAOFactory.getDAOFactory(commonJdbcTemplate,jdbcUtils);
-		ContractDAO contractDAO = new OracleContractDAO(daoFactory);
+		ContractDAO contractDAO = new ContractDAOImpl(daoFactory);
 		List<ContractEntity> listContract = contractDAO.findContractBySearchCriteria(searchCriteria);
 
 		LOGGER.info("[***] PISDR226Impl executeFindReceiptByChargeEntityExtern listReceipts count {}", listContract!=null?listContract.size():0);
@@ -40,7 +40,7 @@ public class PISDR226Impl extends PISDR226Abstract {
 		LOGGER.info("[***] PISDR226Impl executeUpdateBiometricId - biometricId {} ",  biometricId);
 		LOGGER.info("[***] PISDR226Impl executeUpdateBiometricId - usuario {} ",  usuario);
 		BaseDAO baseDAO = DAOFactory.getDAOFactory(commonJdbcTemplate, jdbcUtils);
-		ContractDAO contractDAO = new OracleContractDAO(baseDAO);
+		ContractDAO contractDAO = new ContractDAOImpl(baseDAO);
 		boolean result = contractDAO.updateBiometricId(insuranceContractId,biometricId,usuario);
 		LOGGER.info("[***] PISDR226Impl executeUpdateBiometricId - {} ", result);
 		return result;
@@ -50,9 +50,22 @@ public class PISDR226Impl extends PISDR226Abstract {
 	public boolean executeFindByContract(String biometricId) {
 		LOGGER.info("[***] PISDR226Impl executeFindByContract - biometricId {} ",  biometricId);
 		BaseDAO baseDAO = DAOFactory.getDAOFactory(commonJdbcTemplate, jdbcUtils);
-		ContractDAO contractDAO = new OracleContractDAO(baseDAO);
+		ContractDAO contractDAO = new ContractDAOImpl(baseDAO);
 		boolean result = contractDAO.findByContract(biometricId);
 		LOGGER.info("[***] PISDR226Impl executeFindByContract - {} ", result);
+		return result;
+	}
+
+	@Override
+	public ContractEntity executeExistContractByIdAndProductId(String contractId, String productId) {
+		LOGGER.info("[***] PISDR226Impl executeExistContractByIdAndProductId - contractId {} ",  contractId);
+		LOGGER.info("[***] PISDR226Impl executeExistContractByIdAndProductId - productId {} ",  productId);
+
+		BaseDAO baseDAO = DAOFactory.getDAOFactory(commonJdbcTemplate, jdbcUtils);
+		ContractDAO contractDAO = new ContractDAOImpl(baseDAO);
+		ContractEntity result = contractDAO.findContractByIdAndProductId(contractId,productId);
+
+		LOGGER.info("[***] PISDR226Impl executeExistContractByIdAndProductId - {} ", result);
 		return result;
 	}
 

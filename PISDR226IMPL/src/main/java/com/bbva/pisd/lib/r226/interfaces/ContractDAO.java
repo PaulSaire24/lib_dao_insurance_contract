@@ -13,4 +13,5 @@ public interface ContractDAO {
 
     boolean updateBiometricId(String insuranceContractId, String biometricId, String usuario);
     public Boolean findByContract(String  biometricId);
+    ContractEntity findContractByIdAndProductId(String contractId, String productId);
 }

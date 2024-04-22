@@ -27,6 +27,7 @@ import org.springframework.aop.framework.Advised;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -149,6 +150,23 @@ public class PISDR226Test {
 		Mockito.when(this.jdbcUtils.queryForMap(Mockito.anyString(),Mockito.anyMap())).thenReturn(contratos);
 		boolean resp=this.pisdR226.executeFindByContract("12345678");
 		Assert.assertTrue(resp);
+	}
+
+	@Test
+	public void executeExistContractByIdAndProductIdTest(){
+		Map<String, Object> contratos = new HashMap<>();
+		contratos.put(PISDColumn.Contract.FIELD_POLICY_ID, "139383334");
+		contratos.put(PISDColumn.Contract.FIELD_INSURANCE_CONTRACT_START_DATE, "2025-01-04");
+		contratos.put(PISDColumn.Contract.FIELD_INSURANCE_CONTRACT_END_DATE, "2026-01-04");
+		contratos.put(PISDColumn.Contract.FIELD_CUSTOMER_ID, "97194649");
+		contratos.put(PISDColumn.Contract.FIELD_PREMIUM_AMOUNT, new BigDecimal(932));
+		contratos.put(PISDColumn.Contract.FIELD_INSRNC_CO_CONTRACT_STATUS_TYPE, "FOR");
+		contratos.put(PISDColumn.Contract.FIELD_CONTRACT_STATUS_ID, "FOR");
+
+		Mockito.when(this.jdbcUtils.queryForMap(Mockito.anyString(),Mockito.anyMap())).thenReturn(contratos);
+
+		ContractEntity result = this.pisdR226.executeExistContractByIdAndProductId("00110473284000037421","13");
+		Assert.assertNotNull(result);
 	}
 
 
