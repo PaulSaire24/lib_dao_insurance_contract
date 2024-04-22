@@ -57,6 +57,19 @@ public class PISDR226Impl extends PISDR226Abstract {
 	}
 
 	@Override
+	public ContractEntity executeExistContractByIdAndProductId(String contractId, String productId) {
+		LOGGER.info("[***] PISDR226Impl executeExistContractByIdAndProductId - contractId {} ",  contractId);
+		LOGGER.info("[***] PISDR226Impl executeExistContractByIdAndProductId - productId {} ",  productId);
+
+		BaseDAO baseDAO = DAOFactory.getDAOFactory(commonJdbcTemplate, jdbcUtils);
+		ContractDAO contractDAO = new OracleContractDAO(baseDAO);
+		ContractEntity result = contractDAO.findContractByIdAndProductId(contractId,productId);
+
+		LOGGER.info("[***] PISDR226Impl executeExistContractByIdAndProductId - {} ", result);
+		return result;
+	}
+
+	@Override
 	public void executeSetCommonJdbcTemplate(Object commonJdbcTemplate) {
 		this.commonJdbcTemplate = (CommonJdbcTemplate) commonJdbcTemplate;
 	}

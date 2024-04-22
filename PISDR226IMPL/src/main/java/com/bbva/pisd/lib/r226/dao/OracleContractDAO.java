@@ -2,6 +2,7 @@ package com.bbva.pisd.lib.r226.dao;
 
 import com.bbva.pisd.dto.contract.constants.PISDQueryName;
 import com.bbva.pisd.dto.contract.search.ReceiptSearchCriteria;
+import com.bbva.pisd.dto.insurancedao.constants.PISDColumn;
 import com.bbva.pisd.dto.insurancedao.constants.PISDConstant;
 import com.bbva.pisd.dto.insurancedao.entities.ContractEntity;
 import com.bbva.pisd.dto.insurancedao.operation.Operation;
@@ -9,11 +10,14 @@ import com.bbva.pisd.dto.insurancedao.operation.OperationConstants;
 import com.bbva.pisd.lib.r226.interfaces.ContractDAO;
 import com.bbva.pisd.lib.r226.pattern.factory.impl.CommonJdbcFactory;
 import com.bbva.pisd.lib.r226.pattern.factory.interfaces.BaseDAO;
+import com.bbva.pisd.lib.r226.transfor.bean.ContractTransformBean;
 import com.bbva.pisd.lib.r226.transfor.list.ContractTransformList;
 import com.bbva.pisd.lib.r226.transfor.map.ContractTransformMap;
 import com.bbva.pisd.lib.r226.transfor.map.ReceiptTransformMap;
 import com.bbva.pisd.lib.r226.util.FunctionUtils;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.CollectionUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +31,7 @@ public class OracleContractDAO implements ContractDAO {
     private static final String COUNT="COUNT";
     private static final String PISD_SQL_UPDATE_BIOMETRIC="PISD.SQL_UPDATE.BIOMETRIC";
     private static final String PISD_SQL_SELECT_CONTRACT="PISD.SQL_SELECT_CONTRACT";
+    private static final String PISD_SQL_SELECT_CONTRACT_BY_ID_AND_PRODUCT = "PISD.FIND_CONTRACT_REGISTERED";
 
     private BaseDAO baseDAO;
 
@@ -96,5 +101,36 @@ public class OracleContractDAO implements ContractDAO {
         }
         LOGGER.info("[***] OracleContractDAO updateCardDataInContract result - {} ", resp);
         return resp;
+    }
+
+    @Override
+    public ContractEntity findContractByIdAndProductId(String contractId, String productId) {
+        LOGGER.info("[***] OracleContractDAO findContractByIdAndProductId - {} ", contractId);
+        LOGGER.info("[***] OracleContractDAO findContractByIdAndProductId - {} ", productId);
+
+        ContractEntity contractEntity = null;
+        Map<String,Object> parameters = ContractTransformMap.transformContractByIdAndProductMap(contractId,productId);
+
+        if(FunctionUtils.parametersIsValid(parameters, PISDColumn.Contract.FIELD_INSURANCE_CONTRACT_ENTITY_ID,
+                PISDColumn.Contract.FIELD_INSURANCE_CONTRACT_BRANCH_ID,
+                PISDColumn.Contract.FIELD_INSRC_CONTRACT_INT_ACCOUNT_ID,
+                PISDColumn.Contract.FIELD_INSURANCE_PRODUCT_ID)){
+
+            Operation operation = Operation.Builder.an()
+                    .withTypeOperation(OperationConstants.Operation.SELECT)
+                    .withNameProp(PISD_SQL_SELECT_CONTRACT_BY_ID_AND_PRODUCT)
+                    .withIsForListQuery(false)
+                    .withParams(parameters)
+                    .build();
+
+            Map<String,Object> map = (Map<String,Object>) this.baseDAO.executeQuery(operation);
+
+            if(!CollectionUtils.isEmpty(map)){
+                contractEntity = ContractTransformBean.mapTransformContractEntity(map).build();
+            }
+        }
+
+        return contractEntity;
+
     }
 }
