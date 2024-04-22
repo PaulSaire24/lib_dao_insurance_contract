@@ -27,13 +27,13 @@ import static com.bbva.pisd.dto.insurancedao.constants.PISDColumn.Contract.FIELD
 import static com.bbva.pisd.dto.insurancedao.constants.PISDColumn.Receipt.FIELD_RECEIPT_STATUS_TYPE;
 
 public class OracleContractDAO implements ContractDAO {
-    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(ContractDAO.class);
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(OracleContractDAO.class);
     private static final String COUNT="COUNT";
     private static final String PISD_SQL_UPDATE_BIOMETRIC="PISD.SQL_UPDATE.BIOMETRIC";
     private static final String PISD_SQL_SELECT_CONTRACT="PISD.SQL_SELECT_CONTRACT";
     private static final String PISD_SQL_SELECT_CONTRACT_BY_ID_AND_PRODUCT = "PISD.FIND_CONTRACT_REGISTERED";
 
-    private BaseDAO baseDAO;
+    private final BaseDAO baseDAO;
 
     public OracleContractDAO(BaseDAO baseDAO) {
         this.baseDAO = baseDAO;

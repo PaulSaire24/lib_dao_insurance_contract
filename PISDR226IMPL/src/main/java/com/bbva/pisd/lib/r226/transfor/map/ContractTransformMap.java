@@ -2,6 +2,8 @@ package com.bbva.pisd.lib.r226.transfor.map;
 import com.bbva.pisd.dto.insurancedao.constants.PISDColumn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,7 +45,7 @@ public class ContractTransformMap {
         arguments.put(PISDColumn.Contract.FIELD_INSURANCE_CONTRACT_ENTITY_ID, contractId.substring(0,4));
         arguments.put(PISDColumn.Contract.FIELD_INSURANCE_CONTRACT_BRANCH_ID, contractId.substring(4,8));
         arguments.put(PISDColumn.Contract.FIELD_INSRC_CONTRACT_INT_ACCOUNT_ID,contractId.substring(10));
-        arguments.put(PISDColumn.Contract.FIELD_INSURANCE_PRODUCT_ID, productId);
+        arguments.put(PISDColumn.Contract.FIELD_INSURANCE_PRODUCT_ID, new BigDecimal(productId));
 
         LOGGER.info("[***] ContractTransformMap transformContractByIdAndProductMap arguments - {} ", arguments);
         return arguments;
