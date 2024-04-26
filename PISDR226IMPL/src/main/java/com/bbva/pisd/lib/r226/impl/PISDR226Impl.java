@@ -3,8 +3,11 @@ package com.bbva.pisd.lib.r226.impl;
 import com.bbva.elara.domain.jdbc.CommonJdbcTemplate;
 import com.bbva.pisd.dto.contract.search.ReceiptSearchCriteria;
 import com.bbva.pisd.dto.insurancedao.entities.ContractEntity;
+import com.bbva.pisd.dto.insurancedao.entities.PaymentPeriodEntity;
 import com.bbva.pisd.lib.r226.dao.ContractDAOImpl;
+import com.bbva.pisd.lib.r226.dao.PaymentPeriodImpl;
 import com.bbva.pisd.lib.r226.interfaces.ContractDAO;
+import com.bbva.pisd.lib.r226.interfaces.PaymentPeriodDAO;
 import com.bbva.pisd.lib.r226.pattern.factory.DAOFactory;
 import com.bbva.pisd.lib.r226.pattern.factory.interfaces.BaseDAO;
 import com.bbva.pisd.lib.r226.util.JsonHelper;
@@ -12,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * The PISDR226Impl class...
@@ -66,6 +70,36 @@ public class PISDR226Impl extends PISDR226Abstract {
 		ContractEntity result = contractDAO.findContractByIdAndProductId(contractId,productId);
 
 		LOGGER.info("[***] PISDR226Impl executeExistContractByIdAndProductId - {} ", result);
+		return result;
+	}
+
+	@Override
+	public boolean executeFindQuotationIfExistInContract(String quotationId) {
+		LOGGER.info("[***] PISDR226Impl executeFindQuotationIfExistInContract - quotationId: {} ",  quotationId);
+		BaseDAO baseDAO = DAOFactory.getDAOFactory(commonJdbcTemplate, jdbcUtils);
+		ContractDAO contractDAO = new ContractDAOImpl(baseDAO);
+		boolean result = contractDAO.findQuotationExistInContract(quotationId);
+		LOGGER.info("[***] PISDR226Impl executeFindQuotationIfExistInContract - {} ", result);
+		return result;
+	}
+
+	@Override
+	public PaymentPeriodEntity executeFindPaymentPeriodByType(String paymentFrequencyType) {
+		LOGGER.info("[***] PISDR226Impl executeFindPaymentPeriodByType - paymentFrequencyType: {} ",  paymentFrequencyType);
+		BaseDAO baseDAO = DAOFactory.getDAOFactory(commonJdbcTemplate, jdbcUtils);
+		PaymentPeriodDAO paymentPeriodDAO = new PaymentPeriodImpl(baseDAO);
+		PaymentPeriodEntity result = paymentPeriodDAO.findPaymentPeriodByType(paymentFrequencyType);
+		LOGGER.info("[***] PISDR226Impl executeFindPaymentPeriodByType - {} ", result);
+		return result;
+	}
+
+	@Override
+	public int executeInsertInsuranceContract(Map<String, Object> map) {
+		LOGGER.info("[***] PISDR226Impl executeInsertInsuranceContract - START");
+		BaseDAO baseDAO = DAOFactory.getDAOFactory(commonJdbcTemplate, jdbcUtils);
+		ContractDAO contractDAO = new ContractDAOImpl(baseDAO);
+		int result = contractDAO.insertInsuranceQuotation(map);
+		LOGGER.info("[***] PISDR226Impl executeInsertInsuranceContract - result {} ", result);
 		return result;
 	}
 
