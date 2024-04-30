@@ -13,7 +13,4 @@ public interface ContractDAO {
 
     boolean updateBiometricId(String insuranceContractId, String biometricId, String usuario);
     public Boolean findByContract(String  biometricId);
-    ContractEntity findContractByIdAndProductId(String contractId, String productId);
-    boolean findQuotationExistInContract(String quotationId);
-    int insertInsuranceQuotation(Map<String,Object> map);
 }

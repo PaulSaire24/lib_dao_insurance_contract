@@ -12,15 +12,9 @@ import java.util.Map;
  */
 public interface PISDR226 {
 
-
 	void executeSetCommonJdbcTemplate(Object commonJdbcTemplate);
 	List<ContractEntity> executeFindContractBySearchCriteria(ReceiptSearchCriteria SearchCriteria);
 	boolean executeUpdateBiometricId(String insuranceContractId, String biometricId, String usuario);
 	public boolean executeFindByContract(String biometricId);
-	ContractEntity executeExistContractByIdAndProductId(String contractId, String productId);
-	boolean executeFindQuotationIfExistInContract(String quotationId);
-	PaymentPeriodEntity executeFindPaymentPeriodByType(String paymentFrequencyType);
-	int executeInsertInsuranceContract(Map<String,Object> map);
-
 
 }
