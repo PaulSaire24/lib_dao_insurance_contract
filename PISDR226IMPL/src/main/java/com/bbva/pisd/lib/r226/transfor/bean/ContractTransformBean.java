@@ -2,8 +2,6 @@ package com.bbva.pisd.lib.r226.transfor.bean;
 
 import com.bbva.pisd.dto.insurancedao.constants.PISDColumn;
 import com.bbva.pisd.dto.insurancedao.entities.ContractEntity;
-import com.bbva.pisd.dto.insurancedao.entities.ReceiptEntity;
-import com.bbva.pisd.lib.r226.transfor.list.ContractTransformList;
 import com.bbva.pisd.lib.r226.transfor.list.ReceiptTransformList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +11,10 @@ import java.util.Map;
 import java.util.Objects;
 
 public class ContractTransformBean {
+
+    private ContractTransformBean(){
+
+    }
     private static final Logger LOGGER = LoggerFactory.getLogger(ContractTransformBean.class);
 
     public static ContractEntity mapTransformContractEntityAndReceiptEntity(Map<String,Object> contract,List<Map<String,Object>>receipts){

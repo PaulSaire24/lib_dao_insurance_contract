@@ -12,6 +12,10 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 public class ContractTransformList {
+
+    private ContractTransformList(){
+
+    }
     private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(ContractTransformList.class);
 
     public static List<ContractEntity> transformListMapToListContractEntity(List<Map<String, Object>> listContractMap){

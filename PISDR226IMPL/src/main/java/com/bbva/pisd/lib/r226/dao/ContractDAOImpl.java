@@ -2,7 +2,6 @@ package com.bbva.pisd.lib.r226.dao;
 
 import com.bbva.pisd.dto.contract.constants.PISDQueryName;
 import com.bbva.pisd.dto.contract.search.ReceiptSearchCriteria;
-import com.bbva.pisd.dto.insurancedao.constants.PISDColumn;
 import com.bbva.pisd.dto.insurancedao.constants.PISDConstant;
 import com.bbva.pisd.dto.insurancedao.entities.ContractEntity;
 import com.bbva.pisd.dto.insurancedao.operation.Operation;
@@ -10,16 +9,13 @@ import com.bbva.pisd.dto.insurancedao.operation.OperationConstants;
 import com.bbva.pisd.lib.r226.interfaces.ContractDAO;
 import com.bbva.pisd.lib.r226.pattern.factory.impl.CommonJdbcFactory;
 import com.bbva.pisd.lib.r226.pattern.factory.interfaces.BaseDAO;
-import com.bbva.pisd.lib.r226.transfor.bean.ContractTransformBean;
 import com.bbva.pisd.lib.r226.transfor.list.ContractTransformList;
 import com.bbva.pisd.lib.r226.transfor.map.ContractTransformMap;
 import com.bbva.pisd.lib.r226.transfor.map.ReceiptTransformMap;
 import com.bbva.pisd.lib.r226.util.FunctionUtils;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -30,13 +26,9 @@ import static com.bbva.pisd.dto.insurancedao.constants.PISDColumn.Receipt.FIELD_
 public class ContractDAOImpl implements ContractDAO {
     private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(ContractDAOImpl.class);
     private static final String COUNT="COUNT";
-    private static final String RESULT_NUMBER = "RESULT_NUMBER";
     private static final String PISD_SQL_UPDATE_BIOMETRIC="PISD.SQL_UPDATE.BIOMETRIC";
     private static final String PISD_SQL_SELECT_CONTRACT="PISD.SQL_SELECT_CONTRACT";
-    private static final String PISD_SQL_SELECT_CONTRACT_BY_ID_AND_PRODUCT = "PISD.FIND_CONTRACT_REGISTERED";
-    private static final String PISD_VALIDATE_IF_QUOTATION_EXISTS_IN_CONTRACT =
-            "PISD.VALIDATE_IF_QUOTATION_EXISTS_IN_CONTRACT";
-    private static final String PISD_INSERT_INSURANCE_CONTRACT = "PISD.INSERT_INSURANCE_CONTRACT";
+
 
     private final BaseDAO baseDAO;
 

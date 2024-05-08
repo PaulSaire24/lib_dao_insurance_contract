@@ -2,19 +2,18 @@ package com.bbva.pisd.lib.r226.transfor.bean;
 
 
 import com.bbva.pisd.dto.insurancedao.constants.PISDColumn;
-import com.bbva.pisd.dto.insurancedao.entities.ContractEntity;
 import com.bbva.pisd.dto.insurancedao.entities.ReceiptEntity;
 import com.bbva.pisd.lib.r226.util.FunctionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class ReceiptTransformBean {
+
+    private ReceiptTransformBean(){
+
+    }
     private static final Logger LOGGER = LoggerFactory.getLogger(ReceiptTransformBean.class);
 
     public static ReceiptEntity mapTransformReceiptEntity(Map<String, Object> map){

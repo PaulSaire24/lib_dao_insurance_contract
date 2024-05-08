@@ -1,13 +1,18 @@
 package com.bbva.pisd.lib.r226;
 
+import com.bbva.apx.exception.db.NoResultException;
 import com.bbva.elara.configuration.manager.application.ApplicationConfigurationService;
 import com.bbva.elara.domain.jdbc.CommonJdbcTemplate;
 import com.bbva.elara.domain.transaction.Context;
 import com.bbva.elara.domain.transaction.ThreadContext;
 import javax.annotation.Resource;
 
+import com.bbva.pisd.dto.contract.common.ReceiptDTO;
 import com.bbva.pisd.dto.insurancedao.entities.PaymentPeriodEntity;
 import com.bbva.pisd.lib.r226.pattern.factory.impl.JdbcUtilsFactory;
+import com.bbva.pisd.lib.r226.transfor.map.ReceiptTransformMap;
+import com.bbva.pisd.lib.r226.util.CatalogEnum;
+import com.bbva.pisd.lib.r226.util.Properties;
 import org.mockito.Mockito;
 import com.bbva.elara.utility.jdbc.JdbcUtils;
 import com.bbva.pisd.dto.contract.constants.PISDStatus;
@@ -16,6 +21,7 @@ import com.bbva.pisd.dto.contract.search.ReceiptSearchCriteria;
 import com.bbva.pisd.dto.insurancedao.constants.PISDColumn;
 import com.bbva.pisd.dto.insurancedao.constants.PISDConstant;
 import com.bbva.pisd.dto.insurancedao.entities.ContractEntity;
+import com.bbva.pisd.lib.r226.pattern.factory.impl.CommonJdbcFactory;
 import com.bbva.pisd.lib.r226.pattern.factory.impl.CommonJdbcFactory;
 import org.junit.Assert;
 import org.junit.Before;
@@ -31,6 +37,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigDecimal;
 import java.util.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.mockito.Matchers.anyMap;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -190,5 +202,116 @@ public class PISDR226Test {
 		return receiptSearchCriteria;
 
 	}
-	
+
+
+	@Test
+	public void executeGetRoyalPolicyDetailTest(){
+		/**
+		 *  Context
+		 * */
+
+		String contractNumber = "01234567890123456789";
+
+		Map<String, Object> arg = new HashMap<>();
+		arg.put(CatalogEnum.RECEIPT_STATUS_TYPE.name(), CatalogEnum.INC.name());
+
+		List<Map<String, Object>> list = new ArrayList<>();
+		list.add(arg);
+
+		Mockito.when(jdbcUtils.queryForList(Mockito.anyString(),Mockito.anyMap())).thenReturn(list);
+
+		List<Map<String, Object>> listContract2 = this.pisdR226.executeGetRoyalPolicyDetail(contractNumber);
+		Assert.assertNotNull(listContract2);
+
+		/**
+		 * Ejecución
+		 * */
+
+
+	}
+
+	@Test
+	public void executeGetRoyalPolicyDetailTestCatch(){
+
+		/**
+		 *  Context
+		 * */
+
+		String contractNumber = "01234567890123456789";
+
+		when(jdbcUtils.queryForList(Mockito.anyString(),Mockito.anyMap())).thenThrow(new NoResultException("NO RESULT"));
+		List<Map<String, Object>> validation = this.pisdR226.executeGetRoyalPolicyDetail(contractNumber);
+		assertEquals(0, validation.size());
+
+		/**
+		 * Ejecución
+		 * */
+
+	}
+
+	@Test
+	public void executeGetReceiptsTest(){
+		/**
+		 *  Context
+		 * */
+
+		String contractNumber = "01234567890123456789";
+
+		Map<String, Object> arg = new HashMap<>();
+		arg.put(CatalogEnum.RECEIPT_STATUS_TYPE.name(), CatalogEnum.INC.name());
+
+		List<Map<String, Object>> list = new ArrayList<>();
+		list.add(arg);
+
+		Mockito.when(jdbcUtils.queryForList(Mockito.anyString(),Mockito.anyMap())).thenReturn(list);
+
+		List<ReceiptDTO> listContract2 = this.pisdR226.executeGetReceipts(contractNumber);
+		Assert.assertNotNull(listContract2);
+
+		/**
+		 * Ejecución
+		 * */
+
+	}
+
+	@Test
+	public void executeGetReceiptsTestCatch(){
+
+		/**
+		 *  Context
+		 * */
+		String contractNumber = "01234567890123456789";
+
+		when(jdbcUtils.queryForList(Mockito.anyString(),Mockito.anyMap())).thenThrow(new NoResultException("NO RESULT"));
+		List<ReceiptDTO> validation = this.pisdR226.executeGetReceipts(contractNumber);
+		assertEquals(0, validation.size());
+
+		/**
+		 * Ejecución
+		 * */
+
+	}
+
+	@Test
+	public void receiptSearchTransformMapNullTest(){
+
+		/**
+		 *  Context
+		 * */
+
+		String contractNumber = "012345678901234567890";
+		Map<String, Object> validation = ReceiptTransformMap.receiptSearchTransformMap(contractNumber);
+		assertEquals(Collections.emptyMap(),validation);
+
+		/**
+		 * Ejecución
+		 * */
+
+	}
+
+
+
+
+
+
 }
