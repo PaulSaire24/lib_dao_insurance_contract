@@ -13,7 +13,6 @@ import com.bbva.pisd.lib.r226.pattern.factory.impl.JdbcUtilsFactory;
 import com.bbva.pisd.lib.r226.transfor.list.ReceiptTransformList;
 import com.bbva.pisd.lib.r226.transfor.map.ReceiptTransformMap;
 import com.bbva.pisd.lib.r226.util.CatalogEnum;
-import com.bbva.pisd.lib.r226.util.Properties;
 import org.mockito.Mockito;
 import com.bbva.elara.utility.jdbc.JdbcUtils;
 import com.bbva.pisd.dto.contract.constants.PISDStatus;
@@ -23,12 +22,10 @@ import com.bbva.pisd.dto.insurancedao.constants.PISDColumn;
 import com.bbva.pisd.dto.insurancedao.constants.PISDConstant;
 import com.bbva.pisd.dto.insurancedao.entities.ContractEntity;
 import com.bbva.pisd.lib.r226.pattern.factory.impl.CommonJdbcFactory;
-import com.bbva.pisd.lib.r226.pattern.factory.impl.CommonJdbcFactory;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.springframework.aop.framework.Advised;
@@ -40,9 +37,8 @@ import java.math.BigDecimal;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
-
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -310,6 +306,74 @@ public class PISDR226Test {
 	}
 
 	@Test
+	public void executeExistContractByIdAndProductIdTest(){
+		Map<String, Object> contratos = new HashMap<>();
+		contratos.put(PISDColumn.Contract.FIELD_POLICY_ID, "139383334");
+		contratos.put(PISDColumn.Contract.FIELD_INSURANCE_CONTRACT_START_DATE, "2025-01-04");
+		contratos.put(PISDColumn.Contract.FIELD_INSURANCE_CONTRACT_END_DATE, "2026-01-04");
+		contratos.put(PISDColumn.Contract.FIELD_CUSTOMER_ID, "97194649");
+		contratos.put(PISDColumn.Contract.FIELD_PREMIUM_AMOUNT, new BigDecimal(932));
+		contratos.put(PISDColumn.Contract.FIELD_INSRNC_CO_CONTRACT_STATUS_TYPE, "FOR");
+		contratos.put(PISDColumn.Contract.FIELD_CONTRACT_STATUS_ID, "FOR");
+
+		Mockito.when(this.jdbcUtils.queryForMap(Mockito.anyString(),Mockito.anyMap())).thenReturn(contratos);
+
+		ContractEntity result = this.pisdR226.executeExistContractByIdAndProductId("00110473284000037421","13");
+		Assert.assertNotNull(result);
+	}
+
+	@Test
+	public void executeFindQuotationIfExistInContractTest(){
+
+		Map<String, Object> contratos = new HashMap<>();
+		contratos.put("RESULT_NUMBER",1);
+
+		Mockito.when(this.jdbcUtils.queryForMap(Mockito.anyString(),Mockito.anyMap())).thenReturn(contratos);
+
+		boolean resp = this.pisdR226.executeFindQuotationIfExistInContract("12345678");
+
+		Assert.assertTrue(resp);
+
+	}
+
+	@Test
+	public void executeFindPaymentPeriodByTypeTest(){
+		Map<String, Object> mapResult = new HashMap<>();
+		mapResult.put(PISDColumn.PaymentPeriod.FIELD_PAYMENT_FREQUENCY_ID, 1);
+		mapResult.put(PISDColumn.PaymentPeriod.FIELD_POLICY_PAYMENT_FREQUENCY_TYPE, "M");
+		mapResult.put(PISDColumn.PaymentPeriod.FIELD_PAYMENT_FREQUENCY_NAME, "Mensual");
+
+		Mockito.when(this.jdbcUtils.queryForMap(Mockito.anyString(),Mockito.anyMap())).thenReturn(mapResult);
+
+		PaymentPeriodEntity result = this.pisdR226.executeFindPaymentPeriodByType("M");
+
+		Assert.assertNotNull(result);
+	}
+
+	@Test
+	public void executeInsertInsuranceContractTest(){
+		Map<String, Object> map = new HashMap<>();
+		map.put(PISDColumn.Contract.FIELD_INSURANCE_CONTRACT_ENTITY_ID, "0011");
+		map.put(PISDColumn.Contract.FIELD_INSURANCE_CONTRACT_BRANCH_ID, "0846");
+		map.put(PISDColumn.Contract.FIELD_INSRC_CONTRACT_INT_ACCOUNT_ID, "1009836432");
+		map.put(PISDColumn.Contract.FIELD_INSURANCE_CONTRACT_START_DATE, "19/05/21");
+		map.put(PISDColumn.Contract.FIELD_INSURANCE_CONTRACT_END_DATE, "19/05/22");
+		map.put(PISDColumn.Contract.FIELD_CUSTOMER_ID, "12345678");
+		map.put(PISDColumn.Contract.FIELD_PREMIUM_AMOUNT, 123.0);
+		map.put(PISDColumn.Contract.FIELD_INSRNC_CO_CONTRACT_STATUS_TYPE, "FOR");
+		map.put(PISDColumn.Contract.FIELD_AUDIT_DATE, "19/05/21 04:20:49,151987000 PM");
+		map.put(PISDColumn.Contract.FIELD_USER_AUDIT_ID, "p121328");
+		map.put(PISDColumn.Contract.FIELD_CONTRACT_STATUS_ID, "FOR");
+		map.put(PISDColumn.Contract.FIELD_INSURANCE_PRODUCT_ID, 13);
+
+		Mockito.when(this.jdbcUtils.update(Mockito.anyString(),Mockito.anyMap())).thenReturn(1);
+
+		int result = this.pisdR226.executeInsertInsuranceContract(map);
+
+		Assert.assertEquals(1,result);
+
+	}
+	@Test
 	public void testGetDetailMappedWithEmptyList() {
 
 		/**
@@ -325,14 +389,5 @@ public class PISDR226Test {
 		 * */
 
 	}
-
-
-
-
-
-
-
-
-
 
 }

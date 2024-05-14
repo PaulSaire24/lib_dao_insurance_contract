@@ -3,6 +3,7 @@ package com.bbva.pisd.lib.r226.util;
 import com.bbva.pisd.dto.contract.constants.PISDQueryName;
 import com.bbva.pisd.dto.insurancedao.constants.PISDConstant;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Map;
 import java.util.Arrays;
@@ -54,6 +55,23 @@ public class FunctionUtils {
         Date fecha = (Date) objeto;
         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         return formatoFecha.format(fecha);
+    }
+
+    public static BigDecimal convertObjectToBigdecimal(Object value){
+        BigDecimal ret = null;
+        if(value != null){
+            if(value instanceof BigDecimal){
+                ret = (BigDecimal) value;
+            }else if(value instanceof String){
+                ret = new BigDecimal((String) value);
+            }else if(value instanceof Double){
+                ret = BigDecimal.valueOf(((Double) value).doubleValue());
+            }else if(value instanceof Integer){
+                ret = BigDecimal.valueOf((Integer) value);
+            }
+        }
+
+        return ret;
     }
 
 }
