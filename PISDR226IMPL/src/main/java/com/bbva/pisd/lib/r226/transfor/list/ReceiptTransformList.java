@@ -29,36 +29,13 @@ public class ReceiptTransformList {
         return listReceiptMap.stream().map(ReceiptTransformBean::mapTransformReceiptEntity).collect(Collectors.toList());
     }
 
-    public static List<ReceiptDTO> getDetailMapped(List<Map<String, Object>> rawDetail) {
 
-        LOGGER.info("***** PISDR226Impl - getDetailMapped : {} *****", rawDetail);
-
-        List<ReceiptDTO> receipts = new ArrayList<>();
-
-        rawDetail.forEach(map -> {
-
-            ReceiptDTO re = ReceiptDTO.Builder.an()
-                    .insuranceContractEntityId((String) map.get(CatalogEnum.INSURANCE_CONTRACT_ENTITY_ID.getValue()))
-                    .insuranceContractBranchId((String) map.get(CatalogEnum.INSURANCE_CONTRACT_BRANCH_ID.getValue()))
-                    .insrcContractIntAccountId((String) map.get(CatalogEnum.INSRC_CONTRACT_INT_ACCOUNT_ID.getValue()))
-                    .policyReceiptId(FunctionUtils.mapConvertToInteger(CatalogEnum.POLICY_RECEIPT_ID.getValue(),map))
-                    .premiumPaymentReceiptAmount(FunctionUtils.mapConvertToDouble(CatalogEnum.PREMIUM_PAYMENT_RECEIPT_AMOUNT.getValue(),map))
-                    .insrncCoReceiptStatusType((String) map.get(CatalogEnum.INSRNC_CO_RECEIPT_STATUS_TYPE.getValue()))
-                    .receiptStatusType((String) map.get(CatalogEnum.RECEIPT_STATUS_TYPE.getValue()))
-                    .renewalReceiptSeqNumber(FunctionUtils.mapConvertToInteger(CatalogEnum.RENEWAL_RECEIPT_SEQ_NUMBER.getValue(),map))
-                    .renewalNumber(FunctionUtils.mapConvertToInteger(CatalogEnum.RENEWAL_NUMBER.getValue(),map))
-                    .receiptIssueDate((String) map.get(CatalogEnum.RECEIPT_ISSUE_DATE.getValue()))
-                    .receiptStartDate((String) map.get(CatalogEnum.RECEIPT_START_DATE.getValue()))
-                    .receiptEndDate((String) map.get(CatalogEnum.RECEIPT_END_DATE.getValue()))
-                    .receiptExpirationDate((String) map.get(CatalogEnum.RECEIPT_EXPIRATION_DATE.getValue()))
-                    .build();
-
-            receipts.add(re);
-
-        });
-
-        return receipts;
-
+    public static List<ReceiptDTO> transformListMapToListReceiptDTO(List<Map<String, Object>> listReceipt){
+        LOGGER.info("[***] ReceiptTransformList transformListMapToListReceiptDTO listReceipt - {} ", listReceipt);
+        if(CollectionUtils.isEmpty(listReceipt)){
+            return new ArrayList<>();
+        }
+        return listReceipt.stream().map(ReceiptTransformBean::mapTransformReceiptDTO).collect(Collectors.toList());
     }
 
 

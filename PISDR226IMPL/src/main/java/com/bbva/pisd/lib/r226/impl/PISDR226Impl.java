@@ -71,7 +71,7 @@ public class PISDR226Impl extends PISDR226Abstract {
 	public List<Map<String, Object>> executeGetRoyalPolicyDetail(String contractNumber) {
 		LOGGER.info("***** PISDR103Impl - executeGetRoyalPolicyDetail START  *****  contractNumber: {}", contractNumber);
 
-		Map<String, Object> param = ReceiptTransformMap.receiptSearchTransformMap(contractNumber);
+		Map<String, Object> param = ReceiptTransformMap.mapContractNumber(contractNumber);
 		if (param == null) { return new ArrayList<>(); }
 
 		List<Map<String, Object>> response = new ArrayList<>();
@@ -91,13 +91,13 @@ public class PISDR226Impl extends PISDR226Abstract {
 
 		List<ReceiptDTO> response = new ArrayList<>();
 
-		Map<String, Object> param = ReceiptTransformMap.receiptSearchTransformMap(contractNumber);
+		Map<String, Object> param = ReceiptTransformMap.mapContractNumber(contractNumber);
 		if (param.isEmpty() || param == null) { return new ArrayList<>(); }
 
 		List<Map<String, Object>> list = new ArrayList<>();
 		try {
 			list = this.jdbcUtils.queryForList(Properties.QUERY_SELECT_INSRC_RECEIPTS_DETAIL.getValue(), param);
-			response = ReceiptTransformList.getDetailMapped(list);
+			response = ReceiptTransformList.transformListMapToListReceiptDTO(list);
 
 		} catch(NoResultException ex) {
 			LOGGER.info("PISDR103Impl - executeGetReceipts - QUERY EMPTY RESULT [PISD.SELECT_INSURANCE_RECEIPTS_DETAIL]");

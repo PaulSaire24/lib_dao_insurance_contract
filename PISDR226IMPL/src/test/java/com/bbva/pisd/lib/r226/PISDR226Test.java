@@ -10,9 +10,9 @@ import javax.annotation.Resource;
 import com.bbva.pisd.dto.contract.common.ReceiptDTO;
 import com.bbva.pisd.dto.insurancedao.entities.PaymentPeriodEntity;
 import com.bbva.pisd.lib.r226.pattern.factory.impl.JdbcUtilsFactory;
+import com.bbva.pisd.lib.r226.transfor.list.ReceiptTransformList;
 import com.bbva.pisd.lib.r226.transfor.map.ReceiptTransformMap;
 import com.bbva.pisd.lib.r226.util.CatalogEnum;
-import com.bbva.pisd.lib.r226.util.Properties;
 import org.mockito.Mockito;
 import com.bbva.elara.utility.jdbc.JdbcUtils;
 import com.bbva.pisd.dto.contract.constants.PISDStatus;
@@ -22,12 +22,10 @@ import com.bbva.pisd.dto.insurancedao.constants.PISDColumn;
 import com.bbva.pisd.dto.insurancedao.constants.PISDConstant;
 import com.bbva.pisd.dto.insurancedao.entities.ContractEntity;
 import com.bbva.pisd.lib.r226.pattern.factory.impl.CommonJdbcFactory;
-import com.bbva.pisd.lib.r226.pattern.factory.impl.CommonJdbcFactory;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.springframework.aop.framework.Advised;
@@ -39,10 +37,8 @@ import java.math.BigDecimal;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.mockito.Matchers.anyMap;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -155,7 +151,7 @@ public class PISDR226Test {
 		Mockito.when(this.jdbcUtils.update(Mockito.anyString(),Mockito.anyMap())).thenReturn(1);
 		this.pisdR226.executeSetCommonJdbcTemplate(null);
 		boolean result2 = this.pisdR226.executeUpdateBiometricId("12345678901234567890","12345678","1234");
-		Assert.assertTrue(result2);
+		assertTrue(result2);
 
 	}
 	@Test
@@ -164,7 +160,7 @@ public class PISDR226Test {
 		contratos.put("COUNT",1);
 		Mockito.when(this.jdbcUtils.queryForMap(Mockito.anyString(),Mockito.anyMap())).thenReturn(contratos);
 		boolean resp=this.pisdR226.executeFindByContract("12345678");
-		Assert.assertTrue(resp);
+		assertTrue(resp);
 	}
 
 	private Map<String,Object> getMockMapQueryFindReceiptsSuccessFull(){
@@ -300,7 +296,7 @@ public class PISDR226Test {
 		 * */
 
 		String contractNumber = "012345678901234567890";
-		Map<String, Object> validation = ReceiptTransformMap.receiptSearchTransformMap(contractNumber);
+		Map<String, Object> validation = ReceiptTransformMap.mapContractNumber(contractNumber);
 		assertEquals(Collections.emptyMap(),validation);
 
 		/**
@@ -377,8 +373,21 @@ public class PISDR226Test {
 		Assert.assertEquals(1,result);
 
 	}
+	@Test
+	public void testGetDetailMappedWithEmptyList() {
 
+		/**
+		 *  Context
+		 * */
 
+		List<Map<String, Object>> emptyList = Collections.emptyList();
+		List<ReceiptDTO> result = ReceiptTransformList.transformListMapToListReceiptDTO(emptyList);
+		assertTrue("The result should be an empty list", result.isEmpty());
 
+		/**
+		 * Ejecución
+		 * */
+
+	}
 
 }
