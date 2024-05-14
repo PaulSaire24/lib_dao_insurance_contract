@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import com.bbva.pisd.dto.contract.common.ReceiptDTO;
 import com.bbva.pisd.dto.insurancedao.entities.PaymentPeriodEntity;
 import com.bbva.pisd.lib.r226.pattern.factory.impl.JdbcUtilsFactory;
+import com.bbva.pisd.lib.r226.transfor.list.ReceiptTransformList;
 import com.bbva.pisd.lib.r226.transfor.map.ReceiptTransformMap;
 import com.bbva.pisd.lib.r226.util.CatalogEnum;
 import com.bbva.pisd.lib.r226.util.Properties;
@@ -39,9 +40,8 @@ import java.math.BigDecimal;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.mockito.Matchers.anyMap;
-import static org.mockito.Matchers.anyString;
+
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -155,7 +155,7 @@ public class PISDR226Test {
 		Mockito.when(this.jdbcUtils.update(Mockito.anyString(),Mockito.anyMap())).thenReturn(1);
 		this.pisdR226.executeSetCommonJdbcTemplate(null);
 		boolean result2 = this.pisdR226.executeUpdateBiometricId("12345678901234567890","12345678","1234");
-		Assert.assertTrue(result2);
+		assertTrue(result2);
 
 	}
 	@Test
@@ -164,7 +164,7 @@ public class PISDR226Test {
 		contratos.put("COUNT",1);
 		Mockito.when(this.jdbcUtils.queryForMap(Mockito.anyString(),Mockito.anyMap())).thenReturn(contratos);
 		boolean resp=this.pisdR226.executeFindByContract("12345678");
-		Assert.assertTrue(resp);
+		assertTrue(resp);
 	}
 
 	private Map<String,Object> getMockMapQueryFindReceiptsSuccessFull(){
@@ -300,7 +300,7 @@ public class PISDR226Test {
 		 * */
 
 		String contractNumber = "012345678901234567890";
-		Map<String, Object> validation = ReceiptTransformMap.receiptSearchTransformMap(contractNumber);
+		Map<String, Object> validation = ReceiptTransformMap.mapContractNumber(contractNumber);
 		assertEquals(Collections.emptyMap(),validation);
 
 		/**
@@ -308,6 +308,27 @@ public class PISDR226Test {
 		 * */
 
 	}
+
+	@Test
+	public void testGetDetailMappedWithEmptyList() {
+
+		/**
+		 *  Context
+		 * */
+
+		List<Map<String, Object>> emptyList = Collections.emptyList();
+		List<ReceiptDTO> result = ReceiptTransformList.transformListMapToListReceiptDTO(emptyList);
+		assertTrue("The result should be an empty list", result.isEmpty());
+
+		/**
+		 * Ejecución
+		 * */
+
+	}
+
+
+
+
 
 
 
