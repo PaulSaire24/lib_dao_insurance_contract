@@ -18,7 +18,6 @@ import com.bbva.pisd.lib.r226.util.FunctionUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -49,8 +48,8 @@ public class ContractDAOImpl implements ContractDAO {
     public List<ContractEntity> findContractBySearchCriteria(ReceiptSearchCriteria searchCriteria) {
         LOGGER.info("[***] ContractDAOImpl executeFindReceiptByChargeEntityExtern - {} ", searchCriteria);
         List<ContractEntity> listContract = null;
-        List<Map<String, Object>> result = new ArrayList<>();
-        Map<String, Object> parameters = ReceiptTransformMap.ReceiptSearchCriteriaTransformMap(searchCriteria);
+        List<Map<String, Object>> result;
+        Map<String, Object> parameters = ReceiptTransformMap.receiptSearchCriteriaTransformMap(searchCriteria);
         if (this.baseDAO instanceof CommonJdbcFactory) {
             LOGGER.info("[***] ContractDAOImpl findReceiptByChargeEntityExtern instanceof CommonJdbcFactory");
             if (FunctionUtils.parametersIsValid(parameters, FIELD_PAYMENT_MEANS_TYPE, FIELD_CONTRACT_STATUS_ID, FIELD_RECEIPT_STATUS_TYPE)) {

@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public abstract class DAOFactory {
 
-    private JdbcUtils jdbcUtils;
+    private DAOFactory(){}
 
     public static BaseDAO getDAOFactory(CommonJdbcTemplate commonJdbcTemplate, JdbcUtils jdbcUtils){
            if(Objects.isNull(commonJdbcTemplate)){
