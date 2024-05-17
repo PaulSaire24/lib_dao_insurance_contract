@@ -4,12 +4,12 @@
 	<parent>
 		<groupId>com.bbva.pisd</groupId>
 		<artifactId>PISDR226-parent</artifactId>
-		<version>0.3.2</version>
+		<version>0.3.3</version>
 	</parent>
 	<groupId>com.bbva.pisd</groupId>
 	<artifactId>PISDR226</artifactId>
 	<name>PISDR226</name>
-	<version>0.3.2</version>
+	<version>0.3.3</version>
 	<packaging>bundle</packaging>
 	<description>Deployment unit lib_dao_insurance_contract of uuaa pisd</description>
 	<properties>
