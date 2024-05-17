@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface ContractDAO {
-    List<ContractEntity> findContractBySearchCriteria(ReceiptSearchCriteria SearchCriteria);
+    List<ContractEntity> findContractBySearchCriteria(ReceiptSearchCriteria searchCriteria);
 
     boolean updateBiometricId(String insuranceContractId, String biometricId, String usuario);
     public Boolean findByContract(String  biometricId);

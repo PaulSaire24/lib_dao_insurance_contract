@@ -85,7 +85,7 @@ public class CommonJdbcFactory  implements BaseDAO {
 
     private Long countRowsOfQuery(Map<String, Object> conditions, String queryInExecution) {
         LOGGER.info("[***] ContractDAOImpl executeQueryFindReceiptsCount [ conditions - {} ] - [ queryInExecution - {}]", conditions, queryInExecution);
-        Long countResult = 0l;
+        Long countResult;
         Operation operationInput = Operation.Builder.an()
                 .withQuery(FunctionUtils.generateQueryCounter(queryInExecution))
                 .withTypeOperation(OperationConstants.Operation.SELECT).withIsForListQuery(false)
@@ -112,21 +112,19 @@ public class CommonJdbcFactory  implements BaseDAO {
     }
 
     private String parseQueryWithPagination(final String query, int firstRow, int pageSize) {
-        LOGGER.info("Getting query");
+        LOGGER.info("Getting query: {}",query);
         final String sql = insertPagination(query, firstRow, pageSize);
 
-        LOGGER.info("Getted query" + " ,with SQL: " + sql);
+        LOGGER.info("Getted query with SQL: {}",sql);
         return sql;
     }
 
     private String insertPagination(String parseQuery, int firstRow, int pageSize) {
-        StringBuilder builder = new StringBuilder();
-        builder.append("SELECT * FROM ( SELECT a.*, ROWNUM rnum FROM ( ");
-        builder.append(parseQuery);
-        builder.append(" ) a WHERE ROWNUM <=");
-        builder.append(firstRow + pageSize - 1);
-        builder.append(") WHERE rnum >=");
-        builder.append(firstRow);
-        return builder.toString();
+        return "SELECT * FROM ( SELECT a.*, ROWNUM rnum FROM ( " +
+                parseQuery +
+                " ) a WHERE ROWNUM <=" +
+                (firstRow + pageSize - 1) +
+                ") WHERE rnum >=" +
+                firstRow;
     }
 }
