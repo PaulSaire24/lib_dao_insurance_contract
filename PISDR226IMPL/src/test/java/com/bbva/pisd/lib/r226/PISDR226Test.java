@@ -365,6 +365,8 @@ public class PISDR226Test {
 		map.put(PISDColumn.Contract.FIELD_USER_AUDIT_ID, "p121328");
 		map.put(PISDColumn.Contract.FIELD_CONTRACT_STATUS_ID, "FOR");
 		map.put(PISDColumn.Contract.FIELD_INSURANCE_PRODUCT_ID, 13);
+		map.put(PISDColumn.Contract.FIELD_INSURANCE_MODALITY_TYPE,"01");
+		map.put(PISDColumn.Contract.FIELD_INSURANCE_COMPANY_ID, "01");
 
 		Mockito.when(this.jdbcUtils.update(Mockito.anyString(),Mockito.anyMap())).thenReturn(1);
 
