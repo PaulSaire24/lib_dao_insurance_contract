@@ -7,7 +7,6 @@ public class JsonHelper {
     private static final String DATE = "yyyy-MM-dd";
     private static final JsonHelper INSTANCE = new JsonHelper();
 
-
     private final Gson gson;
 
     private JsonHelper() {

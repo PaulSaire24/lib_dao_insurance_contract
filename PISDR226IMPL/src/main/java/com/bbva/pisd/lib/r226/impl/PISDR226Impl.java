@@ -18,6 +18,7 @@ import com.bbva.pisd.lib.r226.util.JsonHelper;
 import com.bbva.pisd.lib.r226.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +73,7 @@ public class PISDR226Impl extends PISDR226Abstract {
 		LOGGER.info("***** PISDR103Impl - executeGetRoyalPolicyDetail START  *****  contractNumber: {}", contractNumber);
 
 		Map<String, Object> param = ReceiptTransformMap.mapContractNumber(contractNumber);
-		if (param == null) { return new ArrayList<>(); }
+		if (CollectionUtils.isEmpty(param)) { return new ArrayList<>(); }
 
 		List<Map<String, Object>> response = new ArrayList<>();
 		try {
@@ -92,7 +93,7 @@ public class PISDR226Impl extends PISDR226Abstract {
 		List<ReceiptDTO> response = new ArrayList<>();
 
 		Map<String, Object> param = ReceiptTransformMap.mapContractNumber(contractNumber);
-		if (param.isEmpty() || param == null) { return new ArrayList<>(); }
+		if (CollectionUtils.isEmpty(param)) { return new ArrayList<>(); }
 
 		List<Map<String, Object>> list = new ArrayList<>();
 		try {

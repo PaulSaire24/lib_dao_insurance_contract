@@ -4,15 +4,18 @@ import com.bbva.pisd.dto.contract.search.ReceiptSearchCriteria;
 import com.bbva.pisd.dto.insurancedao.constants.PISDColumn;
 import com.bbva.pisd.lib.r226.util.CatalogEnum;
 import java.util.Collections;
+
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ReceiptTransformMap {
-    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(ReceiptTransformMap.class);
+    private ReceiptTransformMap(){}
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReceiptTransformMap.class);
 
-    public static Map<String, Object> ReceiptSearchCriteriaTransformMap(ReceiptSearchCriteria receiptSearchCriteria){
+    public static Map<String, Object> receiptSearchCriteriaTransformMap(ReceiptSearchCriteria receiptSearchCriteria){
         LOGGER.info("[***] ReceiptTransformMap ReceiptSearchCriteriaTransformMap receiptSearchCriteriaDTO - {} ",receiptSearchCriteria);
 
         Map<String, Object> parameters = new HashMap<>();
