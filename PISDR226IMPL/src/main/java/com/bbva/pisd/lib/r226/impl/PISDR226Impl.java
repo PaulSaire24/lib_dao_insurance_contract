@@ -145,7 +145,7 @@ public class PISDR226Impl extends PISDR226Abstract {
 		LOGGER.info("[***] PISDR226Impl executeInsertInsuranceContract - START");
 		BaseDAO baseDAO = DAOFactory.getDAOFactory(commonJdbcTemplate, jdbcUtils);
 		ContractDAO contractDAO = new ContractDAOImpl(baseDAO);
-		int result = contractDAO.insertInsuranceQuotation(map);
+		int result = contractDAO.insertInsuranceContract(map);
 		LOGGER.info("[***] PISDR226Impl executeInsertInsuranceContract - result {} ", result);
 		return result;
 	}
