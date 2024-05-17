@@ -168,15 +168,19 @@ public class ContractDAOImpl implements ContractDAO {
     }
 
     @Override
-    public int insertInsuranceQuotation(Map<String, Object> map) {
+    public int insertInsuranceContract(Map<String, Object> map) {
         int affectedRows = 0;
 
         if(FunctionUtils.parametersIsValid(map, PISDColumn.Contract.FIELD_INSURANCE_CONTRACT_ENTITY_ID,
                 PISDColumn.Contract.FIELD_INSURANCE_CONTRACT_BRANCH_ID,
                 PISDColumn.Contract.FIELD_INSRC_CONTRACT_INT_ACCOUNT_ID,
                 PISDColumn.Contract.FIELD_INSURANCE_PRODUCT_ID,
-                PISDColumn.Contract.FIELD_USER_AUDIT_ID,
-                PISDColumn.Contract.FIELD_AUDIT_DATE
+                PISDColumn.Contract.FIELD_INSURANCE_MODALITY_TYPE,
+                PISDColumn.Contract.FIELD_INSURANCE_COMPANY_ID,
+                PISDColumn.Contract.FIELD_INSURANCE_CONTRACT_START_DATE,
+                PISDColumn.Contract.FIELD_CUSTOMER_ID,
+                PISDColumn.Contract.FIELD_INSRNC_CO_CONTRACT_STATUS_TYPE,
+                PISDColumn.Contract.FIELD_USER_AUDIT_ID
         )){
             Operation operation = Operation.Builder.an()
                     .withTypeOperation(OperationConstants.Operation.UPDATE)
