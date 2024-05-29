@@ -1,6 +1,7 @@
 package com.bbva.pisd.lib.r226.transfor.bean;
 
 
+import com.bbva.pisd.dto.contract.common.AmountDTO;
 import com.bbva.pisd.dto.contract.common.ReceiptDTO;
 import com.bbva.pisd.dto.insurancedao.constants.PISDColumn;
 import com.bbva.pisd.dto.insurancedao.entities.ReceiptEntity;
@@ -42,9 +43,11 @@ public class ReceiptTransformBean {
                 .insuranceContractBranchId((String) map.get(CatalogEnum.INSURANCE_CONTRACT_BRANCH_ID.getValue()))
                 .insrcContractIntAccountId((String) map.get(CatalogEnum.INSRC_CONTRACT_INT_ACCOUNT_ID.getValue()))
                 .policyReceiptId(FunctionUtils.mapConvertToInteger(CatalogEnum.POLICY_RECEIPT_ID.getValue(),map))
-                .premiumPaymentReceiptAmount(FunctionUtils.mapConvertToDouble(CatalogEnum.PREMIUM_PAYMENT_RECEIPT_AMOUNT.getValue(),map))
+                .paymentAmount(AmountDTO.Builder.an().amount(FunctionUtils.convertObjectToBigdecimal(map.get(CatalogEnum.PREMIUM_PAYMENT_RECEIPT_AMOUNT.getValue())))
+                        .currency((String) map.get(CatalogEnum.CURRENCY_ID.getValue()))
+                        .build())
                 .insrncCoReceiptStatusType((String) map.get(CatalogEnum.INSRNC_CO_RECEIPT_STATUS_TYPE.getValue()))
-                .receiptStatusType((String) map.get(CatalogEnum.RECEIPT_STATUS_TYPE.getValue()))
+                .status((String) map.get(CatalogEnum.RECEIPT_STATUS_TYPE.getValue()))
                 .renewalReceiptSeqNumber(FunctionUtils.mapConvertToInteger(CatalogEnum.RENEWAL_RECEIPT_SEQ_NUMBER.getValue(),map))
                 .renewalNumber(FunctionUtils.mapConvertToInteger(CatalogEnum.RENEWAL_NUMBER.getValue(),map))
                 .receiptIssueDate((String) map.get(CatalogEnum.RECEIPT_ISSUE_DATE.getValue()))
