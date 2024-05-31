@@ -70,7 +70,7 @@ public class PISDR226Impl extends PISDR226Abstract {
 	//metodo para obtener el detalle de poliza
 	@Override
 	public List<Map<String, Object>> executeGetRoyalPolicyDetail(String contractNumber) {
-		LOGGER.info("***** PISDR103Impl - executeGetRoyalPolicyDetail START  *****  contractNumber: {}", contractNumber);
+		LOGGER.info("***** PISDR226Impl - executeGetRoyalPolicyDetail START  *****  contractNumber: {}", contractNumber);
 
 		Map<String, Object> param = ReceiptTransformMap.mapContractNumber(contractNumber);
 		if (CollectionUtils.isEmpty(param)) { return new ArrayList<>(); }
@@ -79,16 +79,16 @@ public class PISDR226Impl extends PISDR226Abstract {
 		try {
 			response = this.jdbcUtils.queryForList(Properties.QUERY_SELECT_INSRC_CONTRACT_DETAIL.getValue(), param);
 		} catch(NoResultException ex) {
-			LOGGER.info("PISDR103Impl - executeGetRoyalPolicyDetail - QUERY EMPTY RESULT [PISD.SELECT_INSURANCE_CONTRACT_DETAIL]");
+			LOGGER.info("PISDR226Impl - executeGetRoyalPolicyDetail - QUERY EMPTY RESULT [PISD.SELECT_INSURANCE_CONTRACT_DETAIL]");
 		}
-		LOGGER.info("***** PISDR103Impl - executeGetRoyalPolicyDetail END ***** response : {}", response);
+		LOGGER.info("***** PISDR226Impl - executeGetRoyalPolicyDetail END ***** response : {}", response);
 		return response;
 	}
 
 	//metodo para obtener la lista de recibos
 	@Override
 	public List<ReceiptDTO> executeGetReceipts(String contractNumber) {
-		LOGGER.info("***** PISDR103Impl - executeGetReceipts START  *****  contractNumber: {}", contractNumber);
+		LOGGER.info("***** PISDR226Impl - executeGetReceipts START  *****  contractNumber: {}", contractNumber);
 
 		List<ReceiptDTO> response = new ArrayList<>();
 
@@ -101,9 +101,9 @@ public class PISDR226Impl extends PISDR226Abstract {
 			response = ReceiptTransformList.transformListMapToListReceiptDTO(list);
 
 		} catch(NoResultException ex) {
-			LOGGER.info("PISDR103Impl - executeGetReceipts - QUERY EMPTY RESULT [PISD.SELECT_INSURANCE_RECEIPTS_DETAIL]");
+			LOGGER.info("PISDR226Impl - executeGetReceipts - QUERY EMPTY RESULT [PISD.SELECT_INSURANCE_RECEIPTS_DETAIL]");
 		}
-		LOGGER.info("***** PISDR103Impl - executeGetReceipts END ***** response : {}", response);
+		LOGGER.info("***** PISDR226Impl - executeGetReceipts END ***** response : {}", response);
 
 		return response;
 	}
