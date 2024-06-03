@@ -43,7 +43,7 @@ public class ReceiptTransformBean {
                 .insuranceContractBranchId((String) map.get(CatalogEnum.INSURANCE_CONTRACT_BRANCH_ID.getValue()))
                 .insrcContractIntAccountId((String) map.get(CatalogEnum.INSRC_CONTRACT_INT_ACCOUNT_ID.getValue()))
                 .policyReceiptId(FunctionUtils.mapConvertToInteger(CatalogEnum.POLICY_RECEIPT_ID.getValue(),map))
-                .paymentAmount(AmountDTO.Builder.an().amount(FunctionUtils.convertObjectToBigdecimal(map.get(CatalogEnum.PREMIUM_PAYMENT_RECEIPT_AMOUNT.getValue())))
+                .paymentAmount(AmountDTO.Builder.an().amount(FunctionUtils.mapConvertToDouble(CatalogEnum.PREMIUM_PAYMENT_RECEIPT_AMOUNT.getValue(), map))
                         .currency((String) map.get(CatalogEnum.CURRENCY_ID.getValue()))
                         .build())
                 .insrncCoReceiptStatusType((String) map.get(CatalogEnum.INSRNC_CO_RECEIPT_STATUS_TYPE.getValue()))
