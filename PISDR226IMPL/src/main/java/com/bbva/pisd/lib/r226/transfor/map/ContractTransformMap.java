@@ -41,13 +41,20 @@ public class ContractTransformMap {
     }
 
     public static Map<String,Object> transformContractByIdAndProductMap(String contractId,String productId){
+        Map<String,Object> arguments = transformContractById(contractId);
+        arguments.put(PISDColumn.Contract.FIELD_INSURANCE_PRODUCT_ID, productId);
+
+        LOGGER.info("[***] ContractTransformMap transformContractByIdAndProductMap arguments - {} ", arguments);
+        return arguments;
+    }
+
+    public static Map<String,Object> transformContractById(String contractId){
         Map<String,Object> arguments = new HashMap<>();
         arguments.put(PISDColumn.Contract.FIELD_INSURANCE_CONTRACT_ENTITY_ID, contractId.substring(0,4));
         arguments.put(PISDColumn.Contract.FIELD_INSURANCE_CONTRACT_BRANCH_ID, contractId.substring(4,8));
         arguments.put(PISDColumn.Contract.FIELD_INSRC_CONTRACT_INT_ACCOUNT_ID,contractId.substring(10));
-        arguments.put(PISDColumn.Contract.FIELD_INSURANCE_PRODUCT_ID, productId);
 
-        LOGGER.info("[***] ContractTransformMap transformContractByIdAndProductMap arguments - {} ", arguments);
+        LOGGER.info("[***] ContractTransformMap transformContractById arguments - {} ", arguments);
         return arguments;
     }
 

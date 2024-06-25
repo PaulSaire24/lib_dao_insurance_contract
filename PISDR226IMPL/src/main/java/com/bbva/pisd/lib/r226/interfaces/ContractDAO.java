@@ -14,4 +14,5 @@ public interface ContractDAO {
     ContractEntity findContractByIdAndProductId(String contractId, String productId);
     boolean findQuotationExistInContract(String quotationId);
     int insertInsuranceContract(Map<String,Object> map);
+    ContractEntity findContractById(String contractId);
 }

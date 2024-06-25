@@ -2,6 +2,7 @@ package com.bbva.pisd.lib.r226.util;
 
 import com.bbva.pisd.dto.contract.constants.PISDQueryName;
 import com.bbva.pisd.dto.insurancedao.constants.PISDConstant;
+import org.apache.commons.lang3.StringUtils;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -70,6 +71,18 @@ public class FunctionUtils {
         }
 
         return ret;
+    }
+
+    public static boolean contractIsValid(String contractId) {
+        if (StringUtils.isEmpty(contractId)) return false;
+        int NUMBER_LENGTH = 20;
+        return contractId.length() == NUMBER_LENGTH && isNumberValid(contractId);
+    }
+
+    private static Boolean isNumberValid(String number){
+        if (StringUtils.isEmpty(number)) return false;
+        String CONTRACT_MATCH = "[0-9]+";
+        return number.matches(CONTRACT_MATCH);
     }
 
 }
