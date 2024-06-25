@@ -57,4 +57,18 @@ public class FunctionUtilsTest {
         String fechaFormateada = formatoFecha.format(fechaActual);
         Assert.assertEquals(fechaFormateada, resultado);
     }
+
+    @Test
+    public void contractIsValid_NotANumber_Failed(){
+        boolean result = FunctionUtils.contractIsValid("abc");
+
+        Assert.assertFalse(result);
+    }
+
+    @Test
+    public void contractIsValid_IncorrectSize_Failed(){
+        boolean result = FunctionUtils.contractIsValid("123");
+
+        Assert.assertFalse(result);
+    }
 }
