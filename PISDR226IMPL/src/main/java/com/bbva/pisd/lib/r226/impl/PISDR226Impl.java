@@ -163,12 +163,12 @@ public class PISDR226Impl extends PISDR226Abstract {
 
 	@Override
 	public String executeGetCustomerIdFromContract(String contractId){
-		LOGGER.info("[***] PISDR226Impl executeFindContractById - START");
+		LOGGER.info("[***] PISDR226Impl executeGetCustomerIdFromContract - START");
 		BaseDAO baseDAO = DAOFactory.getDAOFactory(commonJdbcTemplate, jdbcUtils);
 		ContractDAO contractDAO = new ContractDAOImpl(baseDAO);
-		ContractEntity contract = contractDAO.findContractById(contractId);
-		LOGGER.info("[***] PISDR226Impl executeFindContractById - result {} ", contract);
-		return Optional.ofNullable(contract).map(ContractEntity::getCustomerId).orElse(null);
+		String customerId = contractDAO.findCustomerByContractId(contractId);
+		LOGGER.info("[***] PISDR226Impl executeGetCustomerIdFromContract - result {} ", customerId);
+		return customerId;
 	}
 
 
