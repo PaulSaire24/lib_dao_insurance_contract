@@ -1,5 +1,6 @@
 package com.bbva.pisd.lib.r226.interfaces;
 
+import com.bbva.pisd.dto.contract.search.CertifyBankCriteria;
 import com.bbva.pisd.dto.contract.search.ReceiptSearchCriteria;
 import com.bbva.pisd.dto.insurancedao.entities.ContractEntity;
 
@@ -15,4 +16,5 @@ public interface ContractDAO {
     boolean findQuotationExistInContract(String quotationId);
     int insertInsuranceContract(Map<String,Object> map);
     ContractEntity findContractById(String contractId);
+    ContractEntity findByCertifiedBank(CertifyBankCriteria certifyBankCriteria);
 }

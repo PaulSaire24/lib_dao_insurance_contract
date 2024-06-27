@@ -1,6 +1,8 @@
 package com.bbva.pisd.lib.r226.dao;
 
+import com.bbva.pisd.dto.contract.constants.PISDQuery;
 import com.bbva.pisd.dto.contract.constants.PISDQueryName;
+import com.bbva.pisd.dto.contract.search.CertifyBankCriteria;
 import com.bbva.pisd.dto.contract.search.ReceiptSearchCriteria;
 import com.bbva.pisd.dto.insurancedao.constants.PISDColumn;
 import com.bbva.pisd.dto.insurancedao.constants.PISDConstant;
@@ -15,6 +17,7 @@ import com.bbva.pisd.lib.r226.transfor.list.ContractTransformList;
 import com.bbva.pisd.lib.r226.transfor.map.ContractTransformMap;
 import com.bbva.pisd.lib.r226.transfor.map.ReceiptTransformMap;
 import com.bbva.pisd.lib.r226.util.FunctionUtils;
+import com.bbva.pisd.lib.r226.util.JsonHelper;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
 
@@ -24,7 +27,7 @@ import java.util.Map;
 
 import static com.bbva.pisd.dto.insurancedao.constants.PISDColumn.Contract.FIELD_CONTRACT_STATUS_ID;
 import static com.bbva.pisd.dto.insurancedao.constants.PISDColumn.Contract.FIELD_PAYMENT_MEANS_TYPE;
-import static com.bbva.pisd.dto.insurancedao.constants.PISDColumn.Receipt.FIELD_RECEIPT_STATUS_TYPE;
+import static com.bbva.pisd.dto.insurancedao.constants.PISDColumn.Receipt.*;
 
 public class ContractDAOImpl implements ContractDAO {
     private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(ContractDAOImpl.class);
@@ -109,7 +112,44 @@ public class ContractDAOImpl implements ContractDAO {
         LOGGER.info("[***] ContractDAOImpl updateCardDataInContract result - {} ", resp);
         return resp;
     }
-
+    @Override
+    public ContractEntity findByCertifiedBank(CertifyBankCriteria certifyBankCriteria) {
+        LOGGER.info("[***]  findByCertifiedBank :: Criteria {} ", JsonHelper.getInstance().toJsonString(certifyBankCriteria));
+        ContractEntity contract = null;
+        int size = 0;
+        Map<String, Object> parameters = ContractTransformMap.certifyBankCriteriaTransformMap(certifyBankCriteria);
+        if (FunctionUtils.parametersIsValid(parameters, FIELD_INSURANCE_CONTRACT_ENTITY_ID, FIELD_INSURANCE_CONTRACT_BRANCH_ID, FIELD_INSRC_CONTRACT_INT_ACCOUNT_ID )) {
+            if (this.baseDAO instanceof CommonJdbcFactory) {
+                Operation operation = Operation.Builder.an()
+                        .withQuery(PISDQueryName.SQL_SELECT_CONTRACT.getValue())
+                        .withTypeOperation(OperationConstants.Operation.SELECT).withIsForListQuery(true)
+                        .withParams(parameters).build();
+                List<Map<String, Object>> maps = (List<Map<String, Object>>) this.baseDAO.executeQuery(operation);
+                if (!CollectionUtils.isEmpty(maps)) {
+                    contract = ContractTransformBean.mapTransformContractEntityAndReceiptEntity(maps.get(PISDConstant.Numeros.CERO),maps);
+                    LOGGER.info("[OracleContractDAO]  findContractByCertificateBank - Contract  [ {} ] ", JsonHelper.getInstance().toJsonString(contract));
+                    size = maps.size();
+                }
+                LOGGER.info("[***]  findByCertifiedBank :: size {} - result {} ", size, contract);
+            }else {
+                Operation operation = Operation.Builder.an()
+                        .withTypeOperation(OperationConstants.Operation.SELECT)
+                        .withNameProp(PISDQuery.Names.SQL_SELECT_CONTRACT_AND_RECEIPT)
+                        .withIsForListQuery(true)
+                        .withParams(parameters).build();
+                LOGGER.info("operation jdbcUtils{}",operation);
+                List<Map<String, Object>> maps = (List<Map<String, Object>>) this.baseDAO.executeQuery(operation);
+                LOGGER.info("[OracleContractDAO]  findContractByCertificateBank maps{}",maps);
+                if (!CollectionUtils.isEmpty(maps)) {
+                    contract = ContractTransformBean.mapTransformContractEntityAndReceiptEntity(maps.get(PISDConstant.Numeros.CERO),maps);
+                    LOGGER.info("[OracleContractDAO]  findContractByCertificateBank - Contract {}  ", contract);
+                    size = maps.size();
+                }
+            }
+        }
+        LOGGER.info("[***]  findByCertifiedBank :: size {} - result {} ", size, contract);
+        return contract;
+    }
     @Override
     public ContractEntity findContractByIdAndProductId(String contractId, String productId) {
         LOGGER.info("[***] ContractDAOImpl findContractByIdAndProductId - {} ", contractId);
