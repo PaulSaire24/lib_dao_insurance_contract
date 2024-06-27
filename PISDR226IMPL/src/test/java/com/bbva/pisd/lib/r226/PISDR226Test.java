@@ -393,27 +393,27 @@ public class PISDR226Test {
 	}
 
 	@Test
-	public void executeFindContractByIdTest(){
+	public void executeGetCustomerIdFromContractTest(){
 		HashMap<String, Object> map = new HashMap<>();
 		map.put(PISDColumn.Contract.FIELD_INSURANCE_CONTRACT_ENTITY_ID, "1234");
 
 		Mockito.when(this.jdbcUtils.queryForMap(Mockito.anyString(),Mockito.anyMap())).thenReturn(map);
 
-		ContractEntity contractEntity = this.pisdR226.executeFindContractById("12345678901234567890");
+		String customerId = this.pisdR226.executeGetCustomerIdFromContract("12345678901234567890");
 
-		Assert.assertNotNull(contractEntity);
+		Assert.assertNotNull(customerId);
 	}
 
 	@Test
-	public void executeFindContractByIdTest_Failed(){
+	public void executeGetCustomerIdFromContractTest_Failed(){
 		HashMap<String, Object> map = new HashMap<>();
 		map.put(PISDColumn.Contract.FIELD_INSURANCE_CONTRACT_ENTITY_ID, "1234");
 
 		Mockito.when(this.jdbcUtils.queryForMap(Mockito.anyString(),Mockito.anyMap())).thenReturn(map);
 
-		ContractEntity contractEntity = this.pisdR226.executeFindContractById("123456789012345678");
+		String customerId = this.pisdR226.executeGetCustomerIdFromContract("123456789012345678");
 
-		Assert.assertNull(contractEntity);
+		Assert.assertNull(customerId);
 	}
 
 }
