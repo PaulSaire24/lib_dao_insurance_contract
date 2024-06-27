@@ -3,6 +3,7 @@ package com.bbva.pisd.lib.r226.impl;
 import com.bbva.apx.exception.db.NoResultException;
 import com.bbva.elara.domain.jdbc.CommonJdbcTemplate;
 import com.bbva.pisd.dto.contract.common.ReceiptDTO;
+import com.bbva.pisd.dto.contract.search.CertifyBankCriteria;
 import com.bbva.pisd.dto.contract.search.ReceiptSearchCriteria;
 import com.bbva.pisd.dto.insurancedao.entities.ContractEntity;
 import com.bbva.pisd.dto.insurancedao.entities.PaymentPeriodEntity;
@@ -108,7 +109,15 @@ public class PISDR226Impl extends PISDR226Abstract {
 
 		return response;
 	}
-
+	@Override
+	public ContractEntity executeFindByCertifiedBank(CertifyBankCriteria certifyBankCriteria) {
+		LOGGER.info("[***] PISDR226Impl executeFindByCertifiedBank certifyBankCriteria - {} ", certifyBankCriteria);
+		BaseDAO baseDAO = DAOFactory.getDAOFactory(commonJdbcTemplate, jdbcUtils);
+		ContractDAO contractDAO = new ContractDAOImpl(baseDAO);
+		ContractEntity result= contractDAO.findByCertifiedBank(certifyBankCriteria);
+		LOGGER.info("[***] PISDR226Impl executeFindByCertifiedBank result - {} ", result);
+		return result;
+	}
 	@Override
 	public ContractEntity executeExistContractByIdAndProductId(String contractId, String productId) {
 		LOGGER.info("[***] PISDR226Impl executeExistContractByIdAndProductId - contractId {} ",  contractId);

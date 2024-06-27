@@ -8,8 +8,12 @@ import com.bbva.elara.domain.transaction.ThreadContext;
 import javax.annotation.Resource;
 
 import com.bbva.pisd.dto.contract.common.ReceiptDTO;
+import com.bbva.pisd.dto.contract.search.CertifyBankCriteria;
 import com.bbva.pisd.dto.insurancedao.entities.PaymentPeriodEntity;
+import com.bbva.pisd.lib.r226.mock.Mock;
+import com.bbva.pisd.lib.r226.pattern.factory.DAOFactory;
 import com.bbva.pisd.lib.r226.pattern.factory.impl.JdbcUtilsFactory;
+import com.bbva.pisd.lib.r226.pattern.factory.interfaces.BaseDAO;
 import com.bbva.pisd.lib.r226.transfor.list.ReceiptTransformList;
 import com.bbva.pisd.lib.r226.transfor.map.ReceiptTransformMap;
 import com.bbva.pisd.lib.r226.util.CatalogEnum;
@@ -172,8 +176,8 @@ public class PISDR226Test {
 		mapResponse.put(PISDColumn.Contract.FIELD_CONTRACT_SECOND_VERFN_DIGIT_ID, "2");
 		mapResponse.put(PISDColumn.Receipt.FIELD_INSRC_CONTRACT_INT_ACCOUNT_ID, "4000018548");
 		mapResponse.put(PISDColumn.Contract.FIELD_POLICY_ID, "1234567");
-		mapResponse.put(PISDColumn.Receipt.FIELD_RECEIPT_START_DATE,new Date());
-		mapResponse.put(PISDColumn.Receipt.FIELD_RECEIPT_END_DATE,new Date());
+		mapResponse.put(PISDColumn.Receipt.FIELD_RECEIPT_START_DATE,"2021-01-01");
+		mapResponse.put(PISDColumn.Receipt.FIELD_RECEIPT_END_DATE,"2021-01-01");
 		mapResponse.put(PISDColumn.Contract.FIELD_CUSTOMER_ID, "12345678");
 		mapResponse.put(PISDColumn.Contract.FIELD_INSURANCE_MODALITY_TYPE, "1");
 		mapResponse.put(PISDColumn.Contract.FIELD_CONTRACT_STATUS_ID, "FOR");
@@ -415,5 +419,38 @@ public class PISDR226Test {
 
 		Assert.assertNull(customerId);
 	}
+	@Test
+	public void executeFindByCertifiedBankTest(){
 
+		CommonJdbcTemplate commonJdbcTemplate = Mockito.mock(CommonJdbcTemplate.class);
+		this.pisdR226.executeSetCommonJdbcTemplate(commonJdbcTemplate);
+		Map<String, Object> contratos = new HashMap<>();
+		contratos.put("00114444111010101010", Mock.mockContract());
+		List<Map<String, Object>> result = new ArrayList<>();
+		result.add(contratos);
+
+		Mockito.when(commonJdbcTemplate.queryForList(Mockito.anyString(),Mockito.anyMap())).thenReturn(result);
+
+		CertifyBankCriteria certifyBankCriteria = Mock.mockCertifyCriteria();
+		ContractEntity contractEntity =  this.pisdR226.executeFindByCertifiedBank(certifyBankCriteria);
+		Assert.assertNotNull(contractEntity);
+	}
+	@Test
+	public void executeFindByCertifiedBankByJdbcUtilsTest2(){
+		CommonJdbcTemplate commonJdbcTemplate = null;
+		Map<String, Object> contratos = new HashMap<>();
+		contratos.put("00114444111234567890", Mock.mockContract2());
+		List<Map<String, Object>> result = new ArrayList<>();
+		result.add(contratos);
+
+		Mockito.when(this.jdbcUtils.queryForList(Mockito.anyString(),Mockito.anyMap())).thenReturn(result);
+
+		BaseDAO daoFactory = DAOFactory.getDAOFactory(commonJdbcTemplate,jdbcUtils);
+
+
+		this.pisdR226.executeSetCommonJdbcTemplate(commonJdbcTemplate);
+		CertifyBankCriteria certifyBankCriteria = Mock.mockCertifyCriteria();
+		ContractEntity contractEntity =  this.pisdR226.executeFindByCertifiedBank(certifyBankCriteria);
+		Assert.assertNotNull(contractEntity);
+	}
 }

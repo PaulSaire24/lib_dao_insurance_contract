@@ -20,8 +20,9 @@ public class ReceiptTransformBean {
     private static final Logger LOGGER = LoggerFactory.getLogger(ReceiptTransformBean.class);
 
     public static ReceiptEntity mapTransformReceiptEntity(Map<String, Object> map){
-        LOGGER.info("[***] ReceiptTransformBean mapTransformReceiptEntity map - {} ", map);
-        return ReceiptEntity.Builder.an()
+        LOGGER.info("[***] START ReceiptTransformBean mapTransformReceiptEntity map - {} ", map);
+
+        ReceiptEntity receiptEntity = ReceiptEntity.Builder.an()
                 .withInsuranceContractEntityId( (String)map.get(PISDColumn.Receipt.FIELD_INSURANCE_CONTRACT_ENTITY_ID))
                 .withInsuranceContractBranchId( (String)map.get(PISDColumn.Receipt.FIELD_INSURANCE_CONTRACT_BRANCH_ID))
                 .withInsrcContractIntAccountId( (String)map.get(PISDColumn.Receipt.FIELD_INSRC_CONTRACT_INT_ACCOUNT_ID))
@@ -29,10 +30,12 @@ public class ReceiptTransformBean {
                 .withInsuranceCompanyReceiptId( (String)map.get(PISDColumn.Receipt.FIELD_INSURANCE_COMPANY_RECEIPT_ID))
                 .withPremiumPaymentReceiptAmount( FunctionUtils.mapConvertToDouble(PISDColumn.Receipt.FIELD_PREMIUM_PAYMENT_RECEIPT_AMOUNT, map))
                 .withCurrencyId( (String)map.get(PISDColumn.Receipt.FIELD_CURRENCY_ID))
-                .withReceiptStartDate(FunctionUtils.convertDatoToString(PISDColumn.Receipt.FIELD_RECEIPT_START_DATE,map))
-                .withReceiptEndDate(FunctionUtils.convertDatoToString(PISDColumn.Receipt.FIELD_RECEIPT_END_DATE,map))
+                .withReceiptStartDate((String)map.get(PISDColumn.Receipt.FIELD_RECEIPT_START_DATE))
+                .withReceiptEndDate((String)map.get(PISDColumn.Receipt.FIELD_RECEIPT_END_DATE))
                 .withReceiptStatusType( (String)map.get(PISDColumn.Receipt.FIELD_RECEIPT_STATUS_TYPE))
                 .build();
+        LOGGER.info("[***] END ReceiptTransformBean mapTransformReceiptEntity map - {} ", receiptEntity);
+        return receiptEntity;
     }
 
 

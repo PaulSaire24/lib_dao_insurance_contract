@@ -1,6 +1,7 @@
 package com.bbva.pisd.lib.r226;
 
 import com.bbva.pisd.dto.contract.common.ReceiptDTO;
+import com.bbva.pisd.dto.contract.search.CertifyBankCriteria;
 import com.bbva.pisd.dto.contract.search.ReceiptSearchCriteria;
 import com.bbva.pisd.dto.insurancedao.entities.ContractEntity;
 import com.bbva.pisd.dto.insurancedao.entities.PaymentPeriodEntity;
@@ -25,5 +26,6 @@ public interface PISDR226 {
 	PaymentPeriodEntity executeFindPaymentPeriodByType(String paymentFrequencyType);
 	int executeInsertInsuranceContract(Map<String,Object> map);
 	String executeGetCustomerIdFromContract(String contractId);
+	ContractEntity executeFindByCertifiedBank(CertifyBankCriteria certifyBankCriteria);
 
 }
