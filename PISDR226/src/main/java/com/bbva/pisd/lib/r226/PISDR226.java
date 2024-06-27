@@ -25,7 +25,7 @@ public interface PISDR226 {
 	boolean executeFindQuotationIfExistInContract(String quotationId);
 	PaymentPeriodEntity executeFindPaymentPeriodByType(String paymentFrequencyType);
 	int executeInsertInsuranceContract(Map<String,Object> map);
-	ContractEntity executeFindContractById(String contractId);
+	String executeGetCustomerIdFromContract(String contractId);
 	ContractEntity executeFindByCertifiedBank(CertifyBankCriteria certifyBankCriteria);
 
 }

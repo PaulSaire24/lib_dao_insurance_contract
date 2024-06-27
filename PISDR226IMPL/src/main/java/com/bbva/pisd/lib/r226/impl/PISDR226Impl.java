@@ -24,6 +24,7 @@ import org.springframework.util.CollectionUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * The PISDR226Impl class...
@@ -161,13 +162,13 @@ public class PISDR226Impl extends PISDR226Abstract {
 	}
 
 	@Override
-	public	ContractEntity executeFindContractById(String contractId){
+	public String executeGetCustomerIdFromContract(String contractId){
 		LOGGER.info("[***] PISDR226Impl executeFindContractById - START");
 		BaseDAO baseDAO = DAOFactory.getDAOFactory(commonJdbcTemplate, jdbcUtils);
 		ContractDAO contractDAO = new ContractDAOImpl(baseDAO);
 		ContractEntity contract = contractDAO.findContractById(contractId);
 		LOGGER.info("[***] PISDR226Impl executeFindContractById - result {} ", contract);
-		return contract;
+		return Optional.ofNullable(contract).map(ContractEntity::getCustomerId).orElse(null);
 	}
 
 
