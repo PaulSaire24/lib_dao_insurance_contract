@@ -397,29 +397,6 @@ public class PISDR226Test {
 	}
 
 	@Test
-	public void executeGetCustomerIdFromContractTest(){
-		HashMap<String, Object> map = new HashMap<>();
-		map.put(PISDColumn.Contract.FIELD_INSURANCE_CONTRACT_ENTITY_ID, "1234");
-
-		Mockito.when(this.jdbcUtils.queryForMap(Mockito.anyString(),Mockito.anyMap())).thenReturn(map);
-
-		String customerId = this.pisdR226.executeGetCustomerIdFromContract("12345678901234567890");
-
-		Assert.assertNotNull(customerId);
-	}
-
-	@Test
-	public void executeGetCustomerIdFromContractTest_Failed(){
-		HashMap<String, Object> map = new HashMap<>();
-		map.put(PISDColumn.Contract.FIELD_INSURANCE_CONTRACT_ENTITY_ID, "1234");
-
-		Mockito.when(this.jdbcUtils.queryForMap(Mockito.anyString(),Mockito.anyMap())).thenReturn(map);
-
-		String customerId = this.pisdR226.executeGetCustomerIdFromContract("123456789012345678");
-
-		Assert.assertNull(customerId);
-	}
-	@Test
 	public void executeFindByCertifiedBankTest(){
 
 		CommonJdbcTemplate commonJdbcTemplate = Mockito.mock(CommonJdbcTemplate.class);

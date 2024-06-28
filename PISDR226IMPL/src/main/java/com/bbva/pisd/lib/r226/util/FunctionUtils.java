@@ -72,17 +72,4 @@ public class FunctionUtils {
 
         return ret;
     }
-
-    public static boolean contractIsValid(String contractId) {
-        if (StringUtils.isEmpty(contractId)) return false;
-        int NUMBER_LENGTH = 20;
-        return contractId.length() == NUMBER_LENGTH && isNumberValid(contractId);
-    }
-
-    private static Boolean isNumberValid(String number){
-        if (StringUtils.isEmpty(number)) return false;
-        String CONTRACT_MATCH = "[0-9]+";
-        return number.matches(CONTRACT_MATCH);
-    }
-
 }
