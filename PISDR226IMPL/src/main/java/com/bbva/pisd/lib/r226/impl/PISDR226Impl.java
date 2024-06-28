@@ -162,17 +162,6 @@ public class PISDR226Impl extends PISDR226Abstract {
 	}
 
 	@Override
-	public String executeGetCustomerIdFromContract(String contractId){
-		LOGGER.info("[***] PISDR226Impl executeGetCustomerIdFromContract - START");
-		BaseDAO baseDAO = DAOFactory.getDAOFactory(commonJdbcTemplate, jdbcUtils);
-		ContractDAO contractDAO = new ContractDAOImpl(baseDAO);
-		String customerId = contractDAO.findCustomerByContractId(contractId);
-		LOGGER.info("[***] PISDR226Impl executeGetCustomerIdFromContract - result {} ", customerId);
-		return customerId;
-	}
-
-
-	@Override
 	public void executeSetCommonJdbcTemplate(Object commonJdbcTemplate) {
 		this.commonJdbcTemplate = (CommonJdbcTemplate) commonJdbcTemplate;
 	}

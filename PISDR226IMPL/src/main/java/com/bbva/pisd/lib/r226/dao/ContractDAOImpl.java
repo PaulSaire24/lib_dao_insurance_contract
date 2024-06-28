@@ -37,7 +37,6 @@ public class ContractDAOImpl implements ContractDAO {
     private static final String PISD_SQL_UPDATE_BIOMETRIC="PISD.SQL_UPDATE.BIOMETRIC";
     private static final String PISD_SQL_SELECT_CONTRACT="PISD.SQL_SELECT_CONTRACT";
     private static final String PISD_SQL_SELECT_CONTRACT_BY_ID_AND_PRODUCT = "PISD.FIND_CONTRACT_REGISTERED";
-    private static final String PISD_FIND_CUSTOMER_BY_CONTRACT_ID = "PISD.FIND_CUSTOMER_BY_CONTRACT_ID";
     private static final String PISD_VALIDATE_IF_QUOTATION_EXISTS_IN_CONTRACT =
             "PISD.VALIDATE_IF_QUOTATION_EXISTS_IN_CONTRACT";
     private static final String PISD_INSERT_INSURANCE_CONTRACT = "PISD.INSERT_INSURANCE_CONTRACT";
@@ -234,29 +233,4 @@ public class ContractDAOImpl implements ContractDAO {
 
         return affectedRows;
     }
-
-    @Override
-    public String findCustomerByContractId(String contractId){
-        LOGGER.info("[***] ContractDAOImpl findCustomerByContractId - {} ", contractId);
-
-        ContractEntity contractEntity = null;
-        if (!FunctionUtils.contractIsValid(contractId)) return null;
-        Map<String,Object> parameters = ContractTransformMap.transformContractById(contractId);
-
-        Operation operation = Operation.Builder.an()
-                .withTypeOperation(OperationConstants.Operation.SELECT)
-                .withNameProp(PISD_FIND_CUSTOMER_BY_CONTRACT_ID)
-                .withIsForListQuery(false)
-                .withParams(parameters)
-                .build();
-
-        Map<String,Object> map = (Map<String,Object>) this.baseDAO.executeQuery(operation);
-
-        if(!CollectionUtils.isEmpty(map)){
-            contractEntity = ContractTransformBean.mapTransformContractEntity(map).build();
-        }
-
-        return Optional.ofNullable(contractEntity).map(ContractEntity::getCustomerId).orElse(null);
-    }
-
 }
