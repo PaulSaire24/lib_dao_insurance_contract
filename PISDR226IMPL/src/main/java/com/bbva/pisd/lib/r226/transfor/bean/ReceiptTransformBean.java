@@ -54,9 +54,9 @@ public class ReceiptTransformBean {
                 .renewalReceiptSeqNumber(FunctionUtils.mapConvertToInteger(CatalogEnum.RENEWAL_RECEIPT_SEQ_NUMBER.getValue(),map))
                 .renewalNumber(FunctionUtils.mapConvertToInteger(CatalogEnum.RENEWAL_NUMBER.getValue(),map))
                 .receiptIssueDate((String) map.get(CatalogEnum.RECEIPT_ISSUE_DATE.getValue()))
-                .receiptStartDate((String) map.get(CatalogEnum.RECEIPT_START_DATE.getValue()))
-                .receiptEndDate((String) map.get(CatalogEnum.RECEIPT_END_DATE.getValue()))
-                .receiptExpirationDate((String) map.get(CatalogEnum.RECEIPT_EXPIRATION_DATE.getValue()))
+                .startDate((String) map.get(CatalogEnum.RECEIPT_START_DATE.getValue()))
+                .endDate((String) map.get(CatalogEnum.RECEIPT_END_DATE.getValue()))
+                .expirationDate((String) map.get(CatalogEnum.RECEIPT_EXPIRATION_DATE.getValue()))
                 .build();
     }
 
